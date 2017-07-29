@@ -112,7 +112,7 @@ public class menubunboguActivity extends AppCompatActivity {
                                                                                         @Override
                                                                                         public void onClick(DialogInterface dialog, int which) {
                                                                                             derateItem(item);
-
+int t;
                                                                                             adapter.remove(item);
 
                                                                                             Toast.makeText(menubunboguActivity.this, "項目を削除しました。", Toast.LENGTH_SHORT).show();
