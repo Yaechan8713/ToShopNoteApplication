@@ -13,6 +13,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,57 +38,45 @@ public class bookmenuActivity extends AppCompatActivity {
 
     ListView listiew;
     Intent intent;
-    EditText editText;
+    EditText editText,sumedittext;
     Spinner spinner;
-    int spint, deletint, onclickint, goukei,booksum, t,resetlist,money,oldsum;
+    int spint, deletint, onclickint, goukei, booksum, t, resetlist, money, oldsum;
     ArrayAdapter<String> adapter, sumadapter;
     String monoedit, spinstr, monototal;
-    TextView modetextview,bookmoneytextView;
+    TextView modetextview, bookmoneytextView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
-        modetextview = (TextView)findViewById(R.id.mode);
+        sumedittext = (EditText)findViewById(R.id.sumedittext);
+        modetextview = (TextView) findViewById(R.id.mode);
         listiew = (ListView) findViewById(R.id.listView);
         editText = (EditText) findViewById(R.id.edittext);
         spinner = (Spinner) findViewById(R.id.spinner);
-        bookmoneytextView = (TextView)findViewById(R.id.booktextView);
+        bookmoneytextView = (TextView) findViewById(R.id.booktextView);
         adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1);
         sumadapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
 
         firststring();
 
-        SharedPreferences moneyhyouji = getSharedPreferences("money",Context.MODE_PRIVATE);
-        money = moneyhyouji.getInt("money",0);
+        SharedPreferences moneyhyouji = getSharedPreferences("money", Context.MODE_PRIVATE);
+        money = moneyhyouji.getInt("oldbooksum", 0);
 
-        SharedPreferences oldsumhyoji = getSharedPreferences("oldbooksum",Context.MODE_PRIVATE);
-        oldsum = oldsumhyoji.getInt("oldbooksum",Context.MODE_PRIVATE);
+        oldsumhyoji();
 
-        oldsum = oldsum + money;
-
-        if(oldsum <= 999999999) {
-            bookmoneytextView.setText("合計金額は" + oldsum + "円です。");
-        }else if(oldsum < 0){
-            oldsum = 0;
-            bookmoneytextView.setText("エラーです。");
-        }else{
-            oldsum = 0;
-            bookmoneytextView.setText("エラーです。合計金額が大き過ぎです。");
-        }
-
-        SharedPreferences preoldsum = getSharedPreferences("oldbooksum",Context.MODE_PRIVATE);
+        SharedPreferences preoldsum = getSharedPreferences("oldbooksum", Context.MODE_PRIVATE);
         SharedPreferences.Editor preoldsumeditor = preoldsum.edit();
-        preoldsumeditor.putInt("oldbooksum",money);
+        preoldsumeditor.putInt("oldbooksum", money);
         preoldsumeditor.commit();
 
         t = goukei = deletint = spint = onclickint = resetlist = booksum = money = oldsum = 0;
 
 
-        SharedPreferences premoney = getSharedPreferences("money",Context.MODE_PRIVATE);
+        SharedPreferences premoney = getSharedPreferences("money", Context.MODE_PRIVATE);
         SharedPreferences.Editor preeditor = premoney.edit();
-        preeditor.putInt("money",money);
+        preeditor.putInt("money", money);
         preeditor.commit();
 
         modetext();
@@ -102,7 +91,7 @@ public class bookmenuActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                final ArrayAdapter adapter = (ArrayAdapter)listiew.getAdapter();
+                final ArrayAdapter adapter = (ArrayAdapter) listiew.getAdapter();
 
                 final String item = (String) adapter.getItem(position);
 
@@ -123,69 +112,8 @@ public class bookmenuActivity extends AppCompatActivity {
                                         ) {
                                             t++;
                                         }
-                                    })
-                            .setNeutralButton(
-                                    R.string.buy,
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            new AlertDialog
-                                                    .Builder(bookmenuActivity.this)
-                                                    .setTitle(R.string.moneytitle)
-                                                    .setMessage(R.string.moneymessage)
-                                                    .setPositiveButton(
-                                                            R.string.ok,
-                                                            new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                                    DialogFragment sumdialogfragment = new TextsumDialogFragment();
-                                                                    sumdialogfragment.show(getSupportFragmentManager(), "test");
-
-
-                                                                    new AlertDialog
-                                                                            .Builder(bookmenuActivity.this)
-                                                                            .setTitle(R.string.delete)
-                                                                            .setMessage("次の項目を削除しますか？\n\n" + item)
-                                                                            .setPositiveButton(
-                                                                                    R.string.delete,
-
-                                                                                    new DialogInterface.OnClickListener() {
-                                                                                        @Override
-                                                                                        public void onClick(DialogInterface dialog, int which) {
-                                                                                            derateItem(item);
-
-                                                                                            adapter.remove(item);
-
-
-                                                                                            Toast.makeText(bookmenuActivity.this, "項目を削除しました。", Toast.LENGTH_SHORT).show();
-                                                                                        }
-                                                                                    }
-                                                                            )
-                                                                            .setNeutralButton(
-                                                                                    R.string.nodelete,
-                                                                                    new DialogInterface.OnClickListener() {
-                                                                                        @Override
-                                                                                        public void onClick(DialogInterface dialog, int which) {
-                                                                                            t++;
-                                                                                        }
-                                                                                    }
-                                                                            ).show();
-
-                                                                }
-                                                            }
-                                                    )
-                                                    .setNeutralButton(
-                                                            R.string.chancel,
-                                                            new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-                                                                    t++;
-                                                                }
-                                                            }
-                                                    ).show();
-                                        }
                                     }).show();
+
 
                 } else if (deletint == 1) {
 
@@ -261,6 +189,24 @@ public class bookmenuActivity extends AppCompatActivity {
         bookItem item = new bookItem();
         item = new Select().from(bookItem.class).where("bookname =?", bookdelate).executeSingle();
         item.delete();
+    }
+
+    public void oldsumhyoji() {
+        Intent intent = getIntent();
+        oldsum = intent.getIntExtra("sum", 0);
+
+        oldsum = oldsum + money;
+
+        if (oldsum <= 999999999) {
+            bookmoneytextView.setText("合計金額は" + oldsum + "円です。");
+        } else if (oldsum < 0) {
+            oldsum = 0;
+            bookmoneytextView.setText("エラーです。");
+        } else {
+            oldsum = 0;
+            bookmoneytextView.setText("エラーです。合計金額が大き過ぎです。");
+        }
+
     }
 
     public void newint(String booknew) {
@@ -428,10 +374,10 @@ public class bookmenuActivity extends AppCompatActivity {
         }
     }
 
-    public void modetext(){
-        if(deletint == 0) {
+    public void modetext() {
+        if (deletint == 0) {
             modetextview.setText("追加モード");
-        }else if(deletint == 1){
+        } else if (deletint == 1) {
             modetextview.setText("削除モード");
         }
     }
@@ -507,18 +453,32 @@ public class bookmenuActivity extends AppCompatActivity {
     }
 
 
+    public void goukeiintent() {
+
+        money = Integer.valueOf(sumedittext.getText().toString());
+
+        if(sumedittext.getText().toString().equals("")){
+            //sumedittextにデータが入ってなかった場合
+            money = 0;
+            return;
+        }
+        sumedittext.setText("");
+        SharedPreferences preoldsum = getSharedPreferences("oldbooksum", Context.MODE_PRIVATE);
+        SharedPreferences.Editor preoldsumeditor = preoldsum.edit();
+        preoldsumeditor.putInt("oldbooksum", money);
+        preoldsumeditor.commit();
 
 
+        bookmoneytextView.setText("合計金額は" + money + "円です。");
 
-    public void goukeiintent(){
-
-
-
-        intent = new Intent(this,lockActivity.class);
+        intent = new Intent(this,sumActivity.class);
+        intent.putExtra("sum",money);
         startActivity(intent);
+
     }
 
-    public void intentbutton(View v){
+    public void intentbutton(View v) {
+
         goukeiintent();
     }
 

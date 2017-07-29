@@ -34,9 +34,10 @@ public class sumActivity extends AppCompatActivity {
 
     TextView sumtextView;
 
+    SharedPreferences pref;
     ArrayAdapter<String> adapter;
 
-    int sum,t,year,month,day,oldyear,oldmonth,oldday;
+    int sum,oldsum,t,year,month,day,oldyear,oldmonth,oldday;
 
     ListView listView;
 
@@ -50,9 +51,9 @@ public class sumActivity extends AppCompatActivity {
 
 //        Intent intent = new Intent(this,lockActivity.class);
 //        startActivity(intent);
+        pref =getSharedPreferences("shop",Context.MODE_PRIVATE);
 
-
-
+        sum = t = year = month = day = oldyear = oldday = oldmonth = oldsum = 0;
 
         adapter = new ArrayAdapter(this,android.R.layout.simple_expandable_list_item_1);
 
@@ -77,7 +78,7 @@ public class sumActivity extends AppCompatActivity {
         });
 
 
-        sum = t = year = month = day = oldyear = oldday = oldmonth = 0;
+
 
 
 
@@ -122,7 +123,7 @@ public class sumActivity extends AppCompatActivity {
 
 //        String f = t + "秒";
 
-        sumtextView.setText("合計" + sum + "円");
+        sumtextView.setText("合計" + oldsum + "円");
 
 
 
@@ -146,59 +147,66 @@ public class sumActivity extends AppCompatActivity {
     }
 
     public void daterun(){
+
+        oldyear = pref.getInt("year", 0);
+
+        oldmonth = pref.getInt("month", 0);
+
+        oldday = pref.getInt("day", 0);
+
+        oldsum = pref.getInt("goukeisum", 0);
+
+
+
         year = obj_cd.get(Calendar.YEAR);
         month = obj_cd.get(Calendar.MONTH) + 1;
         day = obj_cd.get(Calendar.DATE);
 
-        if (oldyear == year){
 
-            if(oldmonth == month){
-
-                if(oldday == day){
-                    SharedPreferences getsum = getSharedPreferences("goukei", Context.MODE_PRIVATE);
-                    sum = getsum.getInt("goukei",0);
-
-                    hyoujiandclock();
-                }else{
-                    dayriset();
-                }
-
-            }else{
-                dayriset();
-            }
-
+        if((oldyear == year && oldmonth == month && oldday == day) || oldyear == 0 || oldmonth == 0 || oldday == 0){
+            Intent intent = getIntent();
+            sum = intent.getIntExtra("sum", 0);
+            oldsum = oldsum + sum;
         }else{
             dayriset();
         }
+
+        hyoujiandclock();
+
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt("goukeisum",oldsum);
+        editor.commit();
     }
 
     public void reset(){
 
-        t =  sum = 0;
+
+        t =  sum = oldsum = 0;
 
 
         hyoujiandclock();
 
-        SharedPreferences sumpre =getSharedPreferences("goukei",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sumpre.edit();
-        editor.putInt("goukei",sum);
-        editor.commit();
 
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt("goukeisum",oldsum);
+        editor.commit();
     }
 
+
+
     public void dayriset(){
-        SharedPreferences yearpre = getSharedPreferences("year",Context.MODE_PRIVATE);
-        SharedPreferences.Editor yeareditor = yearpre.edit();
+
+        SharedPreferences.Editor yeareditor = pref.edit();
         yeareditor.putInt("year",year);
         yeareditor.commit();
 
-        SharedPreferences monthpre = getSharedPreferences("month",Context.MODE_PRIVATE);
-        SharedPreferences.Editor motheditor = monthpre.edit();
+
+        SharedPreferences.Editor motheditor = pref.edit();
         motheditor.putInt("month",month);
         motheditor.commit();
 
-        SharedPreferences daypre = getSharedPreferences("day",Context.MODE_PRIVATE);
-        SharedPreferences.Editor dayeditor = daypre.edit();
+
+        SharedPreferences.Editor dayeditor = pref.edit();
         dayeditor.putInt("day",day);
         dayeditor.commit();
 

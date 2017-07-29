@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * Created by yaerei on 2017/07/08.
@@ -23,6 +24,13 @@ public class lockActivity extends AppCompatActivity {
 
     Button button;
 
+    TextView textView;
+
+    Intent intent;
+
+
+    int money;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +40,11 @@ public class lockActivity extends AppCompatActivity {
         button = (Button)findViewById(R.id.button);
         setContentView(varlayout);
 
-        Intent intent = new Intent(this,sumActivity.class);
+        Intent intentgetint = getIntent();
+        money = intentgetint.getIntExtra("sum",0);
+
+        intent = new Intent(this,sumActivity.class);
+        intent.putExtra("sum",money);
         startActivity(intent);
 
         float scale = getResources().getDisplayMetrics().density;

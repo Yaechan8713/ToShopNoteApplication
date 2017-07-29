@@ -95,20 +95,13 @@ public class TextsumDialogFragment extends DialogFragment {
 
     public void fragmentdialogruncode(){
 
-        goukei = goukei + money;
+
 
         //合計金額保存
-        SharedPreferences pre = getActivity().getSharedPreferences("goukei",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pre.edit();
-        editor.putInt("goukei",goukei);
-        editor.commit();
 
-        SharedPreferences premoney = getActivity().getSharedPreferences("money",Context.MODE_PRIVATE);
-        SharedPreferences.Editor preeditor = premoney.edit();
-        preeditor.putInt("money",money);
-        preeditor.commit();
-
-        money = goukei = 0;
+        Intent intent = new Intent(getActivity(),sumActivity.class);
+        intent.putExtra("sum",money);
+        startActivity(intent);
     }
 
 }
