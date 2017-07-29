@@ -1,0 +1,271 @@
+<resources>
+    <string name="app_name">ShopingNote</string>
+    <string name="title">買い物アプリ</string>
+    <string name="login">合計金額　ログイン</string>
+    <string name="action_settings">Settings</string>
+    <string name="homemenu">メニュー</string>
+    <string name="foodmenu">食品</string>
+    <string name="bunnbogumenu">文房具</string>
+    <string name="monobasho">欲しい物を表示しています。</string>
+    <string name="bookmenu">本・書籍</string>
+    <string name="kadennmenu">家電製品</string>
+    <string name="iruimenu">衣類</string>
+    <string name="dishmenu">洗剤・石鹸</string>
+    <string name="kagumenu">家具</string>
+    <string name="shokkimenu">食器</string>
+    <string name="gorakumenu">娯楽</string>
+    <string name="softmenu">アプリケーション・ソフトウェア</string>
+    <string name="sonotamenu">その他</string>
+    <string name="kakutei">決定</string>
+    <string name="modehyouji">モードを選択してください。</string>
+    <string name="ok">OK</string>
+    <string name="delete">削除</string>
+    <string name="tuika">追加</string>
+    <string name="chancel">キャンセル</string>
+    <string name="on">ON</string>
+    <string name="nodelete">削除しない</string>
+    <string name="off">OFF</string>
+    <string name="snack_txt1" />
+    <string name="snack_txxt2" />
+    <string name="buy">金額入力</string>
+    <string name="snack_txt3" />
+    <string name="summoney">合計金額</string>
+    <string name="moneytitle">金額設定</string>
+    <string name="kakuninn">確認</string>
+    <string name="moneymessage">金額の設定をしますか？</string>
+    <string name="snack_txt4" />
+    <string name="snack_txt5" />
+    <string name="input">追加</string>
+    <string name="snack_txt6" />
+    <string name="snack_txt7" />
+    <string name="snack_txt8" />
+    <string name="snack_txt9" />
+    <string name="snack_txt10" />
+    <string name="snack_txt11" />
+    <string name="snack_txt12" />
+    <string name="snack_txt2" />
+
+    <string-array name="spnbunbogu">
+        <item>鉛筆</item>
+        <item>シャープペン</item>
+        <item>ノート</item>
+        <item>メモ帳</item>
+        <item>消しゴム</item>
+        <item>付箋</item>
+        <item>マーカー</item>
+        <item>色ペン</item>
+    </string-array>
+
+    <string-array name="spndish">
+        <item>漂白剤</item>
+        <item>洗剤</item>
+        <item>ボディーソープ</item>
+        <item>シャンプー</item>
+        <item>リンス</item>
+    </string-array>
+
+    <string-array name="spnfood">
+        <item>トマト</item>
+        <item>きゅうり</item>
+        <item>キャベツ</item>
+        <item>レタス</item>
+        <item>リンゴ</item>
+        <item>みかん</item>
+        <item>イチゴ</item>
+        <item>ぶどう</item>
+        <item>ほうれん草</item>
+        <item>白菜</item>
+        <item>レンコン</item>
+        <item>大根</item>
+        <item>牛肉</item>
+        <item>豚肉</item>
+        <item>鶏肉</item>
+        <item>餃子の皮</item>
+        <item>麺(ラーメン用)</item>
+        <item>麺(スパゲティー用)</item>
+        <item>ビスケット</item>
+        <item>チョコレート</item>
+        <item>ガム</item>
+        <item>ラムネ</item>
+        <item>ゼリー</item>
+        <item>マグロ</item>
+        <item>はまち</item>
+        <item>桜えび</item>
+        <item>甘えび</item>
+        <item>米</item>
+        <item>麦</item>
+        <item>醤油</item>
+        <item>油</item>
+        <item>ごま油</item>
+        <item>ラー油</item>
+        <item>チーズ</item>
+        <item>牛乳寒天</item>
+
+    </string-array>
+
+    <string-array name="spngoraku">
+        <item>DS</item>
+        <item>テレビゲーム機</item>
+        <item>絵本</item>
+        <item>UNO</item>
+        <item>トランプカード</item>
+        <item>花札</item>
+        <item>将棋</item>
+        <item>オセロ</item>
+
+    </string-array>
+
+    <string-array name="spnirui">
+        <item>Yシャツ</item>
+        <item>ズボン</item>
+        <item>セーター</item>
+        <item>ジーンズ</item>
+        <item>コート</item>
+        <item>白シャツ</item>
+        <item>バスタオル</item>
+        <item>タオル</item>
+        <item>ハンカチ</item>
+        <item>靴下</item>
+        <item>下着類</item>
+        <item>Ｔシャツ</item>
+
+    </string-array>
+
+    <string-array name="spnkadenn">
+        <item>携帯電話・スマートフォン</item>
+        <item>simカード</item>
+        <item>携帯電話・スマートフォンの充電器</item>
+        <item>ノートパソコン</item>
+        <item>ノートパソコンの充電器</item>
+        <item>デスクトップ型パソコン</item>
+        <item>パソコンのRAMメモリー</item>
+        <item>USBメモリー</item>
+        <item>ハードディスク</item>
+        <item>液晶テレビ</item>
+        <item>ブラウン管テレビ</item>
+        <item>冷蔵庫</item>
+        <item>エアコン</item>
+        <item>空気清浄機</item>
+        <item>掃除機</item>
+        <item>洗濯機</item>
+        <item>オーブン</item>
+        <item>電子レンジ</item>
+        <item>炊飯器</item>
+        <item>ノンフライヤー</item>
+        <item>電卓</item>
+    </string-array>
+
+    <string-array name="spnkagu">
+        <item>椅子</item>
+        <item>ソファー</item>
+        <item>テーブル</item>
+        <item>棚</item>
+        <item>本棚</item>
+        <item>靴箱</item>
+        <item>学習机</item>
+        <item>机</item>
+
+    </string-array>
+
+    <string-array name="spnshokki">
+        <item>皿</item>
+        <item>コップ</item>
+        <item>コーヒーカップ</item>
+        <item>箸</item>
+        <item>スプーン</item>
+        <item>フォーク</item>
+
+    </string-array>
+
+    <string-array name="spnsoft">
+        <item>Microsoft Office</item>
+        <item>はがき編集ソフト</item>
+        <item>セキュリティーソフト</item>
+    </string-array>
+
+    <string-array name="spnsonota">
+        <item>紙</item>
+        <item>CD</item>
+        <item>DVD</item>
+        <item>小物入れ</item>
+        <item>ハンガー</item>
+        <item>洗濯バサミ</item>
+    </string-array>
+
+    <string-array name="spnbook">
+        <item>国語の教科書</item>
+        <item>国語のワーク</item>
+        <item>数学の教科書</item>
+        <item>数学のワーク</item>
+        <item>算数の教科書</item>
+        <item>算数のワーク</item>
+        <item>理科の教科書</item>
+        <item>理科のワーク</item>
+        <item>社会の教科書</item>
+        <item>社会のワーク</item>
+        <item>家庭科の教科書</item>
+        <item>家庭科のワーク</item>
+        <item>保健体育の教科書</item>
+        <item>保健体育のワーク</item>
+        <item>音楽の教科書</item>
+        <item>音楽のワーク</item>
+        <item>美術の教科書</item>
+        <item>美術のワーク</item>
+        <item>数学Ⅰの教科書</item>
+        <item>数学Ⅰのワーク</item>
+        <item>数学Ⅱの教科書</item>
+        <item>数学Ⅱのワーク</item>
+        <item>数学Ⅲの教科書</item>
+        <item>数学Ⅲのワーク</item>
+        <item>数学Aの教科書</item>
+        <item>数学Aのワーク</item>
+        <item>数学Bの教科書</item>
+        <item>数学Bのワーク</item>
+        <item>数学Cの教科書</item>
+        <item>数学Cのワーク</item>
+        <item>現代文の教科書</item>
+        <item>現代文のワーク</item>
+        <item>古文の教科書</item>
+        <item>古文のワーク</item>
+        <item>漢文の教科書</item>
+        <item>漢文のワーク</item>
+        <item>日本史の教科書</item>
+        <item>日本史のワーク</item>
+        <item>世界史の教科書</item>
+        <item>世界史のワーク</item>
+        <item>現代社会の教科書</item>
+        <item>現代社会のワーク</item>
+        <item>生物基礎の教科書</item>
+        <item>生物基礎のワーク</item>
+        <item>化学基礎の教科書</item>
+        <item>化学基礎のワーク</item>
+        <item>物理基礎の教科書</item>
+        <item>物理基礎のワーク</item>
+        <item>生物の教科書</item>
+        <item>生物のワーク</item>
+        <item>化学の教科書</item>
+        <item>化学のワーク</item>
+        <item>物理の教科書</item>
+        <item>物理のワーク</item>
+        <item>料理本</item>
+        <item>Microsoft Officeの使い方の本</item>
+        <item>エクセルの使い方の本</item>
+        <item>パワーポイントの使い方の本</item>
+        <item>ワードの使い方の本</item>
+        <item>javaに関する本</item>
+        <item>パソコン利用技術検定の問題集</item>
+        <item>電気工事士の資格を取るための参考書</item>
+        <item>計算技術検定の問題集</item>
+        <item>数学検定の参考書</item>
+        <item>数学検定の過去問題集</item>
+        <item>英語検定の参考書</item>
+        <item>英語検定の過去問題集</item>
+        <item>漢字検定の参考書</item>
+        <item>漢字検定の過去問題集</item>
+        <item>週刊雑誌</item>
+        <item>雑誌</item>
+        <item>小説本</item>
+        <item>物語本</item>
+        <item>漫画</item>
+    </string-array>
+</resources>

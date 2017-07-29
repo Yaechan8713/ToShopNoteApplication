@@ -1,0 +1,76 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="reduce.project.yaerei.toshopnote.MainActivity">
+    <item
+        android:id="@+id/homemenu"
+        android:orderInCategory="100"
+        android:title="@string/homemenu"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menufood"
+        android:orderInCategory="200"
+        android:title="@string/foodmenu"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menubunnbogu"
+        android:orderInCategory="300"
+        android:title="@string/bunnbogumenu"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menubook"
+        android:orderInCategory="400"
+        android:title="@string/bookmenu"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menukadenn"
+        android:orderInCategory="500"
+        android:title="@string/kadennmenu"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menuirui"
+        android:orderInCategory="600"
+        android:title="@string/iruimenu"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menudish"
+        android:orderInCategory="700"
+        android:title="@string/dishmenu"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menukagu"
+        android:orderInCategory="800"
+        android:title="@string/kagumenu"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menushokki"
+        android:orderInCategory="900"
+        android:title="@string/shokkimenu"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menugoraku"
+        android:orderInCategory="1000"
+        android:title="@string/gorakumenu"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menusoft"
+        android:orderInCategory="1100"
+        android:title="@string/softmenu"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menusonota"
+        android:orderInCategory="1200"
+        android:title="@string/sonotamenu"
+        app:showAsAction="never"/>
+</menu>
