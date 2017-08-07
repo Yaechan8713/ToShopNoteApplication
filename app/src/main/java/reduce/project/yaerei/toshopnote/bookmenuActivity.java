@@ -455,13 +455,14 @@ public class bookmenuActivity extends AppCompatActivity {
 
     public void goukeiintent() {
 
-        money = Integer.valueOf(sumedittext.getText().toString());
-
         if(sumedittext.getText().toString().equals("")){
             //sumedittextにデータが入ってなかった場合
             money = 0;
             return;
         }
+
+        money = Integer.valueOf(sumedittext.getText().toString());
+
         sumedittext.setText("");
         SharedPreferences preoldsum = getSharedPreferences("oldbooksum", Context.MODE_PRIVATE);
         SharedPreferences.Editor preoldsumeditor = preoldsum.edit();
