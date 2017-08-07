@@ -134,7 +134,16 @@ public class bookmenuActivity extends AppCompatActivity {
 
                                             Toast.makeText(bookmenuActivity.this, "項目を削除しました。", Toast.LENGTH_SHORT).show();
                                         }
-                                    }).show();
+                                    })
+                            .setNeutralButton(
+                                    R.string.chancel,
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            t++;
+                                        }
+                                    }
+                            ).show();
                 }
 
             }
