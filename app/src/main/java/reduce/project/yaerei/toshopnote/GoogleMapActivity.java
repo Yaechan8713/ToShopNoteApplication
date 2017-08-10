@@ -32,29 +32,6 @@ public class GoogleMapActivity extends FragmentActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
     }
 
-    public void permission(){
-        if(ContextCompat.checkSelfPermission(this,
-                java.util.jar.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,},REQUEST_PERMISSION);
-
-            return;
-        }
-    }
-
-    public void permissionrun(){
-        @Override
-        public void onRequestPermissionsResult(int requestCode,
-            String[] permissions,int[] grantResults){
-            if(requestCode == 1000){
-//                使用が許可された
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-//                    位置測定を始めるコードへ跳ぶ
-                    locationStart();
-                }
-            }
-        }
-    }
 
 
     /**
