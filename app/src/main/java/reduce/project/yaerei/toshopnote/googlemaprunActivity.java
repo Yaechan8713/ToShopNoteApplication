@@ -22,6 +22,7 @@ import com.activeandroid.util.Log;
 /**
  * Created by yaerei on 2017/08/10.
  */
+
 public class googlemaprunActivity extends AppCompatActivity implements LocationListener {
 
     private LocationManager locationManager;

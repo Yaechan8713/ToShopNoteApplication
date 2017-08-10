@@ -1,7 +1,9 @@
 package reduce.project.yaerei.toshopnote;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
@@ -31,11 +34,14 @@ import java.util.List;
 public class menubunboguActivity extends AppCompatActivity {
     ListView listiew;
     Intent intent;
-    EditText editText;
+    EditText editText,bunbogusumedittext;
     Spinner spinner;
-    int t,spint,deletint,onclickint;
+    int t,spint,deletint,onclickint,bunbogusum;
     ArrayAdapter<String> adapter;
     String monoedit,spinstr,monototal;
+    TextView bunbogusumtextView;
+    SharedPreferences bunbogupre;
+    SharedPreferences.Editor bunbogueditor;
 
 
     @Override
@@ -45,6 +51,8 @@ public class menubunboguActivity extends AppCompatActivity {
         listiew = (ListView)findViewById(R.id.listView);
         editText = (EditText)findViewById(R.id.edittext);
         spinner = (Spinner)findViewById(R.id.spinner);
+        bunbogusumedittext = (EditText)findViewById(R.id.bunbogusumedittext);
+        bunbogusumtextView = (TextView)findViewById(R.id.bunbogusumtextView);
         adapter = new ArrayAdapter(this,android.R.layout.simple_expandable_list_item_1);
 
         firststring();
@@ -81,66 +89,6 @@ public class menubunboguActivity extends AppCompatActivity {
                                                 int which
                                         ) {
                                             t++;
-                                        }
-                                    })
-                            .setNeutralButton(
-                                    R.string.buy,
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            new AlertDialog
-                                                    .Builder(menubunboguActivity.this)
-                                                    .setTitle(R.string.moneytitle)
-                                                    .setMessage(R.string.moneymessage)
-                                                    .setPositiveButton(
-                                                            R.string.ok,
-                                                            new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                                    DialogFragment sumdialogfragment = new TextsumDialogFragment();
-                                                                    sumdialogfragment.show(getSupportFragmentManager(), "test");
-
-                                                                    new AlertDialog
-                                                                            .Builder(menubunboguActivity.this)
-                                                                            .setTitle(R.string.delete)
-                                                                            .setMessage("次の項目を削除しますか？\n\n" + item)
-                                                                            .setPositiveButton(
-                                                                                    R.string.delete,
-
-                                                                                    new DialogInterface.OnClickListener() {
-                                                                                        @Override
-                                                                                        public void onClick(DialogInterface dialog, int which) {
-                                                                                            derateItem(item);
-int t;
-                                                                                            adapter.remove(item);
-
-                                                                                            Toast.makeText(menubunboguActivity.this, "項目を削除しました。", Toast.LENGTH_SHORT).show();
-                                                                                        }
-                                                                                    }
-                                                                            )
-                                                                            .setNeutralButton(
-                                                                                    R.string.nodelete,
-                                                                                    new DialogInterface.OnClickListener() {
-                                                                                        @Override
-                                                                                        public void onClick(DialogInterface dialog, int which) {
-                                                                                            t++;
-                                                                                        }
-                                                                                    }
-                                                                            ).show();
-
-                                                                }
-                                                            }
-                                                    )
-                                                    .setNeutralButton(
-                                                            R.string.chancel,
-                                                            new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-                                                                    t++;
-                                                                }
-                                                            }
-                                                    ).show();
                                         }
                                     }).show();
                 } else if (deletint == 1) {
@@ -451,7 +399,25 @@ int t;
     }
 
     public void goukeiintent(){
-        intent = new Intent(this,lockActivity.class);
+        bunbogusum = Integer.valueOf(bunbogusumedittext.getText().toString());
+
+        if(bunbogusumedittext.getText().toString().equals("")){
+            bunbogusum = 0;
+
+            return;
+        }
+
+        bunbogusumedittext.setText("");
+
+        bunbogupre = getSharedPreferences("bunnbogusum", Context.MODE_PRIVATE);
+        bunbogueditor = bunbogupre.edit();
+        bunbogueditor.putInt("bunnbogusum",bunbogusum);
+        bunbogueditor.commit();
+
+        bunbogusumtextView.setText("合計金額は" + bunbogusum + "円です。");
+
+        intent = new Intent(this,sumActivity.class);
+        intent.putExtra("sum",bunbogusum);
         startActivity(intent);
     }
 

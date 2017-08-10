@@ -1,7 +1,9 @@
 package reduce.project.yaerei.toshopnote;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
@@ -31,11 +34,14 @@ public class kagumenuActivity extends AppCompatActivity {
 
     ListView listiew;
     Intent intent;
-    EditText editText;
+    EditText editText,kagusumedittext;
     Spinner spinner;
-    int t,spint,deletint,onclickint;
+    int t,spint,deletint,onclickint,kagusum;
     ArrayAdapter<String> adapter;
     String monoedit,spinstr,monototal;
+    TextView kagusumtextView;
+    SharedPreferences kagupre;
+    SharedPreferences.Editor kagueditor;
 
 
     @Override
@@ -46,6 +52,9 @@ public class kagumenuActivity extends AppCompatActivity {
         editText = (EditText)findViewById(R.id.edittext);
         spinner = (Spinner)findViewById(R.id.spinner);
         adapter = new ArrayAdapter(this,android.R.layout.simple_expandable_list_item_1);
+        kagusumedittext = (EditText)findViewById(R.id.kagusumedittext);
+        kagusumtextView = (TextView)findViewById(R.id.kagusumtextView);
+
 
         firststring();
 
@@ -81,66 +90,6 @@ public class kagumenuActivity extends AppCompatActivity {
                                                 int which
                                         ) {
                                             t++;
-                                        }
-                                    })
-                            .setNeutralButton(
-                                    R.string.buy,
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            new AlertDialog
-                                                    .Builder(kagumenuActivity.this)
-                                                    .setTitle(R.string.moneytitle)
-                                                    .setMessage(R.string.moneymessage)
-                                                    .setPositiveButton(
-                                                            R.string.ok,
-                                                            new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                                    DialogFragment sumdialogfragment = new TextsumDialogFragment();
-                                                                    sumdialogfragment.show(getSupportFragmentManager(), "test");
-
-                                                                    new AlertDialog
-                                                                            .Builder(kagumenuActivity.this)
-                                                                            .setTitle(R.string.delete)
-                                                                            .setMessage("次の項目を削除しますか？\n\n" + item)
-                                                                            .setPositiveButton(
-                                                                                    R.string.delete,
-
-                                                                                    new DialogInterface.OnClickListener() {
-                                                                                        @Override
-                                                                                        public void onClick(DialogInterface dialog, int which) {
-                                                                                            derateItem(item);
-
-                                                                                            adapter.remove(item);
-
-                                                                                            Toast.makeText(kagumenuActivity.this, "項目を削除しました。", Toast.LENGTH_SHORT).show();
-                                                                                        }
-                                                                                    }
-                                                                            )
-                                                                            .setNeutralButton(
-                                                                                    R.string.nodelete,
-                                                                                    new DialogInterface.OnClickListener() {
-                                                                                        @Override
-                                                                                        public void onClick(DialogInterface dialog, int which) {
-                                                                                            t++;
-                                                                                        }
-                                                                                    }
-                                                                            ).show();
-
-                                                                }
-                                                            }
-                                                    )
-                                                    .setNeutralButton(
-                                                            R.string.chancel,
-                                                            new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-                                                                    t++;
-                                                                }
-                                                            }
-                                                    ).show();
                                         }
                                     }).show();
                 } else if (deletint == 1) {
@@ -452,7 +401,25 @@ public class kagumenuActivity extends AppCompatActivity {
     }
 
     public void goukeiintent(){
-        intent = new Intent(this,lockActivity.class);
+        kagusum = Integer.valueOf(kagusumedittext.getText().toString());
+
+        if(kagusumedittext.getText().toString().equals("")){
+            kagusum = 0;
+
+            return;
+        }
+
+        kagusumtextView.setText("");
+
+        kagupre = getSharedPreferences("kagusum", Context.MODE_PRIVATE);
+        kagueditor = kagupre.edit();
+        kagueditor.putInt("kagusum",kagusum);
+        kagueditor.commit();
+
+        kagusumtextView.setText("合計金額は" + kagusum + "円です。");
+
+        intent = new Intent(this,sumActivity.class);
+        intent.putExtra("sum",kagusum);
         startActivity(intent);
     }
 

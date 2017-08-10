@@ -1,7 +1,9 @@
 package reduce.project.yaerei.toshopnote;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
@@ -30,11 +33,14 @@ import java.util.List;
 public class dishmenuActivity extends AppCompatActivity {
     ListView listiew;
     Intent intent;
-    EditText editText;
+    EditText editText,sumedittext;
     Spinner spinner;
-    int t,spint,deletint,onclickint;
+    TextView dishsumtextView;
+    int t,spint,deletint,onclickint,dishsum;
     ArrayAdapter<String> adapter;
     String monoedit,spinstr,monototal;
+    SharedPreferences pre;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -45,10 +51,12 @@ public class dishmenuActivity extends AppCompatActivity {
         editText = (EditText)findViewById(R.id.edittext);
         spinner = (Spinner)findViewById(R.id.spinner);
         adapter = new ArrayAdapter(this,android.R.layout.simple_expandable_list_item_1);
+        sumedittext = (EditText)findViewById(R.id.dishsumedittext);
+        dishsumtextView = (TextView)findViewById(R.id.dishsumtextView);
 
         firststring();
 
-        deletint = t = spint = onclickint = 0;
+        deletint = t = spint = onclickint = dishsum = 0;
 
         spint = spinner.getSelectedItemPosition();
         spinstr = (String)spinner.getSelectedItem();
@@ -80,66 +88,6 @@ public class dishmenuActivity extends AppCompatActivity {
                                                 int which
                                         ) {
                                             t++;
-                                        }
-                                    })
-                            .setNeutralButton(
-                                    R.string.buy,
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            new AlertDialog
-                                                    .Builder(dishmenuActivity.this)
-                                                    .setTitle(R.string.moneytitle)
-                                                    .setMessage(R.string.moneymessage)
-                                                    .setPositiveButton(
-                                                            R.string.ok,
-                                                            new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                                    DialogFragment sumdialogfragment = new TextsumDialogFragment();
-                                                                    sumdialogfragment.show(getSupportFragmentManager(), "test");
-
-                                                                    new AlertDialog
-                                                                            .Builder(dishmenuActivity.this)
-                                                                            .setTitle(R.string.delete)
-                                                                            .setMessage("次の項目を削除しますか？\n\n" + item)
-                                                                            .setPositiveButton(
-                                                                                    R.string.delete,
-
-                                                                                    new DialogInterface.OnClickListener() {
-                                                                                        @Override
-                                                                                        public void onClick(DialogInterface dialog, int which) {
-                                                                                            derateItem(item);
-
-                                                                                            adapter.remove(item);
-
-                                                                                            Toast.makeText(dishmenuActivity.this, "項目を削除しました。", Toast.LENGTH_SHORT).show();
-                                                                                        }
-                                                                                    }
-                                                                            )
-                                                                            .setNeutralButton(
-                                                                                    R.string.nodelete,
-                                                                                    new DialogInterface.OnClickListener() {
-                                                                                        @Override
-                                                                                        public void onClick(DialogInterface dialog, int which) {
-                                                                                            t++;
-                                                                                        }
-                                                                                    }
-                                                                            ).show();
-
-                                                                }
-                                                            }
-                                                    )
-                                                    .setNeutralButton(
-                                                            R.string.chancel,
-                                                            new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-                                                                    t++;
-                                                                }
-                                                            }
-                                                    ).show();
                                         }
                                     }).show();
                 } else if (deletint == 1) {
@@ -454,8 +402,30 @@ public class dishmenuActivity extends AppCompatActivity {
 
 
     public void goukeiintent(){
-        intent = new Intent(this,lockActivity.class);
+        dishsum = Integer.valueOf(sumedittext.getText().toString());
+
+        if(sumedittext.getText().toString().equals("")){
+            dishsum = 0;
+            return;
+        }
+
+        sumedittext.setText("");
+
+        pre = getSharedPreferences("olddishsum", Context.MODE_PRIVATE);
+        editor = pre.edit();
+        editor.putInt("olddishsum",dishsum);
+        editor.commit();
+
+        dishsumtextView.setText("合計金額は" + dishsum + "円です。");
+
+        intent = new Intent(this,sumActivity.class);
+        intent.putExtra("sum",dishsum);
         startActivity(intent);
+
+
+
+
+
     }
 
     public void intentbutton(View v){
