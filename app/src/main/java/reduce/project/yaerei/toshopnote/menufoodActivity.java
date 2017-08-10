@@ -1,7 +1,9 @@
 package reduce.project.yaerei.toshopnote;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
@@ -30,11 +33,14 @@ import java.util.List;
 public class menufoodActivity extends AppCompatActivity {
     ListView listiew;
     Intent intent;
-    EditText editText;
+    EditText editText,foodsumedit;
     Spinner spinner;
-    int t,spint,deletint,onclickint;
+    int t,spint,deletint,onclickint,foodsum;
     ArrayAdapter<String> adapter;
     String monoedit,spinstr,monototal;
+    TextView foodsumtextView;
+    SharedPreferences foodpre;
+    SharedPreferences.Editor foodeditor;
 
 
     @Override
@@ -80,66 +86,6 @@ public class menufoodActivity extends AppCompatActivity {
                                                 int which
                                         ) {
                                             t++;
-                                        }
-                                    })
-                            .setNeutralButton(
-                                    R.string.buy,
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            new AlertDialog
-                                                    .Builder(menufoodActivity.this)
-                                                    .setTitle(R.string.moneytitle)
-                                                    .setMessage(R.string.moneymessage)
-                                                    .setPositiveButton(
-                                                            R.string.ok,
-                                                            new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                                    DialogFragment sumdialogfragment = new TextsumDialogFragment();
-                                                                    sumdialogfragment.show(getSupportFragmentManager(), "test");
-
-                                                                    new AlertDialog
-                                                                            .Builder(menufoodActivity.this)
-                                                                            .setTitle(R.string.delete)
-                                                                            .setMessage("次の項目を削除しますか？\n\n" + item)
-                                                                            .setPositiveButton(
-                                                                                    R.string.delete,
-
-                                                                                    new DialogInterface.OnClickListener() {
-                                                                                        @Override
-                                                                                        public void onClick(DialogInterface dialog, int which) {
-                                                                                            derateItem(item);
-
-                                                                                            adapter.remove(item);
-
-                                                                                            Toast.makeText(menufoodActivity.this, "項目を削除しました。", Toast.LENGTH_SHORT).show();
-                                                                                        }
-                                                                                    }
-                                                                            )
-                                                                            .setNeutralButton(
-                                                                                    R.string.nodelete,
-                                                                                    new DialogInterface.OnClickListener() {
-                                                                                        @Override
-                                                                                        public void onClick(DialogInterface dialog, int which) {
-                                                                                            t++;
-                                                                                        }
-                                                                                    }
-                                                                            ).show();
-
-                                                                }
-                                                            }
-                                                    )
-                                                    .setNeutralButton(
-                                                            R.string.chancel,
-                                                            new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-                                                                    t++;
-                                                                }
-                                                            }
-                                                    ).show();
                                         }
                                     }).show();
                 } else if (deletint == 1) {
@@ -449,7 +395,25 @@ public class menufoodActivity extends AppCompatActivity {
     }
 
     public void goukeiintent(){
-        intent = new Intent(this,lockActivity.class);
+        foodsum = Integer.valueOf(foodsumedit.getText().toString());
+
+        if(foodsumedit.getText().toString().equals("")){
+            foodsum = 0;
+
+            return;
+        }
+
+        foodsumedit.setText("");
+
+        foodpre = getSharedPreferences("foodsum", Context.MODE_PRIVATE);
+        foodeditor = foodpre.edit();
+        foodeditor.putInt("foodsum",foodsum);
+        foodeditor.commit();
+
+        foodsumtextView.setText("合計金額は" + foodsum + "円です。");
+
+        intent = new Intent(this,sumActivity.class);
+        intent.putExtra("sum",foodsum);
         startActivity(intent);
     }
 

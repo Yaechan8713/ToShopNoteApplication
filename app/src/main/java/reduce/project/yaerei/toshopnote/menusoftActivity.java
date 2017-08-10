@@ -1,7 +1,9 @@
 package reduce.project.yaerei.toshopnote;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
@@ -31,25 +34,30 @@ import java.util.List;
 public class menusoftActivity extends AppCompatActivity {
     ListView listiew;
     Intent intent;
-    EditText editText;
+    EditText editText,softsumeditText;
     Spinner spinner;
-    int t,spint,deletint,onclickint;
+    TextView softsumtextView;
+    int t,spint,deletint,onclickint,softsum;
     ArrayAdapter<String> adapter;
     String monoedit,spinstr,monototal;
+    SharedPreferences softpre;
+    SharedPreferences.Editor softeditor;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book);
+        setContentView(R.layout.activity_soft);
         listiew = (ListView)findViewById(R.id.listView);
         editText = (EditText)findViewById(R.id.edittext);
         spinner = (Spinner)findViewById(R.id.spinner);
         adapter = new ArrayAdapter(this,android.R.layout.simple_expandable_list_item_1);
+        softsumeditText = (EditText) findViewById(R.id.softsumeditText);
+        softsumtextView = (TextView) findViewById(R.id.softsumtextView);
 
         firststring();
 
-        deletint = t = spint = onclickint = 0;
+        deletint = t = spint = softsum = onclickint = 0;
 
         spint = spinner.getSelectedItemPosition();
         spinstr = (String)spinner.getSelectedItem();
@@ -81,66 +89,6 @@ public class menusoftActivity extends AppCompatActivity {
                                                 int which
                                         ) {
                                             t++;
-                                        }
-                                    })
-                            .setNeutralButton(
-                                    R.string.buy,
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            new AlertDialog
-                                                    .Builder(menusoftActivity.this)
-                                                    .setTitle(R.string.moneytitle)
-                                                    .setMessage(R.string.moneymessage)
-                                                    .setPositiveButton(
-                                                            R.string.ok,
-                                                            new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                                    DialogFragment sumdialogfragment = new TextsumDialogFragment();
-                                                                    sumdialogfragment.show(getSupportFragmentManager(), "test");
-
-                                                                    new AlertDialog
-                                                                            .Builder(menusoftActivity.this)
-                                                                            .setTitle(R.string.delete)
-                                                                            .setMessage("次の項目を削除しますか？\n\n" + item)
-                                                                            .setPositiveButton(
-                                                                                    R.string.delete,
-
-                                                                                    new DialogInterface.OnClickListener() {
-                                                                                        @Override
-                                                                                        public void onClick(DialogInterface dialog, int which) {
-                                                                                            derateItem(item);
-
-                                                                                            adapter.remove(item);
-
-                                                                                            Toast.makeText(menusoftActivity.this, "項目を削除しました。", Toast.LENGTH_SHORT).show();
-                                                                                        }
-                                                                                    }
-                                                                            )
-                                                                            .setNeutralButton(
-                                                                                    R.string.nodelete,
-                                                                                    new DialogInterface.OnClickListener() {
-                                                                                        @Override
-                                                                                        public void onClick(DialogInterface dialog, int which) {
-                                                                                            t++;
-                                                                                        }
-                                                                                    }
-                                                                            ).show();
-
-                                                                }
-                                                            }
-                                                    )
-                                                    .setNeutralButton(
-                                                            R.string.chancel,
-                                                            new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-                                                                    t++;
-                                                                }
-                                                            }
-                                                    ).show();
                                         }
                                     }).show();
                 } else if (deletint == 1) {
@@ -451,7 +399,25 @@ public class menusoftActivity extends AppCompatActivity {
     }
 
     public void goukeiintent(){
-        intent = new Intent(this,lockActivity.class);
+
+        softsum = Integer.valueOf(softsumeditText.getText().toString());
+
+        if(softsumeditText.getText().toString().equals("")){
+            softsum = 0;
+
+            return;
+        }
+
+        softsumeditText.setText("");
+
+        softpre = getSharedPreferences("softsum", Context.MODE_PRIVATE);
+        softeditor = softpre.edit();
+        softeditor.putInt("softsum",softsum);
+        softeditor.commit();
+
+        softsumtextView.setText("合計金額は" + softsum + "円です。");
+        intent = new Intent(this,sumActivity.class);
+        intent.putExtra("sum",softsum);
         startActivity(intent);
     }
 
