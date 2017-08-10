@@ -2,37 +2,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="reduce.project.yaerei.toshopnote">
 
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality. 
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:name="com.activeandroid.app.Application"
-
         android:allowBackup="true"
         android:icon="@drawable/toshopnoteicon"
         android:label="@string/title"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="AA_DB_NAME"
-            android:value="List.db"/>
-
+            android:value="List.db" />
         <meta-data
             android:name="AA_DB_VERSION"
-            android:value="3"/>
-
+            android:value="3" />
         <meta-data
             android:name="AA_MODELS"
-            android:value="reduce.project.yaerei.toshopnote.bookItem,
-            reduce.project.yaerei.toshopnote.dishItem,
-            reduce.project.yaerei.toshopnote.gorakuItem,
-            reduce.project.yaerei.toshopnote.iruiItem,
-            reduce.project.yaerei.toshopnote.kadennItem,
-            reduce.project.yaerei.toshopnote.kaguItem,
-            reduce.project.yaerei.toshopnote.sumItem,
-            reduce.project.yaerei.toshopnote.menubunboguItem,
-            reduce.project.yaerei.toshopnote.menufoodItem,
-            reduce.project.yaerei.toshopnote.shokkiItem,
-            reduce.project.yaerei.toshopnote.softItem,
-            reduce.project.yaerei.toshopnote.sonotaItem"/>
+            android:value="reduce.project.yaerei.toshopnote.bookItem,             reduce.project.yaerei.toshopnote.dishItem,             reduce.project.yaerei.toshopnote.gorakuItem,             reduce.project.yaerei.toshopnote.iruiItem,             reduce.project.yaerei.toshopnote.kadennItem,             reduce.project.yaerei.toshopnote.kaguItem,             reduce.project.yaerei.toshopnote.sumItem,             reduce.project.yaerei.toshopnote.menubunboguItem,             reduce.project.yaerei.toshopnote.menufoodItem,             reduce.project.yaerei.toshopnote.shokkiItem,             reduce.project.yaerei.toshopnote.softItem,             reduce.project.yaerei.toshopnote.sonotaItem" />
 
         <activity
             android:name=".MainActivity"
@@ -45,48 +37,62 @@
             </intent-filter>
         </activity>
 
-        <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+        <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
         <activity
             android:name=".lockActivity"
-            android:label="@string/login"/>
-
+            android:label="@string/login" />
         <activity
             android:name=".bookmenuActivity"
-            android:label="@string/bookmenu"/>
+            android:label="@string/bookmenu" />
         <activity
             android:name=".dishmenuActivity"
-            android:label="@string/dishmenu"/>
+            android:label="@string/dishmenu" />
         <activity
             android:name=".gorakumenuActivity"
-            android:label="@string/gorakumenu"/>
+            android:label="@string/gorakumenu" />
         <activity
             android:name=".iruimenuActivity"
-            android:label="@string/iruimenu"/>
+            android:label="@string/iruimenu" />
         <activity
             android:name=".kadennmenuActivity"
-            android:label="@string/kadennmenu"/>
+            android:label="@string/kadennmenu" />
         <activity
             android:name=".kagumenuActivity"
-            android:label="@string/kagumenu"/>
+            android:label="@string/kagumenu" />
         <activity
             android:name=".menubunboguActivity"
-            android:label="@string/bunnbogumenu"/>
+            android:label="@string/bunnbogumenu" />
         <activity
             android:name=".menufoodActivity"
-            android:label="@string/foodmenu"/>
+            android:label="@string/foodmenu" />
         <activity
             android:name=".menusoftActivity"
-            android:label="@string/softmenu"/>
+            android:label="@string/softmenu" />
         <activity
             android:name=".shokkimenuActivity"
-            android:label="@string/shokkimenu"/>
+            android:label="@string/shokkimenu" />
         <activity
             android:name=".sonotamenuActivity"
-            android:label="@string/sonotamenu"/>
+            android:label="@string/sonotamenu" />
+        <activity
+            android:name=".sumActivity"
+            android:label="@string/summoney" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
-        <activity android:name=".sumActivity"
-            android:label="@string/summoney"/>
+        <activity
+            android:name=".GoogleMapActivity"
+            android:label="@string/title_activity_google_map"></activity>
     </application>
 
 </manifest>

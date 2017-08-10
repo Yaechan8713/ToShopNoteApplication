@@ -268,4 +268,5 @@
         <item>物語本</item>
         <item>漫画</item>
     </string-array>
+    <string name="title_activity_google_map">Map</string>
 </resources>
