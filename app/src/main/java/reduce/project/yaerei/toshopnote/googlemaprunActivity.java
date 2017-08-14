@@ -18,15 +18,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.util.Log;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationSettingsRequest;
 
 /**
  * Created by yaerei on 2017/08/10.
  */
 
-public class googlemaprunActivity extends AppCompatActivity implements LocationListener {
+public class googlemaprunActivity extends AppCompatActivity{
 
-    private LocationManager locationManager;
-    int t;
+    //Fused Location Provider API
+    private FusedLocationProviderClient fusedLocationProViderClient;
+
+    //Location Settings APIS
+    private SettingsClient settingsClient;
+    private LocationSettingsRequest locationSettingsRequest;
+    private LocationCallback locationCallback;
+    private LocationRequest locationRequest;
+    private Location location;
+
+    private String lastUpdateTime;
+    private Boolean requestLocationUpdates;
+    private static final int REQUEST_CHECK_STTINGS = 0x1;
+    private int priority = 0;
+    TextView textView;
+    String textLog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
