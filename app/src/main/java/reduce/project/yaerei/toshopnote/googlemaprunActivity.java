@@ -1,15 +1,20 @@
 package reduce.project.yaerei.toshopnote;
 
 
+import android.*;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -21,13 +26,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.util.Log;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationAvailability;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.Date;
 
@@ -38,7 +52,7 @@ import java.util.Date;
 public class googlemaprunActivity extends AppCompatActivity {
 
     //Fused Location Provider API
-    private FusedLocationProviderClient fusedLocationProViderClient;
+    private FusedLocationProviderClient fusedLocationClient;
 
     //Location Settings APIS
     private SettingsClient settingsClient;
@@ -48,7 +62,7 @@ public class googlemaprunActivity extends AppCompatActivity {
     private Location location;
 
     private String lastUpdateTime;
-    private Boolean requestLocationUpdates;
+    private Boolean requestingLocationUpdates;
     private static final int REQUEST_CHECK_STTINGS = 0x1;
     private int priority = 0;
     TextView textView;
@@ -60,7 +74,7 @@ public class googlemaprunActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_googlemap_main);
 
-        fusedLocationProViderClient = LocationServices.getFusedLocationProviderClient(this);
+        FusedLocationProviderClient fusedLocationProViderClient = LocationServices.getFusedLocationProviderClient(this);
         settingsClient = LocationServices.getSettingsClient(this);
 
         createLocaClb();
@@ -145,16 +159,110 @@ public class googlemaprunActivity extends AppCompatActivity {
 //            受け身的な位置情報取得アプリが自ら測位せず、他のアプリで得られた位置情報は入手できる
             locationRequest.setPriority(LocationRequest.PRIORITY_NO_POWER);
         }
-        //
-        //
-        //
-        //
+        //アップで都のインターバル期間設定
+        //このインターバルは測位データがない場合はアップデートしない
+        //状況によってはこの時間より長くこともある
+        //他に同様のアプリが短いインターバルでアップデートされているとそれに影響されて短くなることもある
+        //単位：msec
         locationRequest.setInterval(60000);
-        //
-        //
+        //このインターバル時間は正確。これより早いアップデートはしない
+        //単位：msec
         locationRequest.setFastestInterval(5000);
+    }
 
+    private void buidLSR(){
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(locationRequest);
+        locationSettingsRequest = builder.build();
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode,int resultCode,Intent datta) {
+        switch (requestCode) {
+            case REQUEST_CHECK_STTINGS:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        Log.d("debug", "User agreed to make required location settings changes.");
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        Log.i("debug", "User chose not to make required location  settings changes");
+                        requestingLocationUpdates = false;
+                        break;
+                }
+                break;
+        }
+    }
+
+    private void startLU(){
+        settingsClient.checkLocationSettings(locationSettingsRequest).addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
+            @Override
+            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                Log.i("debug", "All location settings are satisfied");
+
+//                パーミッションの確認
+                if (ActivityCompat.checkSelfPermission(googlemaprunActivity.this,
+                        android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(googlemaprunActivity.this,
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                    return;
+                }
+
+                fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+            }
+        }).addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                int statusCode = ((ApiException)e).getStatusCode();
+//                LocationSettingsStatusCodes locationsettingsCode;
+                switch (statusCode){
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        Log.i("dubug","Location settings are not satisfied Attempting to upgrade" + "location settings");
+
+                        try{
+                            ResolvableApiException rae = (ResolvableApiException) e;
+                            rae.startResolutionForResult(googlemaprunActivity.this,REQUEST_CHECK_STTINGS);
+                        } catch (IntentSender.SendIntentException sie) {
+                            Log.i("debug","PendingIntent unable execute request.");
+                        }
+                        break;
+
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        String error = "Location settings are inadequate, and can't be" + " fixed here.Fix in Settings.";
+                        Log.e("debug",error);
+                        Toast.makeText(googlemaprunActivity.this, error,Toast.LENGTH_LONG).show();
+                        requestingLocationUpdates = false;
+
+                }
+            }
+        });
+
+        requestingLocationUpdates = true;
+    }
+
+    private void stopLU(){
+        textLog += "onStop()\n";
+        textView.setText(textLog);
+
+        if(!requestingLocationUpdates){
+            Log.d("debug","stopLocationUpdates: updates never requested, no-op.");
+
+            return;
+        }
+
+        fusedLocationClient.removeLocationUpdates(locationCallback).addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                requestingLocationUpdates = false;
+            }
+        });
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+//        バッテリー消費を鑑みLocation requestを止める
+        stopLU();
     }
 }
 
