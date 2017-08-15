@@ -14,19 +14,28 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.util.Log;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.SettingsClient;
+
+import java.util.Date;
 
 /**
  * Created by yaerei on 2017/08/10.
  */
 
-public class googlemaprunActivity extends AppCompatActivity{
+public class googlemaprunActivity extends AppCompatActivity {
 
     //Fused Location Provider API
     private FusedLocationProviderClient fusedLocationProViderClient;
@@ -51,113 +60,103 @@ public class googlemaprunActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_googlemap_main);
 
-        if(ContextCompat.checkSelfPermission(this,permission,ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,},REQUEST_PERMISSION);
+        fusedLocationProViderClient = LocationServices.getFusedLocationProviderClient(this);
+        settingsClient = LocationServices.getSettingsClient(this);
 
-        }else{
-            locationStart();
-        }
+        createLocaClb();
+        createLR();
+        buidLSR();
+
+        textView = (TextView) findViewById(R.id.textView1);
+        textLog = "onCreate()\n";
+        textView.setText(textLog);
+
+        //測位開始
+        Button buttonStart = (Button) findViewById(R.id.buttonstart);
+        buttonStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startLU();
+            }
+        });
+
+        //測位終了
+        Button buttonstop = (Button) findViewById(R.id.buttonstop);
+        buttonstop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopLU();
+            }
+        });
     }
 
-    private void locationStart(){
-        Log.d("debug","locationStart()");
+    //locationのコールバックを受け取る
 
-//        LocationManager　インスタンス作成
-        locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+    private void createLocaClb() {
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                location = locationResult.getLastLocation();
+                lastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+                updateLocationUI();
+            }
+        };
+    }
 
-        final boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    private void updateLocationUI() {
+        //getLastLocation()からの情報がある場合のみ
+         if (location != null) {
+             textLog += "----------UpdateLocation----------\n";
+             textLog += "Latitude" + String.valueOf(location.getLatitude()) + "\n";
+             textLog += "Latitude=" + String.valueOf(location.getLongitude()) + "\n";
+             textLog += "Accuracy=" + String.valueOf(location.getAccuracy()) + "\n";
+             textLog += "Altitude=" + String.valueOf(location.getAltitude()) + "\n";
+             textLog += "Speed=" + String.valueOf(location.getSpeed()) + "\n";
+             textLog += "Bearing" + String.valueOf(location.getBearing()) + "\n";
+             textLog += "Time=" + String.valueOf(lastUpdateTime) + "\n";
 
-        if(!gpsEnabled){
-//        GPSを設定するようにする。
-            Intent settingIntent = new Intent(Settings,ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(settingIntent);
-            Log.d("debug","not gpsEnable,startActivity");
+             textView.setText(textLog);
+         }
+    }
+
+
+
+
+    private void createLR() {
+        locationRequest = new LocationRequest();
+
+        priority = 0;
+
+        if(priority == 0){
+//            高い精度の位置情報を取得したい場合
+//            インターバルを例えば5000msecに設定すればマップアプリの様なリアルタイム測位となる
+//            主に精度重視の為、GPSが優先的に使われる
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        }else if(priority == 1){
+//            バッテリー消費を抑えたい場合、精度は100m悪くなる
+//            主にwifi、電話網での位置情報が主となる
+//            この設定の例としては、setInterval(1時間).setFastestInterval(1分)
+            locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        }else if(priority == 2){
+//            バッテリー消費を抑えたい場合、精度は10km悪くなる
+            locationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
         }else{
-            Log.d("debug","gpsEnabled");
+//            受け身的な位置情報取得アプリが自ら測位せず、他のアプリで得られた位置情報は入手できる
+            locationRequest.setPriority(LocationRequest.PRIORITY_NO_POWER);
         }
-
-        if(ContextCompat.checkSelfPermission(this,permission,ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,},REQUEST_PERMISSION);
-
-            Log.d("debug","checkSelfPermission false");
-            return;
-        }
-
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,50,this);
-
-//        結果の受け取り
-        @Override
-        public void onRequestPermissionResult(int requestCode, String[] permissions,int[] grantResults){
-            if(requestCode == 1000){
-//                使用が許可された
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    Log.d("debug","checkSelfPermission true");
-
-                    locationStart();
-                    return;
-                }else {
-//                    それでも拒否された時の対応
-                    new AlertDialog.Builder(googlemaprunActivity.this)
-                            .setTitle("")
-                            .setMessage("これ以上なにもできません")
-                            .setPositiveButton(
-                                    R.string.ok,
-
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            t++;
-                                        }
-                                    }
-                            ).show();
-
-                }
-            }
-        }
-
-        @Override
-        public void onStatusChanged(String provider,int status, Bundle extras){
-            switch (status){
-                case LocationProvider.AVAILABLE:
-                    Log.d("debug","LocationProvider.AVILABLE");
-                    break;
-
-                case LocationProvider.OUT_OF_SERVICE:
-                    Log.d("debug","LocationProvider.OUT_OF_SERVICE");
-                    break;
-
-                case LocationProvider.TEMPORARILY_UNAVAILABLE:
-                    Log.d("debug","LocationProvider.TEMPORARILY_UNAVAILABLE");
-                    break;
-            }
-        }
-
-        @Override
-        public void onLocationChanged(Location location){
-            TextView location1textView,location2textView;
-
-            //緯度の表示
-            location1textView = (TextView)findViewById(R.id.location1textView);
-            location1textView.setText("Latitude" + location.getLaitude());
-
-            //経度の表示
-            location2textView = (TextView)findViewById(R.id.loccation2textView);
-            location2textView.setText("Latitude" + location.getLongitude());
-        }
+        //
+        //
+        //
+        //
+        locationRequest.setInterval(60000);
+        //
+        //
+        locationRequest.setFastestInterval(5000);
 
 
-        @Override
-        public void onProviderEnabled(String provider){
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider){
-
-        }
     }
 }
+
 
 
