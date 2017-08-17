@@ -112,7 +112,7 @@ public class googlemaprunActivity extends AppCompatActivity {
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
                 location = locationResult.getLastLocation();
-                lastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+//                lastUpdateTime = DateFormat.getTimeInstance().format(new Date());
                 updateLocationUI();
             }
         };

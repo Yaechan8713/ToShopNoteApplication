@@ -193,6 +193,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    public void googlemapintent(View v){
+        intent = new Intent(this,googlemap2Activity.class);
+        startActivity(intent);
+    }
 
 
     public void sonotaonclick(View v){
