@@ -23,26 +23,24 @@ public class TextsumDialogFragment extends DialogFragment {
 
     EditText sumedittext;
 
-    int goukei,money,t,firstj,deletelist;
+    int num1,num2,num3,num4,t;
+
+    SharedPreferences pre;
+    SharedPreferences.Editor editor;
 
         @Override
         public Dialog onCreateDialog(Bundle sumsaverInterfaceState){
 
 
 
-            deletelist = goukei = money = firstj = t =0;
+
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
             LayoutInflater inf = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View contentview = inf.inflate(R.layout.sumdialog_setting, null);
 
-
-            SharedPreferences goukeinum = getActivity().getSharedPreferences("goukei", Context.MODE_PRIVATE);
-            goukei = goukeinum.getInt("goukei", 0);
-
-            SharedPreferences firstjnum = getActivity().getSharedPreferences("first",Context.MODE_PRIVATE);
-            firstj = firstjnum.getInt("first",0);
+            num1 = num2 = num3= num4 = 0;
 
             sumedittext = (EditText)contentview.findViewById(R.id.sumedittext);
 
@@ -54,19 +52,22 @@ public class TextsumDialogFragment extends DialogFragment {
                         public void onClick(DialogInterface dialog, int which) {
                             //okボタンを押した後の処理
 
-                                if (TextUtils.isEmpty(sumedittext.getText())) {
-                                    firstj = 1;
-                                    SharedPreferences firstjinputnum = getActivity().getSharedPreferences("first",Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = firstjinputnum.edit();
-                                    editor.putInt("first",firstj);
-                                    editor.commit();
-                                    money = Integer.valueOf(sumedittext.getText().toString());
-                                    fragmentdialogruncode();
-                                }
-
-                            fragmentdialogruncode();
-
-                            deletelist = 1;
+                            pre = getActivity().getSharedPreferences("inputnum1",Context.MODE_PRIVATE);
+                            editor = pre.edit();
+                            editor.putInt("inputnum1",num1);
+                            editor.commit();
+                            pre = getActivity().getSharedPreferences("inputnum2",Context.MODE_PRIVATE);
+                            editor = pre.edit();
+                            editor.putInt("inputnum2",num2);
+                            editor.commit();
+                            pre = getActivity().getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
+                            editor = pre.edit();
+                            editor.putInt("inputnum3",num3);
+                            editor.commit();
+                            pre = getActivity().getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
+                            editor = pre.edit();
+                            editor.putInt("inputnum3",num3);
+                            editor.commit();
 
                         }
                     })
@@ -74,14 +75,11 @@ public class TextsumDialogFragment extends DialogFragment {
                     .setNegativeButton(R.string.chancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            num1 = num2 = num3= num4 = 0;
                             t++;
                         }
                     });
 
-            SharedPreferences prelist = getActivity().getSharedPreferences("resetlist",Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = prelist.edit();
-            editor.putInt("resetlist",deletelist);
-            editor.commit();
 
             return  builder.create();
         }
@@ -92,17 +90,6 @@ public class TextsumDialogFragment extends DialogFragment {
 //        super.onAttach(activity);
 //        this.activity = activity;
 //    }
-
-    public void fragmentdialogruncode(){
-
-
-
-        //合計金額保存
-
-        Intent intent = new Intent(getActivity(),sumActivity.class);
-        intent.putExtra("sum",money);
-        startActivity(intent);
-    }
 
 }
 
