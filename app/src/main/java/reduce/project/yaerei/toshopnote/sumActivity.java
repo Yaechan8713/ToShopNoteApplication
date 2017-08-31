@@ -148,6 +148,8 @@ public class sumActivity extends AppCompatActivity {
 
     public void daterun(){
 
+        oldyear = oldmonth = oldday = 0;
+
         oldyear = pref.getInt("year", 0);
 
         oldmonth = pref.getInt("month", 0);
@@ -173,9 +175,8 @@ public class sumActivity extends AppCompatActivity {
 
         hyoujiandclock();
 
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putInt("goukeisum",oldsum);
-        editor.commit();
+
+        input();
     }
 
     public void reset(){
@@ -187,6 +188,10 @@ public class sumActivity extends AppCompatActivity {
         hyoujiandclock();
 
 
+        input();
+    }
+
+    public void input(){
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt("goukeisum",oldsum);
         editor.commit();

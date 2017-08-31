@@ -59,6 +59,11 @@ public class menusoftActivity extends AppCompatActivity {
 
         deletint = t = spint = softsum = onclickint = 0;
 
+        softpre = getSharedPreferences("softsum",Context.MODE_PRIVATE);
+        softsum = softpre.getInt("softsum",0);
+
+        hyouji();
+
         spint = spinner.getSelectedItemPosition();
         spinstr = (String)spinner.getSelectedItem();
 
@@ -399,14 +404,17 @@ public class menusoftActivity extends AppCompatActivity {
     }
 
     public void goukeiintent(){
+        int softsum1;
 
-        softsum = Integer.valueOf(softsumeditText.getText().toString());
+        softsum1 = Integer.valueOf(softsumeditText.getText().toString());
 
         if(softsumeditText.getText().toString().equals("")){
-            softsum = 0;
+            softsum1 = 0;
 
             return;
         }
+
+        softsum = softsum + softsum1;
 
         softsumeditText.setText("");
 
@@ -415,10 +423,28 @@ public class menusoftActivity extends AppCompatActivity {
         softeditor.putInt("softsum",softsum);
         softeditor.commit();
 
-        softsumtextView.setText("合計金額は" + softsum + "円です。");
+        hyouji();
         intent = new Intent(this,sumActivity.class);
         intent.putExtra("sum",softsum);
         startActivity(intent);
+    }
+
+    public void hyouji(){
+
+        String texthyouji;
+
+        if (softsum <= 999999999) {
+            texthyouji = "合計金額は" + softsum + "円です。";
+        } else if (softsum < 0) {
+            softsum = 0;
+            texthyouji = "エラーです。";
+        } else {
+            softsum = 0;
+            texthyouji = "エラーです。合計金額が大き過ぎです。";
+        }
+
+        softsumtextView.setText(texthyouji);
+
     }
 
     public void intentbutton(View v){

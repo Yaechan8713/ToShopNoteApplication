@@ -57,6 +57,11 @@ public class shokkimenuActivity extends AppCompatActivity {
 
         deletint = t = spint = onclickint = shokkisum = 0;
 
+        shokkipre = getSharedPreferences("shokkisum",Context.MODE_PRIVATE);
+        shokkisum = shokkipre.getInt("shokkisum",0);
+
+        hyouji();
+
         spint = spinner.getSelectedItemPosition();
         spinstr = (String)spinner.getSelectedItem();
 
@@ -399,13 +404,17 @@ public class shokkimenuActivity extends AppCompatActivity {
     }
 
     public void goukeiintent(){
-        shokkisum = Integer.valueOf(shokkisumedittext.getText().toString());
+        int shokkisum1;
+
+        shokkisum1 = Integer.valueOf(shokkisumedittext.getText().toString());
 
         if(shokkisumedittext.getText().toString().equals("")){
-            shokkisum = 0;
+            shokkisum1 = 0;
 
             return;
         }
+
+        shokkisum = shokkisum + shokkisum1;
 
         shokkisumedittext.setText("");
 
@@ -414,11 +423,30 @@ public class shokkimenuActivity extends AppCompatActivity {
         shokkieditor.putInt("shokkisum",shokkisum);
         shokkieditor.commit();
 
-        shokkitextView.setText("合計金額は" + shokkisum + "円です。");
+        hyouji();
 
         intent = new Intent(this,sumActivity.class);
         intent.putExtra("sum",shokkisum);
         startActivity(intent);
+    }
+
+    public void hyouji(){
+
+        String texthyouji;
+
+        if (shokkisum <= 999999999) {
+            texthyouji = "合計金額は" + shokkisum + "円です。";
+        } else if (shokkisum < 0) {
+            shokkisum = 0;
+            texthyouji = "エラーです。";
+        } else {
+            shokkisum = 0;
+            texthyouji = "エラーです。合計金額が大き過ぎです。";
+        }
+
+        shokkitextView.setText(texthyouji);
+
+
     }
 
     public void intentbutton(View v){

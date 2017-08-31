@@ -58,6 +58,11 @@ public class sonotamenuActivity extends AppCompatActivity {
 
         deletint = t = spint = onclickint = sonotasum = 0;
 
+        sonotapre = getSharedPreferences("sonotasum",Context.MODE_PRIVATE);
+        sonotasum = sonotapre.getInt("sonotasum",0);
+
+        hyouji();
+
         spint = spinner.getSelectedItemPosition();
         spinstr = (String)spinner.getSelectedItem();
 
@@ -397,14 +402,17 @@ public class sonotamenuActivity extends AppCompatActivity {
     }
 
     public void goukeiintent(){
+        int sonotasum1;
 
-        sonotasum = Integer.valueOf(sonotaedittext.getText().toString());
+        sonotasum1 = Integer.valueOf(sonotaedittext.getText().toString());
 
         if(sonotaedittext.getText().toString().equals("")){
-            sonotasum = 0;
+            sonotasum1 = 0;
 
             return;
         }
+
+        sonotasum = sonotasum + sonotasum1;
 
         sonotaedittext.setText("");
 
@@ -413,11 +421,29 @@ public class sonotamenuActivity extends AppCompatActivity {
         sonotaeditor.putInt("sonotasum",sonotasum);
         sonotaeditor.commit();
 
-        sonotatextView.setText("合計金額は" + sonotasum + "円です。");
+        hyouji();
 
         intent = new Intent(this,sumActivity.class);
         intent.putExtra("sum",sonotasum);
         startActivity(intent);
+    }
+
+    public void hyouji(){
+
+        String texthyouji;
+
+        if (sonotasum <= 999999999) {
+            texthyouji = "合計金額は" + sonotasum + "円です。";
+        } else if (sonotasum < 0) {
+            sonotasum = 0;
+            texthyouji = "エラーです。";
+        } else {
+            sonotasum = 0;
+            texthyouji = "エラーです。合計金額が大き過ぎです。";
+        }
+
+        sonotatextView.setText(texthyouji);
+
     }
 
     public void intentbutton(View v){

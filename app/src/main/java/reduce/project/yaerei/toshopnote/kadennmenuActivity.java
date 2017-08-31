@@ -59,6 +59,11 @@ public class kadennmenuActivity extends AppCompatActivity {
 
         deletint = t = spint = onclickint = kadennsum = 0;
 
+        kadennpre = getSharedPreferences("kadennsum",Context.MODE_PRIVATE);
+        kadennsum = kadennpre.getInt("kadennsum",0);
+
+        hyouji();
+
         spint = spinner.getSelectedItemPosition();
         spinstr = (String)spinner.getSelectedItem();
 
@@ -400,13 +405,31 @@ public class kadennmenuActivity extends AppCompatActivity {
 
     public void goukeiintent(){
 
-        kadennsum = Integer.valueOf(kadensumedittext.getText().toString());
+        int kadennsum1;
+
+        kadennsum1 = Integer.valueOf(kadensumedittext.getText().toString());
 
         if(kadensumedittext.getText().toString().equals("")){
-            kadennsum = 0;
+            kadennsum1 = 0;
 
             return;
         }
+
+        kadennsum = kadennsum + kadennsum1;
+
+        hyouji();
+
+
+
+        intent = new Intent(this,sumActivity.class);
+        intent.putExtra("sum",kadennsum);
+        startActivity(intent);
+
+        kadennsum = kadennsum1 = 0;
+    }
+
+
+    public void hyouji(){
 
         kadennsumtextView.setText("");
 
@@ -415,11 +438,19 @@ public class kadennmenuActivity extends AppCompatActivity {
         kadenneditor.putInt("kadennsum",kadennsum);
         kadenneditor.commit();
 
-        kadennsumtextView.setText("合計金額は" + kadennsum + "円です。");
+        String texthyouji;
 
-        intent = new Intent(this,sumActivity.class);
-        intent.putExtra("sum",kadennsum);
-        startActivity(intent);
+        if (kadennsum <= 999999999) {
+            texthyouji = "合計金額は" + kadennsum + "円です。";
+        } else if (kadennsum < 0) {
+            kadennsum = 0;
+            texthyouji = "エラーです。";
+        } else {
+            kadennsum = 0;
+            texthyouji = "エラーです。合計金額が大き過ぎです。";
+        }
+
+        kadennsumtextView.setText(texthyouji);
     }
 
     public void intentbutton(View v){

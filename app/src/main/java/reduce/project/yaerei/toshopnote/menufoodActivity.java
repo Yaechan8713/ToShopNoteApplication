@@ -56,6 +56,11 @@ public class menufoodActivity extends AppCompatActivity {
 
         deletint = t = spint = onclickint = 0;
 
+        foodpre = getSharedPreferences("foodsum",Context.MODE_PRIVATE);
+        foodsum = foodpre.getInt("foodsum",0);
+
+        hyouji();
+
         spint = spinner.getSelectedItemPosition();
         spinstr = (String)spinner.getSelectedItem();
 
@@ -410,11 +415,28 @@ public class menufoodActivity extends AppCompatActivity {
         foodeditor.putInt("foodsum",foodsum);
         foodeditor.commit();
 
-        foodsumtextView.setText("合計金額は" + foodsum + "円です。");
+        hyouji();
 
         intent = new Intent(this,sumActivity.class);
         intent.putExtra("sum",foodsum);
         startActivity(intent);
+    }
+
+    public void hyouji(){
+        String texthyouji;
+
+        if (foodsum <= 999999999) {
+            texthyouji = "合計金額は" + foodsum + "円です。";
+        } else if (foodsum < 0) {
+            foodsum = 0;
+            texthyouji = "エラーです。";
+        } else {
+            foodsum = 0;
+            texthyouji = "エラーです。合計金額が大き過ぎです。";
+        }
+
+        foodsumtextView.setText(texthyouji);
+
     }
 
     public void intentbutton(View v){

@@ -55,11 +55,15 @@ public class iruimenuActivity extends AppCompatActivity {
         iruisumtextView = (TextView)findViewById(R.id.iruisumtextView);
 
         firststring();
+        deletint = t = spint = onclickint = iruisum = 0;
+
 
         iruipre = getSharedPreferences("iruisum",Context.MODE_PRIVATE);
         iruisum = iruipre.getInt("iruisum",0);
 
-        deletint = t = spint = onclickint = iruisum = 0;
+        hyouji();
+
+
 
         spint = spinner.getSelectedItemPosition();
         spinstr = (String)spinner.getSelectedItem();
@@ -401,16 +405,21 @@ public class iruimenuActivity extends AppCompatActivity {
 
     public void goukeiintent(){
 
-        iruisum = Integer.valueOf(iruisumedittext.getText().toString());
+        int iruisum1;
+
+        iruisum1 = Integer.valueOf(iruisumedittext.getText().toString());
 
         if(iruisumedittext.getText().toString().equals("")){
-            iruisum = 0;
+            iruisum1 = 0;
 
             return;
         }
 
+        iruisum = iruisum + iruisum1;
+
         iruisumedittext.setText("");
-        iruisumtextView.setText("合計金額は" + iruisum + "円です。");
+
+        hyouji();
 
         iruipre = getSharedPreferences("iruisum", Context.MODE_PRIVATE);
         iruieditor = iruipre.edit();
@@ -420,6 +429,20 @@ public class iruimenuActivity extends AppCompatActivity {
         intent = new Intent(this,sumActivity.class);
         intent.putExtra("sum",iruisum);
         startActivity(intent);
+
+        iruisum = iruisum1 = 0;
+    }
+
+    public void hyouji(){
+        if (iruisum <= 999999999) {
+            iruisumtextView.setText("合計金額は" + iruisum + "円です。");
+        } else if (iruisum < 0) {
+            iruisum = 0;
+            iruisumtextView.setText("エラーです。");
+        } else {
+            iruisum = 0;
+            iruisumtextView.setText("エラーです。合計金額が大き過ぎです。");
+        }
     }
 
     public void intentbutton(View v){

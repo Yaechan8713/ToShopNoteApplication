@@ -477,9 +477,15 @@ public class bookmenuActivity extends AppCompatActivity {
         preoldsumeditor.putInt("oldbooksum", money);
         preoldsumeditor.commit();
 
-
-        bookmoneytextView.setText("合計金額は" + money + "円です。");
-
+        if (oldsum <= 999999999) {
+            bookmoneytextView.setText("合計金額は" + oldsum + "円です。");
+        } else if (oldsum < 0) {
+            oldsum = 0;
+            bookmoneytextView.setText("エラーです。");
+        } else {
+            oldsum = 0;
+            bookmoneytextView.setText("エラーです。合計金額が大き過ぎです。");
+        }
         intent = new Intent(this,sumActivity.class);
         intent.putExtra("sum",money);
         startActivity(intent);

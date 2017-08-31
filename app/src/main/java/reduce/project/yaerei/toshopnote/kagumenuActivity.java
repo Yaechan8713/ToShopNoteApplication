@@ -60,6 +60,12 @@ public class kagumenuActivity extends AppCompatActivity {
 
         deletint = t = spint = onclickint = 0;
 
+        kagupre = getSharedPreferences("kagusum",Context.MODE_PRIVATE);
+        kagusum = kagupre.getInt("kagusum",0);
+
+        hyouji();
+
+
         spint = spinner.getSelectedItemPosition();
         spinstr = (String)spinner.getSelectedItem();
 
@@ -401,13 +407,17 @@ public class kagumenuActivity extends AppCompatActivity {
     }
 
     public void goukeiintent(){
-        kagusum = Integer.valueOf(kagusumedittext.getText().toString());
+        int kagusum1;
+
+        kagusum1 = Integer.valueOf(kagusumedittext.getText().toString());
 
         if(kagusumedittext.getText().toString().equals("")){
-            kagusum = 0;
+            kagusum1 = 0;
 
             return;
         }
+
+        kagusum = kagusum + kagusum1;
 
         kagusumtextView.setText("");
 
@@ -416,11 +426,32 @@ public class kagumenuActivity extends AppCompatActivity {
         kagueditor.putInt("kagusum",kagusum);
         kagueditor.commit();
 
-        kagusumtextView.setText("合計金額は" + kagusum + "円です。");
+        hyouji();
 
         intent = new Intent(this,sumActivity.class);
         intent.putExtra("sum",kagusum);
         startActivity(intent);
+
+        kagusum1 = kagusum = 0;
+    }
+
+    public void hyouji(){
+
+
+        String texthyouji;
+
+        if (kagusum <= 999999999) {
+            texthyouji = "合計金額は" + kagusum + "円です。";
+        } else if (kagusum < 0) {
+            kagusum = 0;
+            texthyouji = "エラーです。";
+        } else {
+            kagusum = 0;
+            texthyouji = "エラーです。合計金額が大き過ぎです。";
+        }
+
+        kagusumtextView.setText(texthyouji);
+
     }
 
     public void intentbutton(View v){

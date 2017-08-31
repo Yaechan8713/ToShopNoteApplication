@@ -59,6 +59,11 @@ public class menubunboguActivity extends AppCompatActivity {
 
         deletint = t = spint = onclickint = 0;
 
+        bunbogupre = getSharedPreferences("bunnbogusum",Context.MODE_PRIVATE);
+        bunbogusum = bunbogupre.getInt("bunnbogusum",0);
+
+        hyouji();
+
         spint = spinner.getSelectedItemPosition();
         spinstr = (String)spinner.getSelectedItem();
 
@@ -399,26 +404,48 @@ public class menubunboguActivity extends AppCompatActivity {
     }
 
     public void goukeiintent(){
-        bunbogusum = Integer.valueOf(bunbogusumedittext.getText().toString());
+
+        int bunbogusum1;
+
+        bunbogusum1 = Integer.valueOf(bunbogusumedittext.getText().toString());
 
         if(bunbogusumedittext.getText().toString().equals("")){
-            bunbogusum = 0;
+            bunbogusum1 = 0;
 
             return;
         }
 
-        bunbogusumedittext.setText("");
+        bunbogusum = bunbogusum + bunbogusum1;
+
+        hyouji();
 
         bunbogupre = getSharedPreferences("bunnbogusum", Context.MODE_PRIVATE);
         bunbogueditor = bunbogupre.edit();
         bunbogueditor.putInt("bunnbogusum",bunbogusum);
         bunbogueditor.commit();
 
-        bunbogusumtextView.setText("合計金額は" + bunbogusum + "円です。");
-
         intent = new Intent(this,sumActivity.class);
         intent.putExtra("sum",bunbogusum);
         startActivity(intent);
+    }
+
+    public void hyouji(){
+
+
+        String texthyouji;
+
+        if (bunbogusum <= 999999999) {
+            texthyouji = "合計金額は" + bunbogusum + "円です。";
+        } else if (bunbogusum < 0) {
+            bunbogusum = 0;
+            texthyouji = "エラーです。";
+        } else {
+            bunbogusum = 0;
+            texthyouji = "エラーです。合計金額が大き過ぎです。";
+        }
+
+        bunbogusumedittext.setText(texthyouji);
+
     }
 
     public void intentbutton(View v){
