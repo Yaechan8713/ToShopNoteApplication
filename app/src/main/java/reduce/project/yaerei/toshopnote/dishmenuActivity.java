@@ -58,10 +58,21 @@ public class dishmenuActivity extends AppCompatActivity {
 
         deletint = t = spint = onclickint = dishsum = 0;
 
+        pre = getSharedPreferences("olddishsum",Context.MODE_PRIVATE);
+        dishsum = pre.getInt("olddishsum",0);
+
+        if (dishsum <= 999999999) {
+            dishsumtextView.setText("合計金額は" + dishsum + "円です。");
+        } else if (dishsum < 0) {
+            dishsum = 0;
+            dishsumtextView.setText("エラーです。");
+        } else {
+            dishsum = 0;
+            dishsumtextView.setText("エラーです。合計金額が大き過ぎです。");
+        }
+
         spint = spinner.getSelectedItemPosition();
         spinstr = (String)spinner.getSelectedItem();
-
-
 
         listiew.setAdapter(adapter);
 
@@ -402,12 +413,18 @@ public class dishmenuActivity extends AppCompatActivity {
 
 
     public void goukeiintent(){
-        dishsum = Integer.valueOf(sumedittext.getText().toString());
+        int dishsum1;
+
+        dishsum1 = Integer.valueOf(sumedittext.getText().toString());
 
         if(sumedittext.getText().toString().equals("")){
-            dishsum = 0;
+            dishsum1 = 0;
             return;
         }
+
+        dishsum = dishsum + dishsum1;
+
+
 
         sumedittext.setText("");
 
@@ -423,7 +440,7 @@ public class dishmenuActivity extends AppCompatActivity {
         startActivity(intent);
 
 
-
+        dishsum1 = dishsum = 0;
 
 
     }

@@ -58,6 +58,9 @@ public class gorakumenuActivity extends AppCompatActivity {
 
         deletint = t = spint = onclickint = gorakusum = 0;
 
+        gorakupre = getSharedPreferences("gorakusum",Context.MODE_PRIVATE);
+
+
         spint = spinner.getSelectedItemPosition();
         spinstr = (String)spinner.getSelectedItem();
 
@@ -397,13 +400,17 @@ public class gorakumenuActivity extends AppCompatActivity {
     }
 
     public void goukeiintent(){
-        gorakusum = Integer.valueOf(sumedittextgoraku.getText().toString());
+        int gorakuintentsum;
+
+        gorakuintentsum = Integer.valueOf(sumedittextgoraku.getText().toString());
 
         if(sumedittextgoraku.getText().toString().equals("")){
-            gorakusum = 0;
+            gorakuintentsum = 0;
 
             return;
         }
+
+        gorakusum = gorakusum + gorakuintentsum;
 
         sumedittextgoraku.setText("");
         gorakupre = getSharedPreferences("gorakusum", Context.MODE_PRIVATE);
@@ -416,6 +423,8 @@ public class gorakumenuActivity extends AppCompatActivity {
         intent = new Intent(this,sumActivity.class);
         intent.putExtra("sum",gorakusum);
         startActivity(intent);
+
+        gorakuintentsum = gorakusum = 0;
     }
 
     public void intentbutton(View v){

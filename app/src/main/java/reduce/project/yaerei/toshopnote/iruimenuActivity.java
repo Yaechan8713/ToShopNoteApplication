@@ -56,6 +56,9 @@ public class iruimenuActivity extends AppCompatActivity {
 
         firststring();
 
+        iruipre = getSharedPreferences("iruisum",Context.MODE_PRIVATE);
+        iruisum = iruipre.getInt("iruisum",0);
+
         deletint = t = spint = onclickint = iruisum = 0;
 
         spint = spinner.getSelectedItemPosition();

@@ -61,10 +61,20 @@ public class bookmenuActivity extends AppCompatActivity {
 
         firststring();
 
-        SharedPreferences moneyhyouji = getSharedPreferences("money", Context.MODE_PRIVATE);
+        SharedPreferences moneyhyouji = getSharedPreferences("oldbooksum", Context.MODE_PRIVATE);
         money = moneyhyouji.getInt("oldbooksum", 0);
 
-        oldsumhyoji();
+        oldsum = money;
+
+        if (oldsum <= 999999999) {
+            bookmoneytextView.setText("合計金額は" + oldsum + "円です。");
+        } else if (oldsum < 0) {
+            oldsum = 0;
+            bookmoneytextView.setText("エラーです。");
+        } else {
+            oldsum = 0;
+            bookmoneytextView.setText("エラーです。合計金額が大き過ぎです。");
+        }
 
         SharedPreferences preoldsum = getSharedPreferences("oldbooksum", Context.MODE_PRIVATE);
         SharedPreferences.Editor preoldsumeditor = preoldsum.edit();
@@ -200,23 +210,11 @@ public class bookmenuActivity extends AppCompatActivity {
         item.delete();
     }
 
-    public void oldsumhyoji() {
-        Intent intent = getIntent();
-        oldsum = intent.getIntExtra("sum", 0);
-
-        oldsum = oldsum + money;
-
-        if (oldsum <= 999999999) {
-            bookmoneytextView.setText("合計金額は" + oldsum + "円です。");
-        } else if (oldsum < 0) {
-            oldsum = 0;
-            bookmoneytextView.setText("エラーです。");
-        } else {
-            oldsum = 0;
-            bookmoneytextView.setText("エラーです。合計金額が大き過ぎです。");
-        }
-
-    }
+//    public void oldsumhyoji() {
+//        Intent intent = getIntent();
+//        oldsum = intent.getIntExtra("sum", 0);
+//
+//    }
 
     public void newint(String booknew) {
         bookItem item = new bookItem();
@@ -463,12 +461,13 @@ public class bookmenuActivity extends AppCompatActivity {
 
 
     public void goukeiintent() {
+        int integer;
 
-        money = Integer.valueOf(sumedittext.getText().toString());
+        integer = Integer.valueOf(sumedittext.getText().toString());
 
         if(sumedittext.getText().toString().equals("")){
             //sumedittextにデータが入ってなかった場合
-            money = 0;
+            integer = 0;
             return;
         }
 
@@ -485,6 +484,8 @@ public class bookmenuActivity extends AppCompatActivity {
         intent.putExtra("sum",money);
         startActivity(intent);
 
+
+        money = integer = 0;
     }
 
     public void intentbutton(View v) {
