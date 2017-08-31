@@ -37,10 +37,9 @@
             android:text="ジャンルを選択してください。"
             android:textSize="25dp"/>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -80,14 +79,6 @@
                     android:text="@string/kadennmenu"
                     android:layout_weight="1" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
-
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -116,37 +107,38 @@
                     android:text="@string/gorakumenu"
                     android:onClick="gorakuonclick"/>
 
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:onClick="iruionclick"
+                    android:text="@string/iruimenu"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:onClick="softonclick"
+                    android:text="@string/softmenu"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:onClick="sonotaonclick"
+                    android:text="@string/sonotamenu"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GoogleMap"
+                    android:onClick="googlemapintent"/>
+
             </LinearLayout>
 
-        </LinearLayout>
+        </ScrollView>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:onClick="iruionclick"
-            android:text="@string/iruimenu"
-            android:layout_weight="1" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:onClick="softonclick"
-            android:text="@string/softmenu"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:onClick="sonotaonclick"
-            android:text="@string/sonotamenu"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GoogleMap"
-            android:onClick="googlemapintent"/>
 
 
     </LinearLayout>
