@@ -65,32 +65,24 @@ public class lockfirstActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog,int which){
 
-                                    int num1 = firstnumber1;
-
-                                    int num2 = firstnumber2;
-
-                                    int num3 = firstnumber3;
-
-                                    int num4 = firstnumber4;
-
                                     pre = getSharedPreferences("inputnum1", Context.MODE_PRIVATE);
                                     editor = pre.edit();
-                                    editor.putInt("inputnum1",num1);
+                                    editor.putInt("inputnum1",firstnumber1);
                                     editor.commit();
 
                                     pre = getSharedPreferences("inputnum2",Context.MODE_PRIVATE);
                                     editor = pre.edit();
-                                    editor.putInt("inputnum2",num2);
+                                    editor.putInt("inputnum2",firstnumber2);
                                     editor.commit();
 
                                     pre = getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
                                     editor = pre.edit();
-                                    editor.putInt("inputnum3",num3);
+                                    editor.putInt("inputnum3",firstnumber3);
                                     editor.commit();
 
-                                    pre = getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
+                                    pre = getSharedPreferences("inputnum4",Context.MODE_PRIVATE);
                                     editor = pre.edit();
-                                    editor.putInt("inputnum3",num3);
+                                    editor.putInt("inputnum4",firstnumber4);
                                     editor.commit();
 
                                     int a = 1;
