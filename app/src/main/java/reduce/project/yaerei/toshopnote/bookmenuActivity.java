@@ -108,6 +108,7 @@ public class bookmenuActivity extends AppCompatActivity {
                 if (deletint == 0) {
 
 
+//                    保存したリストをダイアログ表示するための処理
                     new AlertDialog
                             .Builder(bookmenuActivity.this)
                             .setTitle(R.string.monobasho)
@@ -127,6 +128,7 @@ public class bookmenuActivity extends AppCompatActivity {
 
                 } else if (deletint == 1) {
 
+//                    削除したいリストを確認するための
                     new AlertDialog
                             .Builder(bookmenuActivity.this)
                             .setTitle(R.string.delete)
@@ -178,11 +180,12 @@ public class bookmenuActivity extends AppCompatActivity {
             adapter.insert(item.bookname, 0);
         }
 
+//       FoatactionActionボタンを押したときの処理
         FloatingActionButton foatactionbutton = (FloatingActionButton) findViewById(R.id.foatactionbutton);
 
         foatactionbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //このfoatactionbuttonが押された時の処理
+                //このFoatactionActionボタンが押された時の処理
                 input();
             }
         });
@@ -234,21 +237,25 @@ public class bookmenuActivity extends AppCompatActivity {
 
         switch (menu.getItemId()) {
             case R.id.homemenu:
+//                ホームのジャンルのレイアウトを開く
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menufood:
+//                食べ物のジャンルのレイアウトを開く
                 intent = new Intent(this, menufoodActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menubunnbogu:
+//                文房具のジャンルのレイアウトを開く
                 intent = new Intent(this, menubunboguActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menubook:
+//                エラーメッセージの表示
                 new AlertDialog
                         .Builder(bookmenuActivity.this)
                         .setTitle("エラ―")
@@ -268,41 +275,49 @@ public class bookmenuActivity extends AppCompatActivity {
                 return true;
 
             case R.id.menukadenn:
+//                家電のジャンルのレイアウトを開く
                 intent = new Intent(this, kadennmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menuirui:
+//                衣類のジャンルのレイアウトを開く
                 intent = new Intent(this, iruimenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menudish:
+//                洗剤のジャンルのレイアウトを開く
                 intent = new Intent(this, dishmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menukagu:
+//                家具のジャンルのレイアウトを開く
                 intent = new Intent(this, kagumenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menushokki:
+//                食器のジャンルのレイアウトを開く
                 intent = new Intent(this, shokkimenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menugoraku:
+//                娯楽のジャンルのレイアウトを開く
                 intent = new Intent(this, gorakumenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusoft:
+//                ソフトウェアのジャンルのレイアウトを開く
                 intent = new Intent(this, menusoftActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusonota:
+//                その他のジャンルのレイアウトを開く
                 intent = new Intent(this, sonotamenuActivity.class);
                 startActivity(intent);
                 return true;
