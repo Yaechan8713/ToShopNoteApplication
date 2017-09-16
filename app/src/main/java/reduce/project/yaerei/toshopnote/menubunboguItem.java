@@ -12,7 +12,7 @@ public class menubunboguItem extends Model {
     @Column(name = "menubunboguname")
     public String menubunboguname;
 
-    public menubunboguItem(){
+    public menubunboguItem() {
         super();
     }
 }

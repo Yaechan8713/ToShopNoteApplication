@@ -8,12 +8,12 @@ import com.activeandroid.annotation.Table;
  * Created by yaerei on 2017/06/27.
  */
 
-@Table(name="sumItems")
+@Table(name = "sumItems")
 public class sumItem extends Model {
-    @Column(name="sumName")
+    @Column(name = "sumName")
     public String sumname;
 
-    public sumItem(){
+    public sumItem() {
         super();
     }
 

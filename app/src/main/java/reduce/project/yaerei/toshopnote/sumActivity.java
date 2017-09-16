@@ -1,29 +1,22 @@
 package reduce.project.yaerei.toshopnote;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.activeandroid.query.Select;
-import com.activeandroid.util.Log;
 
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,7 +30,7 @@ public class sumActivity extends AppCompatActivity {
     SharedPreferences pref;
     ArrayAdapter<String> adapter;
 
-    int sum,oldsum,t,year,month,day,oldyear,oldmonth,oldday;
+    int sum, oldsum, t, year, month, day, oldyear, oldmonth, oldday;
 
     ListView listView;
 
@@ -51,47 +44,41 @@ public class sumActivity extends AppCompatActivity {
 
 //        Intent intent = new Intent(this,lockActivity.class);
 //        startActivity(intent);
-        pref =getSharedPreferences("shop",Context.MODE_PRIVATE);
+        pref = getSharedPreferences("shop", Context.MODE_PRIVATE);
 
         sum = t = year = month = day = oldyear = oldday = oldmonth = oldsum = 0;
 
-        adapter = new ArrayAdapter(this,android.R.layout.simple_expandable_list_item_1);
+        adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1);
 
-        sumtextView = (TextView)findViewById(R.id.textView);
+        sumtextView = (TextView) findViewById(R.id.textView);
 
-        listView = (ListView)findViewById(R.id.listView);
-
+        listView = (ListView) findViewById(R.id.listView);
 
 
         listView.setAdapter(adapter);
 
 
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final String item = (String)adapter.getItem(position);
-                adapter.insert(item,position);
+                final String item = (String) adapter.getItem(position);
+                adapter.insert(item, position);
                 adapter.remove(item);
             }
 
         });
 
 
-
-
-
-
-        List<sumItem>items;
+        List<sumItem> items;
         items = new Select().from(sumItem.class).execute();
-        for(sumItem item:items){
-            adapter.insert(item.sumname,0);
+        for (sumItem item : items) {
+            adapter.insert(item.sumname, 0);
         }
         daterun();
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         //起動中のアプリを開いた時の処理
 
@@ -114,39 +101,38 @@ public class sumActivity extends AppCompatActivity {
     }
 
 
-
-    public void resetsum(View v){
+    public void resetsum(View v) {
         reset();
     }
 
-    public void hyoujiandclock(){
+    public void hyoujiandclock() {
 
 //        String f = t + "秒";
 
         sumtextView.setText("合計" + oldsum + "円");
 
 
-
     }
 
-    public void insertItem(String suminsert){
+    public void insertItem(String suminsert) {
         sumItem item = new sumItem();
-        item.sumname = suminsert;;
+        item.sumname = suminsert;
+        ;
         item.save();
     }
 
-    public void derateItem(String sumderate){
+    public void derateItem(String sumderate) {
         sumItem item = new sumItem();
-        item = new Select().from(sumItem.class).where("sumname=?",sumderate).executeSingle();
+        item = new Select().from(sumItem.class).where("sumname=?", sumderate).executeSingle();
         item.delete();
     }
 
-    public void newint(String sumnewint){
+    public void newint(String sumnewint) {
         sumItem item = new sumItem();
-        item = new Select().from(sumItem.class).where("sumname=?",sumnewint).executeSingle();
+        item = new Select().from(sumItem.class).where("sumname=?", sumnewint).executeSingle();
     }
 
-    public void daterun(){
+    public void daterun() {
 
         oldyear = oldmonth = oldday = 0;
 
@@ -159,17 +145,16 @@ public class sumActivity extends AppCompatActivity {
         oldsum = pref.getInt("goukeisum", 0);
 
 
-
         year = obj_cd.get(Calendar.YEAR);
         month = obj_cd.get(Calendar.MONTH) + 1;
         day = obj_cd.get(Calendar.DATE);
 
 
-        if((oldyear == year && oldmonth == month && oldday == day) || oldyear == 0 || oldmonth == 0 || oldday == 0){
+        if ((oldyear == year && oldmonth == month && oldday == day) || oldyear == 0 || oldmonth == 0 || oldday == 0) {
             Intent intent = getIntent();
             sum = intent.getIntExtra("sum", 0);
             oldsum = oldsum + sum;
-        }else{
+        } else {
             dayriset();
         }
 
@@ -179,10 +164,10 @@ public class sumActivity extends AppCompatActivity {
         input();
     }
 
-    public void reset(){
+    public void reset() {
 
 
-        t =  sum = oldsum = 0;
+        t = sum = oldsum = 0;
 
 
         hyoujiandclock();
@@ -191,28 +176,27 @@ public class sumActivity extends AppCompatActivity {
         input();
     }
 
-    public void input(){
+    public void input() {
         SharedPreferences.Editor editor = pref.edit();
-        editor.putInt("goukeisum",oldsum);
+        editor.putInt("goukeisum", oldsum);
         editor.commit();
     }
 
 
-
-    public void dayriset(){
+    public void dayriset() {
 
         SharedPreferences.Editor yeareditor = pref.edit();
-        yeareditor.putInt("year",year);
+        yeareditor.putInt("year", year);
         yeareditor.commit();
 
 
         SharedPreferences.Editor motheditor = pref.edit();
-        motheditor.putInt("month",month);
+        motheditor.putInt("month", month);
         motheditor.commit();
 
 
         SharedPreferences.Editor dayeditor = pref.edit();
-        dayeditor.putInt("day",day);
+        dayeditor.putInt("day", day);
         dayeditor.commit();
 
 

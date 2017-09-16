@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -33,11 +31,11 @@ import java.util.List;
 public class shokkimenuActivity extends AppCompatActivity {
     ListView listiew;
     Intent intent;
-    EditText editText,shokkisumedittext;
+    EditText editText, shokkisumedittext;
     Spinner spinner;
-    int t,spint,deletint,onclickint,shokkisum;
+    int t, spint, deletint, onclickint, shokkisum;
     ArrayAdapter<String> adapter;
-    String monoedit,spinstr,monototal;
+    String monoedit, spinstr, monototal;
     TextView shokkitextView;
     SharedPreferences shokkipre;
     SharedPreferences.Editor shokkieditor;
@@ -46,32 +44,31 @@ public class shokkimenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shokki);
-        listiew = (ListView)findViewById(R.id.listView);
-        editText = (EditText)findViewById(R.id.edittext);
-        spinner = (Spinner)findViewById(R.id.spinner);
-        adapter = new ArrayAdapter(this,android.R.layout.simple_expandable_list_item_1);
-        shokkisumedittext = (EditText)findViewById(R.id.shokkisumedittext);
-        shokkitextView = (TextView)findViewById(R.id.shokkitextView);
+        listiew = (ListView) findViewById(R.id.listView);
+        editText = (EditText) findViewById(R.id.edittext);
+        spinner = (Spinner) findViewById(R.id.spinner);
+        adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1);
+        shokkisumedittext = (EditText) findViewById(R.id.shokkisumedittext);
+        shokkitextView = (TextView) findViewById(R.id.shokkitextView);
 
         firststring();
 
         deletint = t = spint = onclickint = shokkisum = 0;
 
-        shokkipre = getSharedPreferences("shokkisum",Context.MODE_PRIVATE);
-        shokkisum = shokkipre.getInt("shokkisum",0);
+        shokkipre = getSharedPreferences("shokkisum", Context.MODE_PRIVATE);
+        shokkisum = shokkipre.getInt("shokkisum", 0);
 
         hyouji();
 
         spint = spinner.getSelectedItemPosition();
-        spinstr = (String)spinner.getSelectedItem();
-
+        spinstr = (String) spinner.getSelectedItem();
 
 
         listiew.setAdapter(adapter);
 
-        listiew.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listiew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?>parent, View view, int position, long id){
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final String item;
 
                 if (deletint == 0) {
@@ -122,13 +119,13 @@ public class shokkimenuActivity extends AppCompatActivity {
 
         });
 
-        listiew.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+        listiew.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent,View view,int position,long id){
-                ArrayAdapter adapter = (ArrayAdapter)listiew.getAdapter();
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                ArrayAdapter adapter = (ArrayAdapter) listiew.getAdapter();
 
-                final String item = (String)adapter.getItem(position);
-                adapter.insert(item,position);
+                final String item = (String) adapter.getItem(position);
+                adapter.insert(item, position);
 //                adapter.remove(item);
 
                 return false;
@@ -137,23 +134,23 @@ public class shokkimenuActivity extends AppCompatActivity {
 
         List<shokkiItem> items;
         items = new Select().from(shokkiItem.class).execute();
-        for(shokkiItem item:items){
-            adapter.insert(item.shokkiname,0);
+        for (shokkiItem item : items) {
+            adapter.insert(item.shokkiname, 0);
         }
 
-        FloatingActionButton foatactionbutton = (FloatingActionButton)findViewById(R.id.foatactionbutton);
+        FloatingActionButton foatactionbutton = (FloatingActionButton) findViewById(R.id.foatactionbutton);
 
-        foatactionbutton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        foatactionbutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 //このfoatactionbuttonが押された時の処理
                 input();
             }
         });
 
-        FloatingActionButton deletefoatactionbutton = (FloatingActionButton)findViewById(R.id.deletefoatactionbutton);
+        FloatingActionButton deletefoatactionbutton = (FloatingActionButton) findViewById(R.id.deletefoatactionbutton);
 
-        deletefoatactionbutton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        deletefoatactionbutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 delete();
             }
         });
@@ -161,47 +158,47 @@ public class shokkimenuActivity extends AppCompatActivity {
 
     }
 
-    public void insertItem(String shokkiinsert){
+    public void insertItem(String shokkiinsert) {
         shokkiItem item = new shokkiItem();
         item.shokkiname = shokkiinsert;
         item.save();
     }
 
-    public void derateItem(String shokkidelate){
+    public void derateItem(String shokkidelate) {
         shokkiItem item = new shokkiItem();
-        item = new Select().from(shokkiItem.class).where("shokkiname =?",shokkidelate).executeSingle();
+        item = new Select().from(shokkiItem.class).where("shokkiname =?", shokkidelate).executeSingle();
         item.delete();
     }
 
-    public void newint(String shokkinew){
+    public void newint(String shokkinew) {
         shokkiItem item = new shokkiItem();
-        item = new Select().from(shokkiItem.class).where("shokkiname =?",shokkinew).executeSingle();
+        item = new Select().from(shokkiItem.class).where("shokkiname =?", shokkinew).executeSingle();
     }
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_main,menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem menu){
-        final RelativeLayout layout = (RelativeLayout)findViewById(R.id.root_layout);
+    public boolean onOptionsItemSelected(MenuItem menu) {
+        final RelativeLayout layout = (RelativeLayout) findViewById(R.id.root_layout);
 
-        switch(menu.getItemId()) {
+        switch (menu.getItemId()) {
             case R.id.homemenu:
-                intent = new Intent(this,MainActivity.class);
+                intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menufood:
-                intent = new Intent(this,menufoodActivity.class);
+                intent = new Intent(this, menufoodActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menubunnbogu:
-                intent = new Intent(this,menubunboguActivity.class);
+                intent = new Intent(this, menubunboguActivity.class);
                 startActivity(intent);
                 return true;
 
@@ -213,54 +210,54 @@ public class shokkimenuActivity extends AppCompatActivity {
                         .setIcon(R.drawable.chuui)
                         .setPositiveButton(
                                 R.string.ok,
-                                new DialogInterface.OnClickListener(){
+                                new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(
                                             DialogInterface dialog,
                                             int which
-                                    ){
+                                    ) {
                                         t++;
                                     }
                                 }).show();
                 return true;
 
             case R.id.menukadenn:
-                intent = new Intent(this,kadennmenuActivity.class);
+                intent = new Intent(this, kadennmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menuirui:
-                intent = new Intent(this,iruimenuActivity.class);
+                intent = new Intent(this, iruimenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menudish:
-                intent = new Intent(this,dishmenuActivity.class);
+                intent = new Intent(this, dishmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menukagu:
-                intent = new Intent(this,kagumenuActivity.class);
+                intent = new Intent(this, kagumenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menushokki:
-                intent = new Intent(this,shokkimenuActivity.class);
+                intent = new Intent(this, shokkimenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menugoraku:
-                intent = new Intent(this,gorakumenuActivity.class);
+                intent = new Intent(this, gorakumenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusoft:
-                intent = new Intent(this,menusoftActivity.class);
+                intent = new Intent(this, menusoftActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusonota:
-                intent = new Intent(this,sonotamenuActivity.class);
+                intent = new Intent(this, sonotamenuActivity.class);
                 startActivity(intent);
                 return true;
 
@@ -268,9 +265,9 @@ public class shokkimenuActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(menu);
     }
 
-    public void input(){
+    public void input() {
 
-        if(deletint == 0){
+        if (deletint == 0) {
             if (TextUtils.isEmpty(editText.getText())) {
                 monototal = spinner.getSelectedItem().toString();
             } else {
@@ -307,7 +304,7 @@ public class shokkimenuActivity extends AppCompatActivity {
                             }).show();
 
         }
-        if(deletint == 1){
+        if (deletint == 1) {
             String inputmode = getString(R.string.input) + "モード";
             new AlertDialog
                     .Builder(shokkimenuActivity.this)
@@ -336,8 +333,8 @@ public class shokkimenuActivity extends AppCompatActivity {
         }
     }
 
-    public void delete(){
-        if(deletint == 0){
+    public void delete() {
+        if (deletint == 0) {
             String deletemode = getString(R.string.delete) + "モード";
 
             new AlertDialog
@@ -368,7 +365,7 @@ public class shokkimenuActivity extends AppCompatActivity {
                             }
                     ).show();
 
-        }else if(deletint == 1){
+        } else if (deletint == 1) {
             String inputmode = getString(R.string.input) + "モード";
             new AlertDialog
                     .Builder(shokkimenuActivity.this)
@@ -398,17 +395,17 @@ public class shokkimenuActivity extends AppCompatActivity {
 
     }
 
-    public void firststring(){
+    public void firststring() {
         monoedit = spinstr = monototal = "";
         editText.setText(monoedit);
     }
 
-    public void goukeiintent(){
+    public void goukeiintent() {
         int shokkisum1;
 
         shokkisum1 = Integer.valueOf(shokkisumedittext.getText().toString());
 
-        if(shokkisumedittext.getText().toString().equals("")){
+        if (shokkisumedittext.getText().toString().equals("")) {
             shokkisum1 = 0;
 
             return;
@@ -420,17 +417,17 @@ public class shokkimenuActivity extends AppCompatActivity {
 
         shokkipre = getSharedPreferences("shokkisum", Context.MODE_PRIVATE);
         shokkieditor = shokkipre.edit();
-        shokkieditor.putInt("shokkisum",shokkisum);
+        shokkieditor.putInt("shokkisum", shokkisum);
         shokkieditor.commit();
 
         hyouji();
 
-        intent = new Intent(this,sumActivity.class);
-        intent.putExtra("sum",shokkisum);
+        intent = new Intent(this, sumActivity.class);
+        intent.putExtra("sum", shokkisum);
         startActivity(intent);
     }
 
-    public void hyouji(){
+    public void hyouji() {
 
         String texthyouji;
 
@@ -449,7 +446,7 @@ public class shokkimenuActivity extends AppCompatActivity {
 
     }
 
-    public void intentbutton(View v){
+    public void intentbutton(View v) {
         goukeiintent();
     }
 }

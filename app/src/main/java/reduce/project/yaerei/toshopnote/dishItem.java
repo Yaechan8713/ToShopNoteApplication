@@ -13,7 +13,7 @@ public class dishItem extends Model {
     @Column(name = "dishName")
     public String dishname;
 
-    public dishItem(){
+    public dishItem() {
         super();
     }
 

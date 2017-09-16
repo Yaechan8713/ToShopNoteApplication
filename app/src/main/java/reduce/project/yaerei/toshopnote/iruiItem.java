@@ -12,7 +12,7 @@ public class iruiItem extends Model {
     @Column(name = "iruiname")
     public String iruiname;
 
-    public iruiItem(){
+    public iruiItem() {
         super();
     }
 }

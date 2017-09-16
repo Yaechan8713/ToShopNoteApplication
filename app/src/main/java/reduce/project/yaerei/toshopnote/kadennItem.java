@@ -14,7 +14,7 @@ public class kadennItem extends Model {
 
     public String kadennname;
 
-    public kadennItem(){
+    public kadennItem() {
         super();
     }
 }
