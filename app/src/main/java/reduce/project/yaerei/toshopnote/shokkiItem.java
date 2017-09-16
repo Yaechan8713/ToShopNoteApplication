@@ -12,7 +12,7 @@ public class shokkiItem extends Model {
     @Column(name = "shokkiname")
     public String shokkiname;
 
-    public shokkiItem(){
+    public shokkiItem() {
         super();
     }
 }

@@ -13,7 +13,7 @@ public class bookItem extends Model {
     @Column(name = "bookName")
     public String bookname;
 
-    public bookItem(){
+    public bookItem() {
         super();
     }
 }

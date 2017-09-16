@@ -3,15 +3,9 @@ package reduce.project.yaerei.toshopnote;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Random;
@@ -31,8 +25,7 @@ public class lockActivity extends AppCompatActivity {
     SharedPreferences pre;
 
 
-
-    Button button1,button2,button3,button4,button5,button6,button7,button8;
+    Button button1, button2, button3, button4, button5, button6, button7, button8;
 
     int money1, money2, money3, money4, money5, money6, money7, money8;
 
@@ -41,23 +34,23 @@ public class lockActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        passwordtextView = (TextView)findViewById(R.id.passwordtextView);
+        passwordtextView = (TextView) findViewById(R.id.passwordtextView);
 
-        button1 = (Button)findViewById(R.id.button1);
-        button2 = (Button)findViewById(R.id.button2);
-        button3 = (Button)findViewById(R.id.button3);
-        button4 = (Button)findViewById(R.id.button4);
-        button5 = (Button)findViewById(R.id.button5);
-        button6 = (Button)findViewById(R.id.button6);
-        button7 = (Button)findViewById(R.id.button7);
-        button8 = (Button)findViewById(R.id.button8);
+        button1 = (Button) findViewById(R.id.button1);
+        button2 = (Button) findViewById(R.id.button2);
+        button3 = (Button) findViewById(R.id.button3);
+        button4 = (Button) findViewById(R.id.button4);
+        button5 = (Button) findViewById(R.id.button5);
+        button6 = (Button) findViewById(R.id.button6);
+        button7 = (Button) findViewById(R.id.button7);
+        button8 = (Button) findViewById(R.id.button8);
 
         firstjudge = 0;
 
-        pre = getSharedPreferences("lockfirst",Context.MODE_PRIVATE);
-        firstjudge = pre.getInt("lockfirst",0);
+        pre = getSharedPreferences("lockfirst", Context.MODE_PRIVATE);
+        firstjudge = pre.getInt("lockfirst", 0);
 
-        if(firstjudge == 1) {
+        if (firstjudge == 1) {
 
             int intentnum;
 
@@ -72,51 +65,51 @@ public class lockActivity extends AppCompatActivity {
 
                     money1 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
-                    money2 = pre.getInt("inputnum3",0);
+                    pre = getSharedPreferences("inputnum3", Context.MODE_PRIVATE);
+                    money2 = pre.getInt("inputnum3", 0);
 
                     money3 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum1",Context.MODE_PRIVATE);
-                    money4 = pre.getInt("inputnum1",0);
+                    pre = getSharedPreferences("inputnum1", Context.MODE_PRIVATE);
+                    money4 = pre.getInt("inputnum1", 0);
 
-                    pre = getSharedPreferences("inputnum4",Context.MODE_PRIVATE);
-                    money5 = pre.getInt("inputnum4",0);
+                    pre = getSharedPreferences("inputnum4", Context.MODE_PRIVATE);
+                    money5 = pre.getInt("inputnum4", 0);
 
                     money6 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum2",Context.MODE_PRIVATE);
-                    money7 = pre.getInt("inputnum2",0);
+                    pre = getSharedPreferences("inputnum2", Context.MODE_PRIVATE);
+                    money7 = pre.getInt("inputnum2", 0);
 
                     money8 = random.nextInt(ten);
 
                 } else if (intentnum == 1) {//7351
 
-                    pre = getSharedPreferences("inputnum4",Context.MODE_PRIVATE);
-                    money1 = pre.getInt("inputnum4",0);
+                    pre = getSharedPreferences("inputnum4", Context.MODE_PRIVATE);
+                    money1 = pre.getInt("inputnum4", 0);
 
                     money2 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum2",Context.MODE_PRIVATE);
-                    money3 = pre.getInt("inputnum2",0);
+                    pre = getSharedPreferences("inputnum2", Context.MODE_PRIVATE);
+                    money3 = pre.getInt("inputnum2", 0);
 
                     money4 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
-                    money5 = pre.getInt("inputnum3",0);
+                    pre = getSharedPreferences("inputnum3", Context.MODE_PRIVATE);
+                    money5 = pre.getInt("inputnum3", 0);
 
                     money6 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum1",Context.MODE_PRIVATE);
-                    money7 = pre.getInt("inputnum1",0);
+                    pre = getSharedPreferences("inputnum1", Context.MODE_PRIVATE);
+                    money7 = pre.getInt("inputnum1", 0);
 
                     money8 = random.nextInt(ten);
 
 
                 } else if (intentnum == 2) {//8176
 
-                    pre = getSharedPreferences("inputnum2",Context.MODE_PRIVATE);
-                    money1 = pre.getInt("inputnum2",0);
+                    pre = getSharedPreferences("inputnum2", Context.MODE_PRIVATE);
+                    money1 = pre.getInt("inputnum2", 0);
 
                     money2 = random.nextInt(ten);
 
@@ -126,14 +119,14 @@ public class lockActivity extends AppCompatActivity {
 
                     money5 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum4",Context.MODE_PRIVATE);
-                    money6 = pre.getInt("inputnum4",0);
+                    pre = getSharedPreferences("inputnum4", Context.MODE_PRIVATE);
+                    money6 = pre.getInt("inputnum4", 0);
 
-                    pre = getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
-                    money7 = pre.getInt("inputnum3",0);
+                    pre = getSharedPreferences("inputnum3", Context.MODE_PRIVATE);
+                    money7 = pre.getInt("inputnum3", 0);
 
-                    pre = getSharedPreferences("inputnum1",Context.MODE_PRIVATE);
-                    money8 = pre.getInt("inputnum1",0);
+                    pre = getSharedPreferences("inputnum1", Context.MODE_PRIVATE);
+                    money8 = pre.getInt("inputnum1", 0);
 
                 } else if (intentnum == 3) {//5467
                     money1 = random.nextInt(ten);
@@ -142,17 +135,17 @@ public class lockActivity extends AppCompatActivity {
 
                     money3 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum2",Context.MODE_PRIVATE);
-                    money4 = pre.getInt("inputnum2",0);
+                    pre = getSharedPreferences("inputnum2", Context.MODE_PRIVATE);
+                    money4 = pre.getInt("inputnum2", 0);
 
-                    pre = getSharedPreferences("inputnum1",Context.MODE_PRIVATE);
-                    money5 = pre.getInt("inputnum1",0);
+                    pre = getSharedPreferences("inputnum1", Context.MODE_PRIVATE);
+                    money5 = pre.getInt("inputnum1", 0);
 
-                    pre = getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
-                    money6 = pre.getInt("inputnum3",0);
+                    pre = getSharedPreferences("inputnum3", Context.MODE_PRIVATE);
+                    money6 = pre.getInt("inputnum3", 0);
 
-                    pre = getSharedPreferences("inputnum4",Context.MODE_PRIVATE);
-                    money7 = pre.getInt("inputnum4",0);
+                    pre = getSharedPreferences("inputnum4", Context.MODE_PRIVATE);
+                    money7 = pre.getInt("inputnum4", 0);
 
                     money8 = random.nextInt(ten);
 
@@ -160,21 +153,21 @@ public class lockActivity extends AppCompatActivity {
 
                     money1 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
-                    money2 = pre.getInt("inputnum3",0);
+                    pre = getSharedPreferences("inputnum3", Context.MODE_PRIVATE);
+                    money2 = pre.getInt("inputnum3", 0);
 
-                    pre = getSharedPreferences("inputnum1",Context.MODE_PRIVATE);
-                    money3 = pre.getInt("inputnum1",0);
+                    pre = getSharedPreferences("inputnum1", Context.MODE_PRIVATE);
+                    money3 = pre.getInt("inputnum1", 0);
 
                     money4 = random.nextInt(ten);
 
                     money5 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum4",Context.MODE_PRIVATE);
-                    money6 = pre.getInt("inputnum4",0);
+                    pre = getSharedPreferences("inputnum4", Context.MODE_PRIVATE);
+                    money6 = pre.getInt("inputnum4", 0);
 
-                    pre = getSharedPreferences("inputnum2",Context.MODE_PRIVATE);
-                    money7 = pre.getInt("inputnum2",0);
+                    pre = getSharedPreferences("inputnum2", Context.MODE_PRIVATE);
+                    money7 = pre.getInt("inputnum2", 0);
 
                 } else if (intentnum == 5) {//6574
 
@@ -184,29 +177,29 @@ public class lockActivity extends AppCompatActivity {
 
                     money3 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum4",Context.MODE_PRIVATE);
-                    money4 = pre.getInt("inputnum4",0);
+                    pre = getSharedPreferences("inputnum4", Context.MODE_PRIVATE);
+                    money4 = pre.getInt("inputnum4", 0);
 
-                    pre = getSharedPreferences("inputnum2",Context.MODE_PRIVATE);
-                    money5 = pre.getInt("inputnum2",0);
+                    pre = getSharedPreferences("inputnum2", Context.MODE_PRIVATE);
+                    money5 = pre.getInt("inputnum2", 0);
 
-                    pre = getSharedPreferences("inputnum1",Context.MODE_PRIVATE);
-                    money6 = pre.getInt("inputnum1",0);
+                    pre = getSharedPreferences("inputnum1", Context.MODE_PRIVATE);
+                    money6 = pre.getInt("inputnum1", 0);
 
-                    pre = getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
-                    money7 = pre.getInt("inputnum3",0);
+                    pre = getSharedPreferences("inputnum3", Context.MODE_PRIVATE);
+                    money7 = pre.getInt("inputnum3", 0);
 
                     money8 = random.nextInt(ten);
 
                 } else if (intentnum == 6) {//8713
 
-                    pre = getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
-                    money1 = pre.getInt("inputnum3",0);
+                    pre = getSharedPreferences("inputnum3", Context.MODE_PRIVATE);
+                    money1 = pre.getInt("inputnum3", 0);
 
                     money2 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum4",Context.MODE_PRIVATE);
-                    money3 = pre.getInt("inputnum4",0);
+                    pre = getSharedPreferences("inputnum4", Context.MODE_PRIVATE);
+                    money3 = pre.getInt("inputnum4", 0);
 
                     money4 = random.nextInt(ten);
 
@@ -214,24 +207,24 @@ public class lockActivity extends AppCompatActivity {
 
                     money6 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum2",Context.MODE_PRIVATE);
-                    money7 = pre.getInt("inputnum2",0);
+                    pre = getSharedPreferences("inputnum2", Context.MODE_PRIVATE);
+                    money7 = pre.getInt("inputnum2", 0);
 
-                    pre = getSharedPreferences("inputnum1",Context.MODE_PRIVATE);
-                    money8 = pre.getInt("inputnum1",0);
+                    pre = getSharedPreferences("inputnum1", Context.MODE_PRIVATE);
+                    money8 = pre.getInt("inputnum1", 0);
 
                 } else if (intentnum == 7) {//4381
 
-                    pre = getSharedPreferences("inputnum4",Context.MODE_PRIVATE);
-                    money1 = pre.getInt("inputnum4",0);
+                    pre = getSharedPreferences("inputnum4", Context.MODE_PRIVATE);
+                    money1 = pre.getInt("inputnum4", 0);
 
                     money2 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum2",Context.MODE_PRIVATE);
-                    money3 = pre.getInt("inputnum2",0);
+                    pre = getSharedPreferences("inputnum2", Context.MODE_PRIVATE);
+                    money3 = pre.getInt("inputnum2", 0);
 
-                    pre = getSharedPreferences("inputnum1",Context.MODE_PRIVATE);
-                    money4 = pre.getInt("inputnum1",0);
+                    pre = getSharedPreferences("inputnum1", Context.MODE_PRIVATE);
+                    money4 = pre.getInt("inputnum1", 0);
 
                     money5 = random.nextInt(ten);
 
@@ -239,28 +232,28 @@ public class lockActivity extends AppCompatActivity {
 
                     money7 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
-                    money8 = pre.getInt("inputnum3",0);
+                    pre = getSharedPreferences("inputnum3", Context.MODE_PRIVATE);
+                    money8 = pre.getInt("inputnum3", 0);
 
-                } else{//5372
+                } else {//5372
 
                     money1 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum4",Context.MODE_PRIVATE);
-                    money2 = pre.getInt("inputnum4",0);
+                    pre = getSharedPreferences("inputnum4", Context.MODE_PRIVATE);
+                    money2 = pre.getInt("inputnum4", 0);
 
-                    pre = getSharedPreferences("inputnum2",Context.MODE_PRIVATE);
-                    money3 = pre.getInt("inputnum2",0);
+                    pre = getSharedPreferences("inputnum2", Context.MODE_PRIVATE);
+                    money3 = pre.getInt("inputnum2", 0);
 
                     money4 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum1",Context.MODE_PRIVATE);
-                    money5 = pre.getInt("inputnum1",0);
+                    pre = getSharedPreferences("inputnum1", Context.MODE_PRIVATE);
+                    money5 = pre.getInt("inputnum1", 0);
 
                     money6 = random.nextInt(ten);
 
-                    pre = getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
-                    money7 = pre.getInt("inputnum3",0);
+                    pre = getSharedPreferences("inputnum3", Context.MODE_PRIVATE);
+                    money7 = pre.getInt("inputnum3", 0);
 
                     money8 = random.nextInt(ten);
 
@@ -274,25 +267,25 @@ public class lockActivity extends AppCompatActivity {
 
                 money3 = random.nextInt(ten);
 
-                pre = getSharedPreferences("inputnum4",Context.MODE_PRIVATE);
-                money4 = pre.getInt("inputnum4",0);
+                pre = getSharedPreferences("inputnum4", Context.MODE_PRIVATE);
+                money4 = pre.getInt("inputnum4", 0);
 
-                pre = getSharedPreferences("inputnum2",Context.MODE_PRIVATE);
-                money5 = pre.getInt("inputnum2",0);
+                pre = getSharedPreferences("inputnum2", Context.MODE_PRIVATE);
+                money5 = pre.getInt("inputnum2", 0);
 
-                pre = getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
-                money6 = pre.getInt("inputnum3",0);
+                pre = getSharedPreferences("inputnum3", Context.MODE_PRIVATE);
+                money6 = pre.getInt("inputnum3", 0);
 
                 money7 = random.nextInt(ten);
 
-                pre = getSharedPreferences("inputnum1",Context.MODE_PRIVATE);
-                money8 = pre.getInt("inputnum1",0);
+                pre = getSharedPreferences("inputnum1", Context.MODE_PRIVATE);
+                money8 = pre.getInt("inputnum1", 0);
             }
-        }else{
+        } else {
 
-            money1 = money2 = money3 = money4 = money5 = money6 = money7 = money8 =  0;
+            money1 = money2 = money3 = money4 = money5 = money6 = money7 = money8 = 0;
 
-            intent = new Intent(this,lockfirstActivity.class);
+            intent = new Intent(this, lockfirstActivity.class);
             startActivity(intent);
         }
 

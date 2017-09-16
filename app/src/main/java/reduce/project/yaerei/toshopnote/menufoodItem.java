@@ -12,7 +12,7 @@ public class menufoodItem extends Model {
     @Column(name = "menufoodname")
     public String menufoodname;
 
-    public menufoodItem(){
+    public menufoodItem() {
         super();
     }
 }

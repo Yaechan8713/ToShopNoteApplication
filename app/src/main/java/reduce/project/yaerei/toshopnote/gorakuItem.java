@@ -13,7 +13,7 @@ public class gorakuItem extends Model {
     @Column(name = "gorakuname")
     public String gorakuname;
 
-    public gorakuItem(){
+    public gorakuItem() {
         super();
     }
 }

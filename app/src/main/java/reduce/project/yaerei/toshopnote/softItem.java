@@ -12,7 +12,7 @@ public class softItem extends Model {
     @Column(name = "softname")
     public String softname;
 
-    public softItem(){
+    public softItem() {
         super();
     }
 

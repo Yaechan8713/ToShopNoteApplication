@@ -12,7 +12,7 @@ public class sonotaItem extends Model {
     @Column(name = "sonotaname")
     public String sonotaname;
 
-    public sonotaItem(){
+    public sonotaItem() {
         super();
     }
 }

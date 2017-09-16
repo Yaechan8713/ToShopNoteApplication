@@ -1,20 +1,14 @@
 package reduce.project.yaerei.toshopnote;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +32,7 @@ public class bookmenuActivity extends AppCompatActivity {
 
     ListView listiew;
     Intent intent;
-    EditText editText,sumedittext;
+    EditText editText, sumedittext;
     Spinner spinner;
     int spint, deletint, onclickint, goukei, booksum, t, resetlist, money, oldsum;
     ArrayAdapter<String> adapter, sumadapter;
@@ -50,7 +44,7 @@ public class bookmenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
-        sumedittext = (EditText)findViewById(R.id.sumedittext);
+        sumedittext = (EditText) findViewById(R.id.sumedittext);
         modetextview = (TextView) findViewById(R.id.mode);
         listiew = (ListView) findViewById(R.id.listView);
         editText = (EditText) findViewById(R.id.edittext);
@@ -480,7 +474,7 @@ public class bookmenuActivity extends AppCompatActivity {
 
         integer = Integer.valueOf(sumedittext.getText().toString());
 
-        if(sumedittext.getText().toString().equals("")){
+        if (sumedittext.getText().toString().equals("")) {
             //sumedittextにデータが入ってなかった場合
             integer = 0;
             return;
@@ -501,8 +495,8 @@ public class bookmenuActivity extends AppCompatActivity {
             oldsum = 0;
             bookmoneytextView.setText("エラーです。合計金額が大き過ぎです。");
         }
-        intent = new Intent(this,sumActivity.class);
-        intent.putExtra("sum",money);
+        intent = new Intent(this, sumActivity.class);
+        intent.putExtra("sum", money);
         startActivity(intent);
 
 

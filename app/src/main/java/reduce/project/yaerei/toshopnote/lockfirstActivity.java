@@ -7,18 +7,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-
-import com.activeandroid.Model;
 
 /**
  * Created by yaerei on 2017/08/31.
  */
 public class lockfirstActivity extends AppCompatActivity {
 
-    int firstnumber1,firstnumber2,firstnumber3,firstnumber4,ichijinum,pushcount;
+    int firstnumber1, firstnumber2, firstnumber3, firstnumber4, ichijinum, pushcount;
 
     TextView textView;
 
@@ -31,27 +28,27 @@ public class lockfirstActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lockfirst);
-        textView = (TextView)findViewById(R.id.passwordtextView);
+        textView = (TextView) findViewById(R.id.passwordtextView);
 
         textView.setText("パスワードを設定してください。");
         firstnumber1 = firstnumber2 = firstnumber3 = firstnumber4 = pushcount = ichijinum = 0;
         maru = "";
     }
 
-    public void run(){
-        if(pushcount == 1){
+    public void run() {
+        if (pushcount == 1) {
             firstnumber1 = ichijinum;
             maru = maru + "●";
         }
-        if(pushcount == 2){
+        if (pushcount == 2) {
             firstnumber2 = ichijinum;
             maru = maru + "●";
         }
-        if(pushcount == 3){
+        if (pushcount == 3) {
             firstnumber3 = ichijinum;
             maru = maru + "●";
         }
-        if(pushcount == 4){
+        if (pushcount == 4) {
             firstnumber4 = ichijinum;
 
             new AlertDialog
@@ -61,35 +58,35 @@ public class lockfirstActivity extends AppCompatActivity {
                     .setPositiveButton(
                             R.string.ok,
 
-                            new DialogInterface.OnClickListener(){
+                            new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialog,int which){
+                                public void onClick(DialogInterface dialog, int which) {
 
                                     pre = getSharedPreferences("inputnum1", Context.MODE_PRIVATE);
                                     editor = pre.edit();
-                                    editor.putInt("inputnum1",firstnumber1);
+                                    editor.putInt("inputnum1", firstnumber1);
                                     editor.commit();
 
-                                    pre = getSharedPreferences("inputnum2",Context.MODE_PRIVATE);
+                                    pre = getSharedPreferences("inputnum2", Context.MODE_PRIVATE);
                                     editor = pre.edit();
-                                    editor.putInt("inputnum2",firstnumber2);
+                                    editor.putInt("inputnum2", firstnumber2);
                                     editor.commit();
 
-                                    pre = getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
+                                    pre = getSharedPreferences("inputnum3", Context.MODE_PRIVATE);
                                     editor = pre.edit();
-                                    editor.putInt("inputnum3",firstnumber3);
+                                    editor.putInt("inputnum3", firstnumber3);
                                     editor.commit();
 
-                                    pre = getSharedPreferences("inputnum4",Context.MODE_PRIVATE);
+                                    pre = getSharedPreferences("inputnum4", Context.MODE_PRIVATE);
                                     editor = pre.edit();
-                                    editor.putInt("inputnum4",firstnumber4);
+                                    editor.putInt("inputnum4", firstnumber4);
                                     editor.commit();
 
                                     int a = 1;
 
-                                    pre = getSharedPreferences("lockfirst",Context.MODE_PRIVATE);
+                                    pre = getSharedPreferences("lockfirst", Context.MODE_PRIVATE);
                                     editor = pre.edit();
-                                    editor.putInt("lockfirst",a);
+                                    editor.putInt("lockfirst", a);
                                     editor.commit();
                                     maru = "";
                                     intent();
@@ -107,71 +104,70 @@ public class lockfirstActivity extends AppCompatActivity {
         }
 
 
-
         textView.setText(maru);
 
     }
 
-    public void intent(){
-        Intent intent = new Intent(this,lockActivity.class);
+    public void intent() {
+        Intent intent = new Intent(this, lockActivity.class);
         startActivity(intent);
     }
 
-    public void passwordnum1(View v){
+    public void passwordnum1(View v) {
         pushcount++;
         ichijinum = 1;
         run();
     }
 
-    public void passwordnum2(View v){
+    public void passwordnum2(View v) {
         pushcount++;
         ichijinum = 2;
         run();
     }
 
-    public void passwordnum3(View v){
+    public void passwordnum3(View v) {
         pushcount++;
         ichijinum = 3;
         run();
     }
 
-    public void passwordnum4(View v){
+    public void passwordnum4(View v) {
         pushcount++;
         ichijinum = 4;
         run();
     }
 
-    public void passwordnum5(View v){
+    public void passwordnum5(View v) {
         pushcount++;
         ichijinum = 5;
         run();
     }
 
-    public void passwordnum6(View v){
+    public void passwordnum6(View v) {
         pushcount++;
         ichijinum = 6;
         run();
     }
 
-    public void passwordnum7(View v){
+    public void passwordnum7(View v) {
         pushcount++;
         ichijinum = 7;
         run();
     }
 
-    public void passwordnum8(View v){
+    public void passwordnum8(View v) {
         pushcount++;
-        ichijinum=8;
+        ichijinum = 8;
         run();
     }
 
-    public void passwordnum9(View v){
+    public void passwordnum9(View v) {
         pushcount++;
         ichijinum = 9;
         run();
     }
 
-    public void passwordnum0(View v){
+    public void passwordnum0(View v) {
         pushcount++;
         ichijinum = 0;
         run();

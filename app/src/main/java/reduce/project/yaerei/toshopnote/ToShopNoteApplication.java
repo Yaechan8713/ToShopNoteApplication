@@ -10,7 +10,7 @@ import android.support.multidex.MultiDexApplication;
 public class ToShopNoteApplication extends MultiDexApplication {
 
     @Override
-    protected void attachBaseContext(Context base){
+    protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }

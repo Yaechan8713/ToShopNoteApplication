@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -33,44 +31,43 @@ import java.util.List;
 public class gorakumenuActivity extends AppCompatActivity {
     ListView listiew;
     Intent intent;
-    EditText editText,sumedittextgoraku;
+    EditText editText, sumedittextgoraku;
     Spinner spinner;
-    int t,spint,deletint,onclickint,gorakusum;
+    int t, spint, deletint, onclickint, gorakusum;
     ArrayAdapter<String> adapter;
     TextView gorakusumtextView;
     SharedPreferences gorakupre;
     SharedPreferences.Editor gorakueditor;
-    String monoedit,spinstr,monototal;
+    String monoedit, spinstr, monototal;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goraku);
-        listiew = (ListView)findViewById(R.id.listView);
-        editText = (EditText)findViewById(R.id.edittext);
-        spinner = (Spinner)findViewById(R.id.spinner);
-        adapter = new ArrayAdapter(this,android.R.layout.simple_expandable_list_item_1);
-        gorakusumtextView = (TextView)findViewById(R.id.gorakusumtextView);
-        sumedittextgoraku = (EditText)findViewById(R.id.gorakusumedittext);
+        listiew = (ListView) findViewById(R.id.listView);
+        editText = (EditText) findViewById(R.id.edittext);
+        spinner = (Spinner) findViewById(R.id.spinner);
+        adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1);
+        gorakusumtextView = (TextView) findViewById(R.id.gorakusumtextView);
+        sumedittextgoraku = (EditText) findViewById(R.id.gorakusumedittext);
 
         firststring();
 
         deletint = t = spint = onclickint = gorakusum = 0;
 
-        gorakupre = getSharedPreferences("gorakusum",Context.MODE_PRIVATE);
+        gorakupre = getSharedPreferences("gorakusum", Context.MODE_PRIVATE);
 
 
         spint = spinner.getSelectedItemPosition();
-        spinstr = (String)spinner.getSelectedItem();
-
+        spinstr = (String) spinner.getSelectedItem();
 
 
         listiew.setAdapter(adapter);
 
-        listiew.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listiew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?>parent, View view, int position, long id){
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final String item;
 
                 if (deletint == 0) {
@@ -118,13 +115,13 @@ public class gorakumenuActivity extends AppCompatActivity {
             }
         });
 
-        listiew.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+        listiew.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent,View view,int position,long id){
-                ArrayAdapter adapter = (ArrayAdapter)listiew.getAdapter();
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                ArrayAdapter adapter = (ArrayAdapter) listiew.getAdapter();
 
-                final String item = (String)adapter.getItem(position);
-                adapter.insert(item,position);
+                final String item = (String) adapter.getItem(position);
+                adapter.insert(item, position);
 //                adapter.remove(item);
 
                 return false;
@@ -133,23 +130,23 @@ public class gorakumenuActivity extends AppCompatActivity {
 
         List<gorakuItem> items;
         items = new Select().from(gorakuItem.class).execute();
-        for(gorakuItem item:items){
-            adapter.insert(item.gorakuname,0);
+        for (gorakuItem item : items) {
+            adapter.insert(item.gorakuname, 0);
         }
 
-        FloatingActionButton foatactionbutton = (FloatingActionButton)findViewById(R.id.foatactionbutton);
+        FloatingActionButton foatactionbutton = (FloatingActionButton) findViewById(R.id.foatactionbutton);
 
-        foatactionbutton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        foatactionbutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 //このfoatactionbuttonが押された時の処理
                 input();
             }
         });
 
-        FloatingActionButton deletefoatactionbutton = (FloatingActionButton)findViewById(R.id.deletefoatactionbutton);
+        FloatingActionButton deletefoatactionbutton = (FloatingActionButton) findViewById(R.id.deletefoatactionbutton);
 
-        deletefoatactionbutton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        deletefoatactionbutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 delete();
             }
         });
@@ -157,77 +154,77 @@ public class gorakumenuActivity extends AppCompatActivity {
 
     }
 
-    public void insertItem(String gorakuinsert){
+    public void insertItem(String gorakuinsert) {
         gorakuItem item = new gorakuItem();
         item.gorakuname = gorakuinsert;
         item.save();
     }
 
-    public void derateItem(String gorakudelate){
+    public void derateItem(String gorakudelate) {
         gorakuItem item = new gorakuItem();
-        item = new Select().from(gorakuItem.class).where("gorakuname =?",gorakudelate).executeSingle();
+        item = new Select().from(gorakuItem.class).where("gorakuname =?", gorakudelate).executeSingle();
         item.delete();
     }
 
-    public void newint(String gorakunew){
+    public void newint(String gorakunew) {
         gorakuItem item = new gorakuItem();
-        item = new Select().from(gorakuItem.class).where("gorakuname =?",gorakunew).executeSingle();
+        item = new Select().from(gorakuItem.class).where("gorakuname =?", gorakunew).executeSingle();
     }
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_main,menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem menu){
-        final RelativeLayout layout = (RelativeLayout)findViewById(R.id.root_layout);
+    public boolean onOptionsItemSelected(MenuItem menu) {
+        final RelativeLayout layout = (RelativeLayout) findViewById(R.id.root_layout);
 
-        switch(menu.getItemId()) {
+        switch (menu.getItemId()) {
             case R.id.homemenu:
-                intent = new Intent(this,MainActivity.class);
+                intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menufood:
-                intent = new Intent(this,menufoodActivity.class);
+                intent = new Intent(this, menufoodActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menubunnbogu:
-                intent = new Intent(this,menubunboguActivity.class);
+                intent = new Intent(this, menubunboguActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menubook:
-                intent = new Intent(this,bookmenuActivity.class);
+                intent = new Intent(this, bookmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menukadenn:
-                intent = new Intent(this,kadennmenuActivity.class);
+                intent = new Intent(this, kadennmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menuirui:
-                intent = new Intent(this,iruimenuActivity.class);
+                intent = new Intent(this, iruimenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menudish:
-                intent = new Intent(this,dishmenuActivity.class);
+                intent = new Intent(this, dishmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menukagu:
-                intent = new Intent(this,kagumenuActivity.class);
+                intent = new Intent(this, kagumenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menushokki:
-                intent = new Intent(this,shokkimenuActivity.class);
+                intent = new Intent(this, shokkimenuActivity.class);
                 startActivity(intent);
                 return true;
 
@@ -239,24 +236,24 @@ public class gorakumenuActivity extends AppCompatActivity {
                         .setIcon(R.drawable.chuui)
                         .setPositiveButton(
                                 R.string.ok,
-                                new DialogInterface.OnClickListener(){
+                                new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(
                                             DialogInterface dialog,
                                             int which
-                                    ){
+                                    ) {
                                         t++;
                                     }
                                 }).show();
                 return true;
 
             case R.id.menusoft:
-                intent = new Intent(this,menusoftActivity.class);
+                intent = new Intent(this, menusoftActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusonota:
-                intent = new Intent(this,sonotamenuActivity.class);
+                intent = new Intent(this, sonotamenuActivity.class);
                 startActivity(intent);
                 return true;
 
@@ -264,9 +261,9 @@ public class gorakumenuActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(menu);
     }
 
-    public void input(){
+    public void input() {
 
-        if(deletint == 0){
+        if (deletint == 0) {
             if (TextUtils.isEmpty(editText.getText())) {
                 monototal = spinner.getSelectedItem().toString();
             } else {
@@ -303,7 +300,7 @@ public class gorakumenuActivity extends AppCompatActivity {
                             }).show();
 
         }
-        if(deletint == 1){
+        if (deletint == 1) {
             String inputmode = getString(R.string.input) + "モード";
             new AlertDialog
                     .Builder(gorakumenuActivity.this)
@@ -332,8 +329,8 @@ public class gorakumenuActivity extends AppCompatActivity {
         }
     }
 
-    public void delete(){
-        if(deletint == 0){
+    public void delete() {
+        if (deletint == 0) {
             String deletemode = getString(R.string.delete) + "モード";
 
             new AlertDialog
@@ -364,7 +361,7 @@ public class gorakumenuActivity extends AppCompatActivity {
                             }
                     ).show();
 
-        }else if(deletint == 1){
+        } else if (deletint == 1) {
             String inputmode = getString(R.string.input) + "モード";
             new AlertDialog
                     .Builder(gorakumenuActivity.this)
@@ -399,12 +396,12 @@ public class gorakumenuActivity extends AppCompatActivity {
         editText.setText(monoedit);
     }
 
-    public void goukeiintent(){
+    public void goukeiintent() {
         int gorakuintentsum;
 
         gorakuintentsum = Integer.valueOf(sumedittextgoraku.getText().toString());
 
-        if(sumedittextgoraku.getText().toString().equals("")){
+        if (sumedittextgoraku.getText().toString().equals("")) {
             gorakuintentsum = 0;
 
             return;
@@ -415,19 +412,19 @@ public class gorakumenuActivity extends AppCompatActivity {
         sumedittextgoraku.setText("");
         gorakupre = getSharedPreferences("gorakusum", Context.MODE_PRIVATE);
         gorakueditor = gorakupre.edit();
-        gorakueditor.putInt("gorakusum",gorakusum);
+        gorakueditor.putInt("gorakusum", gorakusum);
         gorakueditor.commit();
 
         gorakusumtextView.setText("合計金額は" + gorakusum + "円です。");
 
-        intent = new Intent(this,sumActivity.class);
-        intent.putExtra("sum",gorakusum);
+        intent = new Intent(this, sumActivity.class);
+        intent.putExtra("sum", gorakusum);
         startActivity(intent);
 
         gorakuintentsum = gorakusum = 0;
     }
 
-    public void intentbutton(View v){
+    public void intentbutton(View v) {
         goukeiintent();
     }
 }

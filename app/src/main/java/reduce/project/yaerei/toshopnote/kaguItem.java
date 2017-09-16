@@ -13,7 +13,7 @@ public class kaguItem extends Model {
 
     public String kaguname;
 
-    public kaguItem(){
+    public kaguItem() {
         super();
     }
 }
