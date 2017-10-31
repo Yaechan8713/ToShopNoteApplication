@@ -33,6 +33,17 @@ public class lockfirstActivity extends AppCompatActivity {
         textView.setText("パスワードを設定してください。");
         firstnumber1 = firstnumber2 = firstnumber3 = firstnumber4 = pushcount = ichijinum = 0;
         maru = "";
+
+        int lockfirst = 0;
+
+        pre = getSharedPreferences("lockfirst",Context.MODE_PRIVATE);
+        lockfirst = pre.getInt("lockfirst",0);
+
+        if(lockfirst == 0){
+            run();
+        }else{
+            intent();
+        }
     }
 
     public void run() {

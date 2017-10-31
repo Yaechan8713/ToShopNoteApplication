@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -18,6 +19,39 @@
         android:layout_weight="1">
 
     </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/common_google_signin_btn_text_light_disabled"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="検索ワード："
+            android:textColor="#000"
+            android:textSize="25dp" />
+
+        <EditText
+            android:id="@+id/resurchedit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:onClick="touchedit"
+            android:text="" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="resurch"
+            android:src="@drawable/resurch" />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,9 +91,18 @@
                 android:textColor="#000000" />
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/sumedittext"/>
+                android:id="@+id/sumedittext"
+                android:layout_weight="10"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="合計金額　表示"
+                android:textSize="15dp"
+                android:onClick="intentbutton"/>
 
         </LinearLayout>
 
@@ -85,14 +128,16 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edittext" />
+                    android:id="@+id/edittext"
+                    android:layout_weight="1"/>
 
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/spinner"
                     android:drawSelectorOnTop="true"
-                    android:entries="@array/spnbook"/>
+                    android:entries="@array/spnbook"
+                    android:layout_weight="1"/>
 
             </LinearLayout>
 
@@ -121,12 +166,10 @@
         </LinearLayout>
 
 
-
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="intentbutton"
-            android:text="合計金額　表示"/>
+            android:textSize="50dp"/>
 
     </LinearLayout>
 

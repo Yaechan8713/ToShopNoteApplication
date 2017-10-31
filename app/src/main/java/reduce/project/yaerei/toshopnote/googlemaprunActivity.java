@@ -59,7 +59,7 @@ public class googlemaprunActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_googlemap_main);
 
-        FusedLocationProviderClient fusedLocationProViderClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         settingsClient = LocationServices.getSettingsClient(this);
 
         createLocaClb();

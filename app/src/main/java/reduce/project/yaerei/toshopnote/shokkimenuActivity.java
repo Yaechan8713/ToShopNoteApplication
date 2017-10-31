@@ -403,13 +403,13 @@ public class shokkimenuActivity extends AppCompatActivity {
     public void goukeiintent() {
         int shokkisum1;
 
-        shokkisum1 = Integer.valueOf(shokkisumedittext.getText().toString());
-
         if (shokkisumedittext.getText().toString().equals("")) {
             shokkisum1 = 0;
 
             return;
         }
+
+        shokkisum1 = Integer.valueOf(shokkisumedittext.getText().toString());
 
         shokkisum = shokkisum + shokkisum1;
 

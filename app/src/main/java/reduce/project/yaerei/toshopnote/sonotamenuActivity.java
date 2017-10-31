@@ -401,13 +401,13 @@ public class sonotamenuActivity extends AppCompatActivity {
     public void goukeiintent() {
         int sonotasum1;
 
-        sonotasum1 = Integer.valueOf(sonotaedittext.getText().toString());
-
         if (sonotaedittext.getText().toString().equals("")) {
             sonotasum1 = 0;
 
             return;
         }
+
+        sonotasum1 = Integer.valueOf(sonotaedittext.getText().toString());
 
         sonotasum = sonotasum + sonotasum1;
 

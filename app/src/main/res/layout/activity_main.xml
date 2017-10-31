@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -39,101 +39,101 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
                     android:layout_weight="1"
+                    android:onClick="foodonclick"
                     android:text="@string/foodmenu"
-                    android:onClick="foodonclick"/>
+                    android:textSize="25dp" />
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:text="@string/bunnbogumenu"
+                    android:layout_weight="1"
                     android:onClick="bunboguonclick"
-                    android:layout_weight="1" />
+                    android:text="@string/bunnbogumenu"
+                    android:textSize="25dp" />
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:text="@string/bookmenu"
+                    android:layout_weight="1"
                     android:onClick="bookonclick"
-                    android:layout_weight="1" />
+                    android:text="@string/bookmenu"
+                    android:textSize="25dp" />
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:layout_weight="1"
                     android:onClick="kadennonclick"
                     android:text="@string/kadennmenu"
-                    android:layout_weight="1" />
+                    android:textSize="25dp" />
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
                     android:onClick="dishonclick"
-                    android:text="@string/dishmenu"/>
+                    android:text="@string/dishmenu"
+                    android:textSize="25dp" />
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:onClick="kaguonclick"
                     android:text="@string/kagumenu"
-                    android:onClick="kaguonclick"/>
+                    android:textSize="25dp" />
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:onClick="shokkionclick"
                     android:text="@string/shokkimenu"
-                    android:onClick="shokkionclick"/>
+                    android:textSize="25dp" />
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:onClick="gorakuonclick"
                     android:text="@string/gorakumenu"
-                    android:onClick="gorakuonclick"/>
+                    android:textSize="25dp" />
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:layout_weight="1"
                     android:onClick="iruionclick"
                     android:text="@string/iruimenu"
-                    android:layout_weight="1" />
+                    android:textSize="25dp" />
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
                     android:onClick="softonclick"
-                    android:text="@string/softmenu"/>
+                    android:text="@string/softmenu"
+                    android:textSize="20dp" />
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
                     android:onClick="sonotaonclick"
-                    android:text="@string/sonotamenu"/>
+                    android:text="@string/sonotamenu"
+                    android:textSize="25dp" />
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="GoogleMap"
-                    android:onClick="googlemapintent"/>
+                    android:onClick="googlemapintent"
+                    android:text="GoogleMap" />
 
             </LinearLayout>
 

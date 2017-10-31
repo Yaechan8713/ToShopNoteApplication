@@ -32,8 +32,9 @@ public class dishmenuActivity extends AppCompatActivity {
     ListView listiew;
     Intent intent;
     EditText editText, sumedittext;
+    EditText dishresurchedit;
     Spinner spinner;
-    TextView dishsumtextView;
+    TextView dishsumtextView,mode;
     int t, spint, deletint, onclickint, dishsum;
     ArrayAdapter<String> adapter;
     String monoedit, spinstr, monototal;
@@ -45,12 +46,17 @@ public class dishmenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dish);
+
+        dishresurchedit = (EditText)findViewById(R.id.dishresurchedit);
+        mode = (TextView)findViewById(R.id.mode);
         listiew = (ListView) findViewById(R.id.listView);
         editText = (EditText) findViewById(R.id.edittext);
         spinner = (Spinner) findViewById(R.id.spinner);
         adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1);
         sumedittext = (EditText) findViewById(R.id.dishsumedittext);
         dishsumtextView = (TextView) findViewById(R.id.dishsumtextView);
+
+        mode.setText("追加モード");
 
         firststring();
 
@@ -162,6 +168,84 @@ public class dishmenuActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public void resurch(View v){
+        if(deletint == 0){
+
+            String resurchstring = dishresurchedit.getText().toString();
+
+            dishItem item = new Select().from(dishItem.class).where("dishName = ?",resurchstring).executeSingle();
+
+            String resurchdeishitem,resurchkekka;
+
+            resurchkekka = "検索結果";
+
+            if(item == null){
+                new AlertDialog.Builder(dishmenuActivity.this)
+                        .setTitle(resurchkekka)
+                        .setMessage("検索結果が見つかりませんでした。")
+                        .setPositiveButton(
+                                R.string.kakuninn,
+
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        edittextfirst();
+                                    }
+                                }
+                        ).show();
+
+                return;
+            }else{
+                resurchdeishitem = item.dishname;
+
+                new AlertDialog.Builder(dishmenuActivity.this)
+                        .setTitle(resurchkekka)
+                        .setMessage("検索結果が見つかりました！\n\n欲しい物：" + resurchdeishitem)
+                        .setPositiveButton(
+                                R.string.ok,
+
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        edittextfirst();
+                                    }
+                                }
+                        ).show();
+            }
+        }else if(deletint == 1){
+            new AlertDialog.Builder(dishmenuActivity.this)
+                    .setTitle("エラー")
+                    .setIcon(R.drawable.chuui)
+                    .setMessage("削除モードになっています。\nワード検索は追加モードでないとできません。\n追加モードに変化しますか？")
+                    .setPositiveButton(
+                            R.string.tuika,
+
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    deletint = 0;
+                                    modetext();
+                                }
+                            }
+                    ).setNeutralButton(
+                    R.string.chancel,
+
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            int t;
+                            t = 0;
+                            t++;
+                        }
+                    }
+            ).show();
+        }
+    }
+
+    public void edittextfirst(){
+        dishresurchedit.setText("");
     }
 
     public void insertItem(String dishinert) {
@@ -324,6 +408,7 @@ public class dishmenuActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     deletint = 0;
+                                    modetext();
                                 }
                             }
                     )
@@ -336,6 +421,14 @@ public class dishmenuActivity extends AppCompatActivity {
                                 }
                             }
                     ).show();
+        }
+    }
+
+    public void modetext(){
+        if(deletint == 0){
+            mode.setText("追加モード");
+        }else if(deletint == 1){
+            mode.setText("削除モード");
         }
     }
 
@@ -356,6 +449,7 @@ public class dishmenuActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     //ダイアログのOKボタンを押したときの処理
                                     deletint = 1;
+                                    modetext();
                                 }
                             }
                     )
@@ -385,6 +479,7 @@ public class dishmenuActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     deletint = 0;
+                                    modetext();
                                 }
                             }
                     )
@@ -410,12 +505,12 @@ public class dishmenuActivity extends AppCompatActivity {
     public void goukeiintent() {
         int dishsum1;
 
-        dishsum1 = Integer.valueOf(sumedittext.getText().toString());
-
         if (sumedittext.getText().toString().equals("")) {
             dishsum1 = 0;
             return;
         }
+
+        dishsum1 = Integer.valueOf(sumedittext.getText().toString());
 
         dishsum = dishsum + dishsum1;
 

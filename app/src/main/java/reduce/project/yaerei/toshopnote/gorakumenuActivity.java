@@ -399,13 +399,13 @@ public class gorakumenuActivity extends AppCompatActivity {
     public void goukeiintent() {
         int gorakuintentsum;
 
-        gorakuintentsum = Integer.valueOf(sumedittextgoraku.getText().toString());
-
         if (sumedittextgoraku.getText().toString().equals("")) {
             gorakuintentsum = 0;
 
             return;
         }
+
+        gorakuintentsum = Integer.valueOf(sumedittextgoraku.getText().toString());
 
         gorakusum = gorakusum + gorakuintentsum;
 

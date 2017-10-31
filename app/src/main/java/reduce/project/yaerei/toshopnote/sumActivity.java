@@ -144,22 +144,23 @@ public class sumActivity extends AppCompatActivity {
 
         oldsum = pref.getInt("goukeisum", 0);
 
-
         year = obj_cd.get(Calendar.YEAR);
         month = obj_cd.get(Calendar.MONTH) + 1;
         day = obj_cd.get(Calendar.DATE);
 
-
         if ((oldyear == year && oldmonth == month && oldday == day) || oldyear == 0 || oldmonth == 0 || oldday == 0) {
+
             Intent intent = getIntent();
             sum = intent.getIntExtra("sum", 0);
             oldsum = oldsum + sum;
+
         } else {
+
             dayriset();
+
         }
 
         hyoujiandclock();
-
 
         input();
     }
@@ -189,16 +190,13 @@ public class sumActivity extends AppCompatActivity {
         yeareditor.putInt("year", year);
         yeareditor.commit();
 
-
         SharedPreferences.Editor motheditor = pref.edit();
         motheditor.putInt("month", month);
         motheditor.commit();
 
-
         SharedPreferences.Editor dayeditor = pref.edit();
         dayeditor.putInt("day", day);
         dayeditor.commit();
-
 
         reset();
     }

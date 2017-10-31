@@ -403,13 +403,13 @@ public class menubunboguActivity extends AppCompatActivity {
 
         int bunbogusum1;
 
-        bunbogusum1 = Integer.valueOf(bunbogusumedittext.getText().toString());
-
         if (bunbogusumedittext.getText().toString().equals("")) {
             bunbogusum1 = 0;
 
             return;
         }
+
+        bunbogusum1 = Integer.valueOf(bunbogusumedittext.getText().toString());
 
         bunbogusum = bunbogusum + bunbogusum1;
 

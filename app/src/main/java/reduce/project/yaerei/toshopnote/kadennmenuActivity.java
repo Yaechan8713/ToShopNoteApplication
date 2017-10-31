@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -39,6 +40,8 @@ public class kadennmenuActivity extends AppCompatActivity {
     String monoedit, spinstr, monototal;
     SharedPreferences kadennpre;
     SharedPreferences.Editor kadenneditor;
+    int year,oldyear,day,oldday,month,oldmonth;
+    Calendar calendar = Calendar.getInstance();
 
 
     @Override
@@ -52,14 +55,30 @@ public class kadennmenuActivity extends AppCompatActivity {
         kadensumedittext = (EditText) findViewById(R.id.kadensumedittext);
         kadennsumtextView = (TextView) findViewById(R.id.kadennsumtextView);
 
+        year = oldyear = day = oldday = month = oldmonth = 0;
 
         firststring();
 
+        year = calendar.get(Calendar.YEAR);
+        day = calendar.get(Calendar.DATE);
+        month = calendar.get(Calendar.MONTH) + 1;
+
+        SharedPrefarences();
+
+        oldyear = kadennpre.getInt("kadennyear",0);
+
+        oldmonth = kadennpre.getInt("kadennmonth",0);
+
+        oldday = kadennpre.getInt("kadennmonth",0);
+
         deletint = t = spint = onclickint = kadennsum = 0;
 
-        kadennpre = getSharedPreferences("kadennsum", Context.MODE_PRIVATE);
-        kadennsum = kadennpre.getInt("kadennsum", 0);
+        if((year == oldyear && day == oldday && month == oldmonth)) {
 
+            kadennpre = getSharedPreferences("kadennsum", Context.MODE_PRIVATE);
+            kadennsum = kadennpre.getInt("kadennsum", 0);
+
+        }
         hyouji();
 
         spint = spinner.getSelectedItemPosition();
@@ -188,26 +207,35 @@ public class kadennmenuActivity extends AppCompatActivity {
 
         switch (menu.getItemId()) {
             case R.id.homemenu:
+                dayinput();
+                finish();
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menufood:
+                dayinput();
+                finish();
                 intent = new Intent(this, menufoodActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menubunnbogu:
+                dayinput();
+                finish();
                 intent = new Intent(this, menubunboguActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menubook:
+                dayinput();
+                finish();
                 intent = new Intent(this, bookmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menukadenn:
+                dayinput();
                 new AlertDialog
                         .Builder(kadennmenuActivity.this)
                         .setTitle("エラ―")
@@ -227,36 +255,50 @@ public class kadennmenuActivity extends AppCompatActivity {
                 return true;
 
             case R.id.menuirui:
+                dayinput();
+                finish();
                 intent = new Intent(this, iruimenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menudish:
+                dayinput();
+                finish();
                 intent = new Intent(this, dishmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menukagu:
+                dayinput();
+                finish();
                 intent = new Intent(this, kagumenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menushokki:
+                dayinput();
+                finish();
                 intent = new Intent(this, shokkimenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menugoraku:
+                dayinput();
+                finish();
                 intent = new Intent(this, gorakumenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusoft:
+                dayinput();
+                finish();
                 intent = new Intent(this, menusoftActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusonota:
+                dayinput();
+                finish();
                 intent = new Intent(this, sonotamenuActivity.class);
                 startActivity(intent);
                 return true;
@@ -273,6 +315,8 @@ public class kadennmenuActivity extends AppCompatActivity {
             } else {
                 monototal = editText.getText().toString();
             }
+
+
 
             new AlertDialog
                     .Builder(kadennmenuActivity.this)
@@ -404,18 +448,28 @@ public class kadennmenuActivity extends AppCompatActivity {
 
         int kadennsum1;
 
-        kadennsum1 = Integer.valueOf(kadensumedittext.getText().toString());
-
         if (kadensumedittext.getText().toString().equals("")) {
             kadennsum1 = 0;
 
             return;
         }
 
+        kadennsum1 = Integer.valueOf(kadensumedittext.getText().toString());
+
+        if(kadennsum1 < 0){
+
+            kadennsum1 = 0;
+            Toast.makeText(this,"負の値は計算できません。",Toast.LENGTH_SHORT).show();
+        }
+
         kadennsum = kadennsum + kadennsum1;
 
         hyouji();
 
+        kadensumedittext.setText("");
+        editText.setText("");
+
+        dayinput();
 
         intent = new Intent(this, sumActivity.class);
         intent.putExtra("sum", kadennsum);
@@ -451,6 +505,30 @@ public class kadennmenuActivity extends AppCompatActivity {
 
     public void intentbutton(View v) {
         goukeiintent();
+    }
+
+    public void dayinput(){
+
+        SharedPrefarences();
+
+        kadenneditor = kadennpre.edit();
+
+        kadenneditor.putInt("year",year);
+        kadenneditor.putInt("month",month);
+        kadenneditor.putInt("day",day);
+
+        kadenneditor.commit();
+
+
+
+    }
+
+    public void SharedPrefarences(){
+
+        kadennpre = getSharedPreferences("kadennyear",Context.MODE_PRIVATE);
+        kadennpre = getSharedPreferences("kadennmonth",Context.MODE_PRIVATE);
+        kadennpre = getSharedPreferences("kadennday",Context.MODE_PRIVATE);
+
     }
 
 

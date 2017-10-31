@@ -45,7 +45,10 @@ public class menufoodActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food);
+
+        foodsumtextView = (TextView)findViewById(R.id.sumtextView);
         listiew = (ListView) findViewById(R.id.listView);
+        foodsumedit = (EditText)findViewById(R.id.foodsumedittext);
         editText = (EditText) findViewById(R.id.edittext);
         spinner = (Spinner) findViewById(R.id.spinner);
         adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1);
@@ -397,13 +400,14 @@ public class menufoodActivity extends AppCompatActivity {
     }
 
     public void goukeiintent() {
-        foodsum = Integer.valueOf(foodsumedit.getText().toString());
 
         if (foodsumedit.getText().toString().equals("")) {
             foodsum = 0;
 
             return;
         }
+
+        foodsum = Integer.valueOf(foodsumedit.getText().toString());
 
         foodsumedit.setText("");
 

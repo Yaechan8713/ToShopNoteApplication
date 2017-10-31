@@ -13,6 +13,9 @@ public class dishItem extends Model {
     @Column(name = "dishName")
     public String dishname;
 
+    @Column(name = "Age")
+    public int age;
+
     public dishItem() {
         super();
     }

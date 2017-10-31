@@ -20,6 +20,7 @@
     <string name="modehyouji">モードを選択してください。</string>
     <string name="ok">OK</string>
     <string name="delete">削除</string>
+    <string name="inputmode">追加モードに変更</string>
     <string name="tuika">追加</string>
     <string name="chancel">キャンセル</string>
     <string name="on">ON</string>

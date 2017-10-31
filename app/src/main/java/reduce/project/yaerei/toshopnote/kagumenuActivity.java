@@ -406,13 +406,13 @@ public class kagumenuActivity extends AppCompatActivity {
     public void goukeiintent() {
         int kagusum1;
 
-        kagusum1 = Integer.valueOf(kagusumedittext.getText().toString());
-
         if (kagusumedittext.getText().toString().equals("")) {
             kagusum1 = 0;
 
             return;
         }
+
+        kagusum1 = Integer.valueOf(kagusumedittext.getText().toString());
 
         kagusum = kagusum + kagusum1;
 

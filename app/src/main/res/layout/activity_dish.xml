@@ -18,7 +18,37 @@
         android:layout_weight="1">
 
     </android.support.design.widget.AppBarLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/common_google_signin_btn_text_light_disabled"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="検索ワード："
+            android:textColor="#000"
+            android:textSize="25dp" />
+
+        <EditText
+            android:id="@+id/dishresurchedit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:onClick="touchedit"
+            android:text="" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="resurch"
+            android:src="@drawable/resurch" />
+
+    </LinearLayout>
 
 
     <LinearLayout
@@ -28,11 +58,11 @@
         android:layout_weight="1">
 
         <TextView
+            android:id="@+id/mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/modehyouji"
-            android:id="@+id/mode"
-            android:textSize="25dp" />
+            android:textSize="25dp"/>
 
         <ListView
             android:layout_width="wrap_content"

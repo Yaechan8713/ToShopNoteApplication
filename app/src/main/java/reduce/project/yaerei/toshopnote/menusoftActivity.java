@@ -402,13 +402,13 @@ public class menusoftActivity extends AppCompatActivity {
     public void goukeiintent() {
         int softsum1;
 
-        softsum1 = Integer.valueOf(softsumeditText.getText().toString());
-
         if (softsumeditText.getText().toString().equals("")) {
             softsum1 = 0;
 
             return;
         }
+
+        softsum1 = Integer.valueOf(softsumeditText.getText().toString());
 
         softsum = softsum + softsum1;
 

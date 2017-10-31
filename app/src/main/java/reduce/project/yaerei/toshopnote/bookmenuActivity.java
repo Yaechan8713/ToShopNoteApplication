@@ -15,12 +15,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 
 import java.util.List;
@@ -32,18 +34,20 @@ public class bookmenuActivity extends AppCompatActivity {
 
     ListView listiew;
     Intent intent;
-    EditText editText, sumedittext;
+    EditText editText, sumedittext,resurchedit;
     Spinner spinner;
     int spint, deletint, onclickint, goukei, booksum, t, resetlist, money, oldsum;
     ArrayAdapter<String> adapter, sumadapter;
     String monoedit, spinstr, monototal;
     TextView modetextview, bookmoneytextView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActiveAndroid.initialize(this);
         setContentView(R.layout.activity_book);
+
+        resurchedit = (EditText)findViewById(R.id.resurchedit);
         sumedittext = (EditText) findViewById(R.id.sumedittext);
         modetextview = (TextView) findViewById(R.id.mode);
         listiew = (ListView) findViewById(R.id.listView);
@@ -195,6 +199,112 @@ public class bookmenuActivity extends AppCompatActivity {
 
     }
 
+    public void resurch(View v) {
+
+        if(deletint == 0){
+
+            String resurch = resurchedit.getText().toString();
+
+            bookItem item = new Select().from(bookItem.class).where("bookName = ?", resurch).executeSingle();
+
+            String resurchitem, resurchkekka;
+
+            resurchkekka = "検索結果";
+
+            if (item == null) {
+
+                new AlertDialog.Builder(bookmenuActivity.this)
+                        .setTitle(resurchkekka)
+                        .setMessage("検索結果が見つかりませんでした。")
+                        .setPositiveButton(
+                                R.string.kakuninn,
+
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        edittextfirst();
+                                    }
+                                }
+                        ).show();
+
+                return;
+            } else {
+
+                resurchitem = item.bookname;
+                ;
+
+                new AlertDialog.Builder(bookmenuActivity.this)
+                        .setTitle(resurchkekka)
+                        .setMessage("検索結果が見つかりました！\n\n欲しい物：" + resurchitem)
+                        .setPositiveButton(
+                                R.string.ok,
+
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        edittextfirst();
+                                    }
+                                }
+                        ).show();
+            }
+
+        }else if(deletint == 1){
+            new AlertDialog.Builder(bookmenuActivity.this)
+                    .setTitle("エラー")
+                    .setIcon(R.drawable.chuui)
+                    .setMessage("削除モードになっています。\nワード検索は追加モードでないとできません。\n追加モードに変更しますか？")
+                    .setPositiveButton(
+                            R.string.inputmode,
+
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    deletint = 0;
+                                    modetext();
+                                }
+                            }
+                    ).setNeutralButton(
+
+                    R.string.chancel,
+
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            int t = 0;
+
+                            t++;
+                        }
+                    }
+            ).show();
+        }else{
+            new AlertDialog.Builder(bookmenuActivity.this)
+                    .setTitle("エラー")
+                    .setMessage("エラーです。")
+                    .setIcon(R.drawable.chuui)
+                    .setPositiveButton(
+
+                            R.string.kakuninn,
+
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    int t = 0;
+
+                                    t++;
+                                }
+                            }
+                    ).show();
+        }
+    }
+
+    public void edittextfirst(){
+        resurchedit.setText("");
+    }
+
+    public void touchedit(View v){
+        resurchedit.setText("");
+    }
+
     public void insertItem(String bookinsert) {
         bookItem item = new bookItem();
         item.bookname = bookinsert;
@@ -206,12 +316,6 @@ public class bookmenuActivity extends AppCompatActivity {
         item = new Select().from(bookItem.class).where("bookname =?", bookdelate).executeSingle();
         item.delete();
     }
-
-//    public void oldsumhyoji() {
-//        Intent intent = getIntent();
-//        oldsum = intent.getIntExtra("sum", 0);
-//
-//    }
 
     public void newint(String booknew) {
         bookItem item = new bookItem();
@@ -231,18 +335,21 @@ public class bookmenuActivity extends AppCompatActivity {
 
         switch (menu.getItemId()) {
             case R.id.homemenu:
+                finish();
 //                ホームのジャンルのレイアウトを開く
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menufood:
+                finish();
 //                食べ物のジャンルのレイアウトを開く
                 intent = new Intent(this, menufoodActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menubunnbogu:
+                finish();
 //                文房具のジャンルのレイアウトを開く
                 intent = new Intent(this, menubunboguActivity.class);
                 startActivity(intent);
@@ -269,48 +376,56 @@ public class bookmenuActivity extends AppCompatActivity {
                 return true;
 
             case R.id.menukadenn:
+                finish();
 //                家電のジャンルのレイアウトを開く
                 intent = new Intent(this, kadennmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menuirui:
+                finish();
 //                衣類のジャンルのレイアウトを開く
                 intent = new Intent(this, iruimenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menudish:
+                finish();
 //                洗剤のジャンルのレイアウトを開く
                 intent = new Intent(this, dishmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menukagu:
+                finish();
 //                家具のジャンルのレイアウトを開く
                 intent = new Intent(this, kagumenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menushokki:
+                finish();
 //                食器のジャンルのレイアウトを開く
                 intent = new Intent(this, shokkimenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menugoraku:
+                finish();
 //                娯楽のジャンルのレイアウトを開く
                 intent = new Intent(this, gorakumenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusoft:
+                finish();
 //                ソフトウェアのジャンルのレイアウトを開く
                 intent = new Intent(this, menusoftActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusonota:
+                finish();
 //                その他のジャンルのレイアウトを開く
                 intent = new Intent(this, sonotamenuActivity.class);
                 startActivity(intent);
@@ -470,15 +585,18 @@ public class bookmenuActivity extends AppCompatActivity {
 
 
     public void goukeiintent() {
-        int integer;
 
-        integer = Integer.valueOf(sumedittext.getText().toString());
+        int booksummoney;
 
         if (sumedittext.getText().toString().equals("")) {
             //sumedittextにデータが入ってなかった場合
-            integer = 0;
+            booksummoney = 0;
             return;
         }
+
+        booksummoney = Integer.valueOf(sumedittext.getText().toString());
+
+        money = money + booksummoney;
 
         sumedittext.setText("");
         SharedPreferences preoldsum = getSharedPreferences("oldbooksum", Context.MODE_PRIVATE);
@@ -500,12 +618,13 @@ public class bookmenuActivity extends AppCompatActivity {
         startActivity(intent);
 
 
-        money = integer = 0;
+        money = 0;
     }
 
     public void intentbutton(View v) {
 
         goukeiintent();
+
     }
 
 

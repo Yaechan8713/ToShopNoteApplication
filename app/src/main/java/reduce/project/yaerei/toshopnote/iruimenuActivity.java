@@ -403,13 +403,13 @@ public class iruimenuActivity extends AppCompatActivity {
 
         int iruisum1;
 
-        iruisum1 = Integer.valueOf(iruisumedittext.getText().toString());
-
         if (iruisumedittext.getText().toString().equals("")) {
             iruisum1 = 0;
 
             return;
         }
+
+        iruisum1 = Integer.valueOf(iruisumedittext.getText().toString());
 
         iruisum = iruisum + iruisum1;
 

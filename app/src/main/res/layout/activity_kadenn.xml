@@ -82,14 +82,16 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edittext" />
+                    android:layout_weight="1"/>
 
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/spinner"
+                    android:layout_weight="1"
                     android:drawSelectorOnTop="true"
                     android:entries="@array/spnkadenn"/>
 
