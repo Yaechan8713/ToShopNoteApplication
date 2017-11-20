@@ -19,9 +19,43 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/common_google_signin_btn_text_light_disabled"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="検索ワード："
+            android:textColor="#000"
+            android:textSize="25dp" />
+
+        <EditText
+            android:id="@+id/iruiresurchedit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:onClick="touchedit"
+            android:text="" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="resurch"
+            android:src="@drawable/resurch" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="50">
 
         <TextView
             android:layout_width="wrap_content"
@@ -95,35 +129,51 @@
 
             </LinearLayout>
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/foatactionbutton"
-                android:layout_height="wrap_content"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:src="@android:drawable/ic_input_add"
-                android:layout_weight="1" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal">
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/deletefoatactionbutton"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:src="@android:drawable/ic_menu_delete"
-                android:layout_weight="1"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="intentbutton"
+                    android:text="@string/sumhyoji"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/foatactionbutton"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:src="@android:drawable/ic_input_add"
+                        android:layout_weight="1" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/deletefoatactionbutton"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:src="@android:drawable/ic_menu_delete"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="intentbutton"
-            android:text="合計金額　表示"/>
 
     </LinearLayout>
 

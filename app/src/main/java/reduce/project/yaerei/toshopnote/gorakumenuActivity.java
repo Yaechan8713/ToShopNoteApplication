@@ -34,8 +34,9 @@ public class gorakumenuActivity extends AppCompatActivity {
     EditText editText, sumedittextgoraku;
     Spinner spinner;
     int t, spint, deletint, onclickint, gorakusum;
+    EditText gorakuresurchedit;
     ArrayAdapter<String> adapter;
-    TextView gorakusumtextView;
+    TextView gorakusumtextView,mode;
     SharedPreferences gorakupre;
     SharedPreferences.Editor gorakueditor;
     String monoedit, spinstr, monototal;
@@ -45,11 +46,14 @@ public class gorakumenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goraku);
+
+        gorakuresurchedit = (EditText)findViewById(R.id.gorakuresurchedit);
         listiew = (ListView) findViewById(R.id.listView);
         editText = (EditText) findViewById(R.id.edittext);
         spinner = (Spinner) findViewById(R.id.spinner);
         adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1);
         gorakusumtextView = (TextView) findViewById(R.id.gorakusumtextView);
+        mode = (TextView)findViewById(R.id.mode);
         sumedittextgoraku = (EditText) findViewById(R.id.gorakusumedittext);
 
         firststring();
@@ -261,6 +265,92 @@ public class gorakumenuActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(menu);
     }
 
+    public void modetext(){
+        if(deletint == 0){
+            mode.setText("追加モード");
+        }else if(deletint == 1){
+            mode.setText("削除モード");
+        }
+    }
+
+    public void resurch(View v){
+        if(deletint == 0){
+
+            String resurchstring = gorakuresurchedit.getText().toString();
+
+            gorakuItem item = new Select().from(gorakuItem.class).where("gorakuname = ?",resurchstring).executeSingle();
+
+            String resurchdeishitem,resurchkekka;
+
+            resurchkekka = "検索結果";
+
+            if(item == null){
+                new AlertDialog.Builder(gorakumenuActivity.this)
+                        .setTitle(resurchkekka)
+                        .setMessage("検索結果が見つかりませんでした。")
+                        .setPositiveButton(
+                                R.string.kakuninn,
+
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        edittextfirst();
+                                    }
+                                }
+                        ).show();
+
+                return;
+            }else{
+                resurchdeishitem = item.gorakuname;
+
+                new AlertDialog.Builder(gorakumenuActivity.this)
+                        .setTitle(resurchkekka)
+                        .setMessage("検索結果が見つかりました！\n\n欲しい物：" + resurchdeishitem)
+                        .setPositiveButton(
+                                R.string.ok,
+
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        edittextfirst();
+                                    }
+                                }
+                        ).show();
+            }
+        }else if(deletint == 1){
+            new AlertDialog.Builder(gorakumenuActivity.this)
+                    .setTitle("エラー")
+                    .setIcon(R.drawable.chuui)
+                    .setMessage("削除モードになっています。\nワード検索は追加モードでないとできません。\n追加モードに変化しますか？")
+                    .setPositiveButton(
+                            R.string.tuika,
+
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    deletint = 0;
+                                    modetext();
+                                }
+                            }
+                    ).setNeutralButton(
+                    R.string.chancel,
+
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            int t;
+                            t = 0;
+                            t++;
+                        }
+                    }
+            ).show();
+        }
+    }
+
+    public void edittextfirst(){
+        gorakuresurchedit.setText("");
+    }
+
     public void input() {
 
         if (deletint == 0) {
@@ -314,6 +404,7 @@ public class gorakumenuActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     deletint = 0;
+                                    firststring();
                                 }
                             }
                     )
@@ -346,6 +437,7 @@ public class gorakumenuActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     //ダイアログのOKボタンを押したときの処理
                                     deletint = 1;
+                                    firststring();
                                 }
                             }
                     )
@@ -375,6 +467,7 @@ public class gorakumenuActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     deletint = 0;
+                                    firststring();
                                 }
                             }
                     )
