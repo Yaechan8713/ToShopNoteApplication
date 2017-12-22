@@ -278,31 +278,37 @@ public class dishmenuActivity extends AppCompatActivity {
 
         switch (menu.getItemId()) {
             case R.id.homemenu:
+                finish();
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menufood:
+                finish();
                 intent = new Intent(this, menufoodActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menubunnbogu:
+                finish();
                 intent = new Intent(this, menubunboguActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menubook:
+                finish();
                 intent = new Intent(this, bookmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menukadenn:
+                finish();
                 intent = new Intent(this, kadennmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menuirui:
+                finish();
                 intent = new Intent(this, iruimenuActivity.class);
                 startActivity(intent);
                 return true;
@@ -327,26 +333,31 @@ public class dishmenuActivity extends AppCompatActivity {
                 return true;
 
             case R.id.menukagu:
+                finish();
                 intent = new Intent(this, kagumenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menushokki:
+                finish();
                 intent = new Intent(this, shokkimenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menugoraku:
+                finish();
                 intent = new Intent(this, gorakumenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusoft:
+                finish();
                 intent = new Intent(this, menusoftActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusonota:
+                finish();
                 intent = new Intent(this, sonotamenuActivity.class);
                 startActivity(intent);
                 return true;

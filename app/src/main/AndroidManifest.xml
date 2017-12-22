@@ -18,8 +18,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-
-
         <meta-data
             android:name="com.android.gms.version"
             android:value="@integer/google_play_services_version"/>
@@ -37,6 +35,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,42 +48,55 @@
 
         <activity
             android:name=".lockActivity"
+            android:screenOrientation="portrait"
             android:label="@string/login" />
         <activity
             android:name=".bookmenuActivity"
+            android:screenOrientation="portrait"
             android:label="@string/bookmenu" />
         <activity
             android:name=".dishmenuActivity"
+            android:screenOrientation="portrait"
             android:label="@string/dishmenu" />
         <activity
             android:name=".gorakumenuActivity"
+            android:screenOrientation="portrait"
             android:label="@string/gorakumenu" />
         <activity
             android:name=".iruimenuActivity"
+            android:screenOrientation="portrait"
             android:label="@string/iruimenu" />
         <activity
             android:name=".kadennmenuActivity"
+            android:screenOrientation="portrait"
             android:label="@string/kadennmenu" />
         <activity
             android:name=".kagumenuActivity"
+            android:screenOrientation="portrait"
             android:label="@string/kagumenu" />
         <activity
             android:name=".menubunboguActivity"
+            android:screenOrientation="portrait"
             android:label="@string/bunnbogumenu" />
         <activity
             android:name=".menufoodActivity"
+            android:screenOrientation="portrait"
             android:label="@string/foodmenu" />
         <activity
             android:name=".menusoftActivity"
+            android:screenOrientation="portrait"
             android:label="@string/softmenu" />
         <activity
             android:name=".shokkimenuActivity"
+            android:screenOrientation="portrait"
             android:label="@string/shokkimenu" />
         <activity
             android:name=".sonotamenuActivity"
+            android:screenOrientation="portrait"
             android:label="@string/sonotamenu" />
         <activity
             android:name=".sumActivity"
+            android:screenOrientation="portrait"
             android:label="@string/summoney" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -100,10 +112,14 @@
 
         <activity
             android:name=".GoogleMapActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_google_map"/>
 
-        <activity android:name=".googlemap2Activity"/>
-        <activity android:name=".googlemaprunActivity"/>
+        <activity android:name=".googlemap2Activity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".googlemaprunActivity"
+            android:screenOrientation="portrait"/>
 
 
 

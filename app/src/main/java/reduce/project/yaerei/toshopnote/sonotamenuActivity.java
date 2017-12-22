@@ -31,11 +31,11 @@ import java.util.List;
 public class sonotamenuActivity extends AppCompatActivity {
     ListView listiew;
     Intent intent;
-    EditText editText, sonotaedittext;
+    EditText editText, sonotaedittext,sonotaresurch;
     Spinner spinner;
     int t, spint, deletint, onclickint, sonotasum;
     ArrayAdapter<String> adapter;
-    TextView sonotatextView;
+    TextView sonotatextView,mode;
     SharedPreferences sonotapre;
     SharedPreferences.Editor sonotaeditor;
     String monoedit, spinstr, monototal;
@@ -45,12 +45,15 @@ public class sonotamenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sonota);
+
         listiew = (ListView) findViewById(R.id.listView);
         editText = (EditText) findViewById(R.id.edittext);
         spinner = (Spinner) findViewById(R.id.spinner);
         adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1);
         sonotaedittext = (EditText) findViewById(R.id.sonotaedittext);
         sonotatextView = (TextView) findViewById(R.id.sonotatextView);
+        sonotaresurch = (EditText)findViewById(R.id.sonotaresurch);
+        mode = (TextView)findViewById(R.id.mode);
 
         firststring();
 
@@ -186,16 +189,19 @@ public class sonotamenuActivity extends AppCompatActivity {
 
         switch (menu.getItemId()) {
             case R.id.homemenu:
+                finish();
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menufood:
+                finish();
                 intent = new Intent(this, menufoodActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menubunnbogu:
+                finish();
                 intent = new Intent(this, menubunboguActivity.class);
                 startActivity(intent);
                 return true;
@@ -220,47 +226,57 @@ public class sonotamenuActivity extends AppCompatActivity {
                 return true;
 
             case R.id.menukadenn:
+                finish();
                 intent = new Intent(this, kadennmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menuirui:
+                finish();
                 intent = new Intent(this, iruimenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menudish:
+                finish();
                 intent = new Intent(this, dishmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menukagu:
+                finish();
                 intent = new Intent(this, kagumenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menushokki:
+                finish();
                 intent = new Intent(this, shokkimenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menugoraku:
+                finish();
                 intent = new Intent(this, gorakumenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusoft:
+                finish();
                 intent = new Intent(this, menusoftActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusonota:
+                finish();
                 intent = new Intent(this, sonotamenuActivity.class);
                 startActivity(intent);
                 return true;
 
         }
+
         return super.onOptionsItemSelected(menu);
+
     }
 
     public void input() {
@@ -445,5 +461,95 @@ public class sonotamenuActivity extends AppCompatActivity {
 
     public void intentbutton(View v) {
         goukeiintent();
+    }
+
+    public void resurch(View v){
+        if(deletint == 0){
+
+            String resurchstring = sonotaresurch.getText().toString();
+
+            sonotaItem item = new Select().from(sonotaItem.class).where("sonotaname = ?",resurchstring).executeSingle();
+
+            String resurchdeishitem,resurchkekka;
+
+            resurchkekka = "検索結果";
+
+            if(item == null){
+                new AlertDialog.Builder(sonotamenuActivity.this)
+                        .setTitle(resurchkekka)
+                        .setMessage("検索結果が見つかりませんでした。")
+                        .setPositiveButton(
+                                R.string.kakuninn,
+
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        edittextfirst();
+                                    }
+                                }
+                        ).show();
+
+                return;
+            }else{
+                resurchdeishitem = item.sonotaname;
+
+                new AlertDialog.Builder(sonotamenuActivity.this)
+                        .setTitle(resurchkekka)
+                        .setMessage("検索結果が見つかりました！\n\n欲しい物：" + resurchdeishitem)
+                        .setPositiveButton(
+                                R.string.ok,
+
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        edittextfirst();
+                                    }
+                                }
+                        ).show();
+            }
+
+//            Context context = kagumenuActivity;
+        }else if(deletint == 1){
+            new AlertDialog.Builder(sonotamenuActivity.this)
+                    .setTitle("エラー")
+                    .setIcon(R.drawable.chuui)
+                    .setMessage("削除モードになっています。\nワード検索は追加モードでないとできません。\n追加モードに変化しますか？")
+                    .setPositiveButton(
+                            R.string.tuika,
+
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    deletint = 0;
+                                    modetext();
+                                }
+                            }
+                    ).setNeutralButton(
+                    R.string.chancel,
+
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            int t;
+                            t = 0;
+                            t++;
+                        }
+                    }
+            ).show();
+
+        }
+
+    }
+
+    public void edittextfirst(){
+        sonotaresurch.setText("");
+    }
+
+    public void modetext(){
+        if(deletint == 0){
+            mode.setText("追加モード");
+        }else if(deletint == 1){
+            mode.setText("削除モード");
+        }
     }
 }

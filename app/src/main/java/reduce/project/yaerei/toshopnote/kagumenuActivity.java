@@ -32,12 +32,12 @@ public class kagumenuActivity extends AppCompatActivity {
 
     ListView listiew;
     Intent intent;
-    EditText editText, kagusumedittext;
+    EditText editText, kagusumedittext,resurchedit;
     Spinner spinner;
     int t, spint, deletint, onclickint, kagusum;
     ArrayAdapter<String> adapter;
     String monoedit, spinstr, monototal;
-    TextView kagusumtextView;
+    TextView kagusumtextView,mode;
     SharedPreferences kagupre;
     SharedPreferences.Editor kagueditor;
 
@@ -52,7 +52,8 @@ public class kagumenuActivity extends AppCompatActivity {
         adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1);
         kagusumedittext = (EditText) findViewById(R.id.kagusumedittext);
         kagusumtextView = (TextView) findViewById(R.id.kagusumtextView);
-
+        resurchedit = (EditText)findViewById(R.id.kaguresurchedit);
+        mode = (TextView)findViewById(R.id.mode);
 
         firststring();
 
@@ -191,36 +192,43 @@ public class kagumenuActivity extends AppCompatActivity {
 
         switch (menu.getItemId()) {
             case R.id.homemenu:
+                finish();
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menufood:
+                finish();
                 intent = new Intent(this, menufoodActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menubunnbogu:
+                finish();
                 intent = new Intent(this, menubunboguActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menubook:
+                finish();
                 intent = new Intent(this, bookmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menukadenn:
+                finish();
                 intent = new Intent(this, kadennmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menuirui:
+                finish();
                 intent = new Intent(this, iruimenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menudish:
+                finish();
                 intent = new Intent(this, dishmenuActivity.class);
                 startActivity(intent);
                 return true;
@@ -245,21 +253,25 @@ public class kagumenuActivity extends AppCompatActivity {
                 return true;
 
             case R.id.menushokki:
+                finish();
                 intent = new Intent(this, shokkimenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menugoraku:
+                finish();
                 intent = new Intent(this, gorakumenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusoft:
+                finish();
                 intent = new Intent(this, menusoftActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusonota:
+                finish();
                 intent = new Intent(this, sonotamenuActivity.class);
                 startActivity(intent);
                 return true;
@@ -453,6 +465,93 @@ public class kagumenuActivity extends AppCompatActivity {
 
     public void intentbutton(View v) {
         goukeiintent();
+    }
+    public void resurch(View v){
+        if(deletint == 0){
+
+            String resurchstring = resurchedit.getText().toString();
+
+            kaguItem item = new Select().from(kaguItem.class).where("kaguname = ?",resurchstring).executeSingle();
+
+            String resurchdeishitem,resurchkekka;
+
+            resurchkekka = "検索結果";
+
+            if(item == null){
+                new AlertDialog.Builder(kagumenuActivity.this)
+                        .setTitle(resurchkekka)
+                        .setMessage("検索結果が見つかりませんでした。")
+                        .setPositiveButton(
+                                R.string.kakuninn,
+
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        edittextfirst();
+                                    }
+                                }
+                        ).show();
+
+                return;
+            }else{
+                resurchdeishitem = item.kaguname;
+
+                new AlertDialog.Builder(kagumenuActivity.this)
+                        .setTitle(resurchkekka)
+                        .setMessage("検索結果が見つかりました！\n\n欲しい物：" + resurchdeishitem)
+                        .setPositiveButton(
+                                R.string.ok,
+
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        edittextfirst();
+                                    }
+                                }
+                        ).show();
+            }
+
+//            Context context = kagumenuActivity;
+        }else if(deletint == 1){
+            new AlertDialog.Builder(kagumenuActivity.this)
+                    .setTitle("エラー")
+                    .setIcon(R.drawable.chuui)
+                    .setMessage("削除モードになっています。\nワード検索は追加モードでないとできません。\n追加モードに変化しますか？")
+                    .setPositiveButton(
+                            R.string.tuika,
+
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    deletint = 0;
+                                    modetext();
+                                }
+                            }
+                    ).setNeutralButton(
+                    R.string.chancel,
+
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            int t;
+                            t = 0;
+                            t++;
+                        }
+                    }
+            ).show();
+        }
+    }
+
+    public void edittextfirst(){
+        resurchedit.setText("");
+    }
+
+    public void modetext(){
+        if(deletint == 0){
+            mode.setText("追加モード");
+        }else if(deletint == 1){
+            mode.setText("削除モード");
+        }
     }
 
 }

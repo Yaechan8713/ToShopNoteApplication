@@ -3,6 +3,41 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/common_google_signin_btn_text_light_disabled"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="検索ワード："
+            android:textColor="#000"
+            android:textSize="25dp" />
+
+        <EditText
+            android:id="@+id/bunboguresurchedit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:onClick="touchedit"
+            android:text="" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="resurch"
+            android:src="@drawable/resurch" />
+
+    </LinearLayout>
+
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,27 +55,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="50"
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/modehyouji"
-            android:id="@+id/mode"
             android:textSize="25dp" />
 
         <ListView
+            android:id="@+id/listView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/listView"
             android:layout_weight="1" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/bunbogusumtextView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:id="@+id/bunbogusumtextView"/>
+            android:textSize="25dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,14 +85,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="金額"
                 android:gravity="center_vertical"
+                android:text="金額"
                 android:textColor="#000000" />
 
             <EditText
+                android:id="@+id/bunbogusumedittext"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/bunbogusumedittext"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -71,9 +106,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text="商品名"
-                android:textColor="#000000"
-                android:gravity="center_vertical" />
+                android:textColor="#000000" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -82,50 +117,66 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/edittext"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/edittext" />
+                    android:layout_height="wrap_content" />
 
                 <Spinner
+                    android:id="@+id/spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/spinner"
                     android:drawSelectorOnTop="true"
-                    android:entries="@array/spnbunbogu"/>
+                    android:entries="@array/spnbunbogu" />
 
             </LinearLayout>
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/foatactionbutton"
-                android:layout_height="wrap_content"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:src="@android:drawable/ic_input_add"
-                android:layout_weight="1" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/deletefoatactionbutton"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:src="@android:drawable/ic_menu_delete"
-                android:layout_weight="1"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="intentbutton"
+                    android:text="合計金額　表示" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/foatactionbutton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_weight="1"
+                        android:src="@android:drawable/ic_input_add" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/deletefoatactionbutton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_weight="1"
+                        android:src="@android:drawable/ic_menu_delete" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="intentbutton"
-            android:text="合計金額　表示"/>
 
     </LinearLayout>
 

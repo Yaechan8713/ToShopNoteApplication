@@ -36,18 +36,23 @@ public class kadennmenuActivity extends AppCompatActivity {
     Spinner spinner;
     TextView kadennsumtextView;
     int t, spint, deletint, onclickint, kadennsum;
+    TextView mode;
     ArrayAdapter<String> adapter;
     String monoedit, spinstr, monototal;
     SharedPreferences kadennpre;
     SharedPreferences.Editor kadenneditor;
     int year,oldyear,day,oldday,month,oldmonth;
     Calendar calendar = Calendar.getInstance();
+    EditText kadennresurchedit;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kadenn);
+
+        mode = (TextView)findViewById(R.id.mode);
+        kadennresurchedit = (EditText)findViewById(R.id.kadennresurchedit);
         listiew = (ListView) findViewById(R.id.listView);
         editText = (EditText) findViewById(R.id.edittext);
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -437,6 +442,91 @@ public class kadennmenuActivity extends AppCompatActivity {
                     ).show();
         }
 
+    }
+    public void resurch(View v){
+        if(deletint == 0){
+
+            String resurchstring = kadennresurchedit.getText().toString();
+
+            kadennItem item = new Select().from(kadennItem.class).where("kadennname = ?",resurchstring).executeSingle();
+
+            String resurchdeishitem,resurchkekka;
+
+            resurchkekka = "検索結果";
+
+            if(item == null){
+                new AlertDialog.Builder(kadennmenuActivity.this)
+                        .setTitle(resurchkekka)
+                        .setMessage("検索結果が見つかりませんでした。")
+                        .setPositiveButton(
+                                R.string.kakuninn,
+
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        edittextfirst();
+                                    }
+                                }
+                        ).show();
+
+                return;
+            }else{
+                resurchdeishitem = item.kadennname;
+
+                new AlertDialog.Builder(kadennmenuActivity.this)
+                        .setTitle(resurchkekka)
+                        .setMessage("検索結果が見つかりました！\n\n欲しい物：" + resurchdeishitem)
+                        .setPositiveButton(
+                                R.string.ok,
+
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        edittextfirst();
+                                    }
+                                }
+                        ).show();
+            }
+        }else if(deletint == 1){
+            new AlertDialog.Builder(kadennmenuActivity.this)
+                    .setTitle("エラー")
+                    .setIcon(R.drawable.chuui)
+                    .setMessage("削除モードになっています。\nワード検索は追加モードでないとできません。\n追加モードに変化しますか？")
+                    .setPositiveButton(
+                            R.string.tuika,
+
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    deletint = 0;
+                                    modetext();
+                                }
+                            }
+                    ).setNeutralButton(
+                    R.string.chancel,
+
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            int t;
+                            t = 0;
+                            t++;
+                        }
+                    }
+            ).show();
+        }
+    }
+
+    public void edittextfirst(){
+        kadennresurchedit.setText("");
+    }
+
+    public void modetext(){
+        if(deletint == 0){
+            mode.setText("追加モード");
+        }else if(deletint == 1){
+            mode.setText("削除モード");
+        }
     }
 
     public void firststring() {
