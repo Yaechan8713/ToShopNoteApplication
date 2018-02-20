@@ -87,7 +87,7 @@ public class bookmenuActivity extends AppCompatActivity {
         preeditor.putInt("money", money);
         preeditor.commit();
 
-        modetext();
+        modetext("追加モード");
 
         spint = spinner.getSelectedItemPosition();
         spinstr = (String) spinner.getSelectedItem();
@@ -259,8 +259,8 @@ public class bookmenuActivity extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    deletint = 0;
-                                    modetext();
+//                                    deletint = 0;
+                                    modetext("追加モード");
                                 }
                             }
                     ).setNeutralButton(
@@ -416,7 +416,6 @@ public class bookmenuActivity extends AppCompatActivity {
                 intent = new Intent(this, gorakumenuActivity.class);
                 startActivity(intent);
                 return true;
-
             case R.id.menusoft:
                 finish();
 //                ソフトウェアのジャンルのレイアウトを開く
@@ -489,7 +488,7 @@ public class bookmenuActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     deletint = 0;
 
-                                    modetext();
+                                    modetext("追加モード");
                                 }
                             }
                     )
@@ -505,12 +504,8 @@ public class bookmenuActivity extends AppCompatActivity {
         }
     }
 
-    public void modetext() {
-        if (deletint == 0) {
-            modetextview.setText("追加モード");
-        } else if (deletint == 1) {
-            modetextview.setText("削除モード");
-        }
+    public void modetext(String modestr) {
+        modetextview.setText(modestr);
     }
 
     public void delete() {
@@ -529,8 +524,8 @@ public class bookmenuActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     //ダイアログのOKボタンを押したときの処理
-                                    deletint = 1;
-                                    modetext();
+//                                    deletint = 1;
+                                    modetext("削除モード");
 
                                 }
                             }
@@ -560,8 +555,8 @@ public class bookmenuActivity extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    deletint = 0;
-                                    modetext();
+//                                    deletint = 0;
+                                    modetext("追加モード");
                                 }
                             }
                     )
@@ -613,7 +608,7 @@ public class bookmenuActivity extends AppCompatActivity {
             oldsum = 0;
             bookmoneytextView.setText("エラーです。合計金額が大き過ぎです。");
         }
-        intent = new Intent(this, sumActivity.class);
+        intent = new Intent(this, lockActivity.class);
         intent.putExtra("sum", money);
         startActivity(intent);
 

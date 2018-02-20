@@ -56,8 +56,6 @@ public class dishmenuActivity extends AppCompatActivity {
         sumedittext = (EditText) findViewById(R.id.dishsumedittext);
         dishsumtextView = (TextView) findViewById(R.id.dishsumtextView);
 
-        mode.setText("追加モード");
-
         firststring();
 
         deletint = t = spint = onclickint = dishsum = 0;
@@ -79,6 +77,8 @@ public class dishmenuActivity extends AppCompatActivity {
         spinstr = (String) spinner.getSelectedItem();
 
         listiew.setAdapter(adapter);
+
+        modetext("追加モード");
 
         listiew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -225,8 +225,8 @@ public class dishmenuActivity extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    deletint = 0;
-                                    modetext();
+//                                    deletint = 0;
+                                    modetext("追加モード");
                                 }
                             }
                     ).setNeutralButton(
@@ -370,6 +370,7 @@ public class dishmenuActivity extends AppCompatActivity {
 
         if (deletint == 0) {
             if (TextUtils.isEmpty(editText.getText())) {
+//                Edittext editTextに何も入力されてなかった場合
                 monototal = spinner.getSelectedItem().toString();
             } else {
                 monototal = editText.getText().toString();
@@ -419,7 +420,7 @@ public class dishmenuActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     deletint = 0;
-                                    modetext();
+                                    modetext("追加モード");
                                 }
                             }
                     )
@@ -435,12 +436,8 @@ public class dishmenuActivity extends AppCompatActivity {
         }
     }
 
-    public void modetext(){
-        if(deletint == 0){
-            mode.setText("追加モード");
-        }else if(deletint == 1){
-            mode.setText("削除モード");
-        }
+    public void modetext(String text){
+        mode.setText(text);
     }
 
     public void delete() {
@@ -459,8 +456,8 @@ public class dishmenuActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     //ダイアログのOKボタンを押したときの処理
-                                    deletint = 1;
-                                    modetext();
+//                                    deletint = 1;
+                                    modetext("削除モード");
                                 }
                             }
                     )
@@ -489,8 +486,8 @@ public class dishmenuActivity extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    deletint = 0;
-                                    modetext();
+//                                    deletint = 0;
+                                    modetext("追加モード");
                                 }
                             }
                     )
@@ -535,7 +532,7 @@ public class dishmenuActivity extends AppCompatActivity {
 
         dishsumtextView.setText("合計金額は" + dishsum + "円です。");
 
-        intent = new Intent(this, sumActivity.class);
+        intent = new Intent(this, lockActivity.class);
         intent.putExtra("sum", dishsum);
         startActivity(intent);
 

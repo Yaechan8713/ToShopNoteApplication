@@ -151,7 +151,7 @@ public class sumActivity extends AppCompatActivity {
         if ((oldyear == year && oldmonth == month && oldday == day) || oldyear == 0 || oldmonth == 0 || oldday == 0) {
 
             Intent intent = getIntent();
-            sum = intent.getIntExtra("sum", 0);
+            sum = intent.getIntExtra("sum2", 0);
             oldsum = oldsum + sum;
 
         } else {

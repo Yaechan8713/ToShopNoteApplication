@@ -110,18 +110,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".GoogleMapActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_google_map"/>
-
-        <activity android:name=".googlemap2Activity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".googlemaprunActivity"
-            android:screenOrientation="portrait"/>
-
-
 
     </application>
 

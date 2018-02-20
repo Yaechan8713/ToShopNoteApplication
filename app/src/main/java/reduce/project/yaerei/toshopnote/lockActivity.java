@@ -1,9 +1,11 @@
 package reduce.project.yaerei.toshopnote;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,7 +19,7 @@ public class lockActivity extends AppCompatActivity {
 
     Intent intent;
 
-    int firstjudge;
+    int firstjudge,passwordcount;
     Random random = new Random();
 
     TextView passwordtextView;
@@ -27,12 +29,14 @@ public class lockActivity extends AppCompatActivity {
 
     Button button1, button2, button3, button4, button5, button6, button7, button8;
 
-    int money1, money2, money3, money4, money5, money6, money7, money8;
+    int money1, money2, money3, money4, money5,sum, money6, money7, money8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
 
         passwordtextView = (TextView) findViewById(R.id.passwordtextView);
 
@@ -50,6 +54,16 @@ public class lockActivity extends AppCompatActivity {
         pre = getSharedPreferences("lockfirst", Context.MODE_PRIVATE);
         firstjudge = pre.getInt("lockfirst", 0);
 
+        firstrun();
+
+    }
+
+    public void firstrun(){
+
+        intent = getIntent();
+        sum = intent.getIntExtra("sum",0);
+
+        passwordcount = 0;
         if (firstjudge == 1) {
 
             int intentnum;
@@ -305,18 +319,59 @@ public class lockActivity extends AppCompatActivity {
 
         button8.setText(money8 + "");
     }
+
+    public void passwordrun(int ps){
+        int num1,num2,num3,num4,ps1,ps2,ps3,ps4;
+        num1 = num2 = num3 = num4 = 0;
+
+        pre = getSharedPreferences("inputnum1",Context.MODE_PRIVATE);
+        ps1 = pre.getInt("inputnum1",0);
+
+        pre =getSharedPreferences("inputnum2",Context.MODE_PRIVATE);
+        ps2 = pre.getInt("inputnum2",0);
+
+        pre = getSharedPreferences("inputnum3",Context.MODE_PRIVATE);
+        ps3 = pre.getInt("inputnum3",0);
+
+        pre = getSharedPreferences("inputnum4",Context.MODE_PRIVATE);
+        ps4 = pre.getInt("inputnum4",0);
+
+        if(passwordcount == 0){
+            num1 = ps;
+            passwordcount++;
+        }
+        if(passwordcount == 1){
+            num2 = ps;
+            passwordcount++;
+        }else if(passwordcount == 2){
+            num3 = ps;
+            passwordcount++;
+        }else{
+            num4 = ps;
+            passwordcount = 0;
+        }
+
+        if(num1 == ps1 && num2 == ps2 && num3 == ps3 && num4 == ps4){
+
+            intent = new Intent(this,sumActivity.class);
+            intent.putExtra("sum2",sum);
+            startActivity(intent);
+
+        }else{
+            new AlertDialog.Builder(lockActivity.this)
+                    .setTitle("エラー")
+                    .setIcon(R.drawable.chuui)
+                    .setMessage("パスワードが違います。")
+                    .setPositiveButton(
+                            R.string.ryoukai,
+
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    firstrun();
+                                }
+                            }
+                    ).show();
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -58,6 +58,8 @@ public class gorakumenuActivity extends AppCompatActivity {
 
         firststring();
 
+        modetext("追加モード");
+
         deletint = t = spint = onclickint = gorakusum = 0;
 
         gorakupre = getSharedPreferences("gorakusum", Context.MODE_PRIVATE);
@@ -188,46 +190,55 @@ public class gorakumenuActivity extends AppCompatActivity {
 
         switch (menu.getItemId()) {
             case R.id.homemenu:
+                finish();
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menufood:
+                finish();
                 intent = new Intent(this, menufoodActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menubunnbogu:
+                finish();
                 intent = new Intent(this, menubunboguActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menubook:
+                finish();
                 intent = new Intent(this, bookmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menukadenn:
+                finish();
                 intent = new Intent(this, kadennmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menuirui:
+                finish();
                 intent = new Intent(this, iruimenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menudish:
+                finish();
                 intent = new Intent(this, dishmenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menukagu:
+                finish();
                 intent = new Intent(this, kagumenuActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menushokki:
+                finish();
                 intent = new Intent(this, shokkimenuActivity.class);
                 startActivity(intent);
                 return true;
@@ -252,11 +263,13 @@ public class gorakumenuActivity extends AppCompatActivity {
                 return true;
 
             case R.id.menusoft:
+                finish();
                 intent = new Intent(this, menusoftActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menusonota:
+                finish();
                 intent = new Intent(this, sonotamenuActivity.class);
                 startActivity(intent);
                 return true;
@@ -265,12 +278,8 @@ public class gorakumenuActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(menu);
     }
 
-    public void modetext(){
-        if(deletint == 0){
-            mode.setText("追加モード");
-        }else if(deletint == 1){
-            mode.setText("削除モード");
-        }
+    public void modetext(String modestr){
+        mode.setText(modestr);
     }
 
     public void resurch(View v){
@@ -329,7 +338,8 @@ public class gorakumenuActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     deletint = 0;
-                                    modetext();
+                                    firststring();
+                                    modetext(R.string.tuika + "モード");
                                 }
                             }
                     ).setNeutralButton(
@@ -391,7 +401,7 @@ public class gorakumenuActivity extends AppCompatActivity {
 
         }
         if (deletint == 1) {
-            String inputmode = getString(R.string.input) + "モード";
+            final String inputmode = getString(R.string.input) + "モード";
             new AlertDialog
                     .Builder(gorakumenuActivity.this)
                     .setTitle(R.string.input)
@@ -403,8 +413,8 @@ public class gorakumenuActivity extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    deletint = 0;
                                     firststring();
+                                    modetext(inputmode);
                                 }
                             }
                     )
@@ -422,7 +432,7 @@ public class gorakumenuActivity extends AppCompatActivity {
 
     public void delete() {
         if (deletint == 0) {
-            String deletemode = getString(R.string.delete) + "モード";
+            final String deletemode = getString(R.string.delete) + "モード";
 
             new AlertDialog
                     .Builder(gorakumenuActivity.this)
@@ -436,7 +446,8 @@ public class gorakumenuActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     //ダイアログのOKボタンを押したときの処理
-                                    deletint = 1;
+//                                    deletint = 1;
+                                    modetext(deletemode);
                                     firststring();
                                 }
                             }
@@ -454,7 +465,7 @@ public class gorakumenuActivity extends AppCompatActivity {
                     ).show();
 
         } else if (deletint == 1) {
-            String inputmode = getString(R.string.input) + "モード";
+            final String inputmode = getString(R.string.input) + "モード";
             new AlertDialog
                     .Builder(gorakumenuActivity.this)
                     .setTitle(R.string.delete)
@@ -468,6 +479,7 @@ public class gorakumenuActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     deletint = 0;
                                     firststring();
+                                    modetext(inputmode);
                                 }
                             }
                     )
@@ -510,7 +522,7 @@ public class gorakumenuActivity extends AppCompatActivity {
 
         gorakusumtextView.setText("合計金額は" + gorakusum + "円です。");
 
-        intent = new Intent(this, sumActivity.class);
+        intent = new Intent(this, lockActivity.class);
         intent.putExtra("sum", gorakusum);
         startActivity(intent);
 

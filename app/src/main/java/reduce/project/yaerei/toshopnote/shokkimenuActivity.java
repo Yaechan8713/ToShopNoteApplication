@@ -58,6 +58,8 @@ public class shokkimenuActivity extends AppCompatActivity {
 
         deletint = t = spint = onclickint = shokkisum = 0;
 
+        modetext(deletint);
+
         shokkipre = getSharedPreferences("shokkisum", Context.MODE_PRIVATE);
         shokkisum = shokkipre.getInt("shokkisum", 0);
 
@@ -332,6 +334,7 @@ public class shokkimenuActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     deletint = 0;
+                                    modetext(deletint);
                                 }
                             }
                     )
@@ -349,7 +352,7 @@ public class shokkimenuActivity extends AppCompatActivity {
 
     public void delete() {
         if (deletint == 0) {
-            String deletemode = getString(R.string.delete) + "モード";
+            final String deletemode = getString(R.string.delete) + "モード";
 
             new AlertDialog
                     .Builder(shokkimenuActivity.this)
@@ -364,6 +367,7 @@ public class shokkimenuActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     //ダイアログのOKボタンを押したときの処理
                                     deletint = 1;
+                                    modetext(deletint);
                                 }
                             }
                     )
@@ -393,6 +397,7 @@ public class shokkimenuActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     deletint = 0;
+                                    modetext(deletint);
                                 }
                             }
                     )
@@ -522,7 +527,7 @@ public class shokkimenuActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     deletint = 0;
-                                    modetext();
+                                    modetext(deletint);
                                 }
                             }
                     ).setNeutralButton(
@@ -546,10 +551,10 @@ public class shokkimenuActivity extends AppCompatActivity {
         shokkiresurchedit.setText("");
     }
 
-    public void modetext(){
-        if(deletint == 0){
+    public void modetext(int a){
+        if(a == 0){
             mode.setText("追加モード");
-        }else if(deletint == 1){
+        }else if(a == 1){
             mode.setText("削除モード");
         }
     }

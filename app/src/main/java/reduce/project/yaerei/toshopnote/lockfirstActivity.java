@@ -46,21 +46,24 @@ public class lockfirstActivity extends AppCompatActivity {
         }
     }
 
-    public void run() {
+    public void run(int t) {
+
+        pushcount++;
+
         if (pushcount == 1) {
-            firstnumber1 = ichijinum;
+            firstnumber1 = t;
             maru = maru + "●";
         }
         if (pushcount == 2) {
-            firstnumber2 = ichijinum;
+            firstnumber2 = t;
             maru = maru + "●";
         }
         if (pushcount == 3) {
-            firstnumber3 = ichijinum;
+            firstnumber3 = t;
             maru = maru + "●";
         }
         if (pushcount == 4) {
-            firstnumber4 = ichijinum;
+            firstnumber4 = t;
 
             new AlertDialog
                     .Builder(lockfirstActivity.this)
@@ -125,62 +128,42 @@ public class lockfirstActivity extends AppCompatActivity {
     }
 
     public void passwordnum1(View v) {
-        pushcount++;
-        ichijinum = 1;
-        run();
+        run(1);
     }
 
     public void passwordnum2(View v) {
-        pushcount++;
-        ichijinum = 2;
-        run();
+        run(2);
     }
 
     public void passwordnum3(View v) {
-        pushcount++;
-        ichijinum = 3;
-        run();
+        run(3);
     }
 
     public void passwordnum4(View v) {
-        pushcount++;
-        ichijinum = 4;
-        run();
+        run(4);
     }
 
     public void passwordnum5(View v) {
-        pushcount++;
-        ichijinum = 5;
-        run();
+        run(5);
     }
 
     public void passwordnum6(View v) {
-        pushcount++;
-        ichijinum = 6;
-        run();
+        run(6);
     }
 
     public void passwordnum7(View v) {
-        pushcount++;
-        ichijinum = 7;
-        run();
+        run(7);
     }
 
     public void passwordnum8(View v) {
-        pushcount++;
-        ichijinum = 8;
-        run();
+        run(8);
     }
 
     public void passwordnum9(View v) {
-        pushcount++;
-        ichijinum = 9;
-        run();
+        run(9);
     }
 
     public void passwordnum0(View v) {
-        pushcount++;
-        ichijinum = 0;
-        run();
+        run(0);
     }
 }

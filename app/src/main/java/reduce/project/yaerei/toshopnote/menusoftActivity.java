@@ -59,6 +59,8 @@ public class menusoftActivity extends AppCompatActivity {
 
         deletint = t = spint = softsum = onclickint = 0;
 
+        modetext(deletint);
+
         softpre = getSharedPreferences("softsum", Context.MODE_PRIVATE);
         softsum = softpre.getInt("softsum", 0);
 
@@ -331,6 +333,7 @@ public class menusoftActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     deletint = 0;
+                                    modetext(deletint);
                                 }
                             }
                     )
@@ -363,6 +366,7 @@ public class menusoftActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     //ダイアログのOKボタンを押したときの処理
                                     deletint = 1;
+                                    modetext(deletint);
                                 }
                             }
                     )
@@ -392,6 +396,7 @@ public class menusoftActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     deletint = 0;
+                                    modetext(deletint);
                                 }
                             }
                     )
@@ -519,7 +524,7 @@ public class menusoftActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     deletint = 0;
-                                    modetext();
+                                    modetext(deletint);
                                 }
                             }
                     ).setNeutralButton(
@@ -543,10 +548,10 @@ public class menusoftActivity extends AppCompatActivity {
         softresurch.setText("");
     }
 
-    public void modetext(){
-        if(deletint == 0){
+    public void modetext(int tt){
+        if(tt == 0){
             mode.setText("追加モード");
-        }else if(deletint == 1){
+        }else if(tt == 1){
             mode.setText("削除モード");
         }
     }

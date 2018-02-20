@@ -177,8 +177,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void googlemapintent(View v) {
-        intent = new Intent(this, googlemap2Activity.class);
-        startActivity(intent);
+        int t = 0;
+//        intent = new Intent(this, googlemap2Activity.class);
+//        startActivity(intent);
     }
 
 

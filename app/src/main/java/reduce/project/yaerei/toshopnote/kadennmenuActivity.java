@@ -63,6 +63,7 @@ public class kadennmenuActivity extends AppCompatActivity {
         year = oldyear = day = oldday = month = oldmonth = 0;
 
         firststring();
+        modetext(deletint);
 
         year = calendar.get(Calendar.YEAR);
         day = calendar.get(Calendar.DATE);
@@ -367,6 +368,7 @@ public class kadennmenuActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     deletint = 0;
+                                    modetext(deletint);
                                 }
                             }
                     )
@@ -399,6 +401,7 @@ public class kadennmenuActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     //ダイアログのOKボタンを押したときの処理
                                     deletint = 1;
+                                    modetext(deletint);
                                 }
                             }
                     )
@@ -428,6 +431,7 @@ public class kadennmenuActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     deletint = 0;
+                                    modetext(deletint);
                                 }
                             }
                     )
@@ -499,7 +503,7 @@ public class kadennmenuActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     deletint = 0;
-                                    modetext();
+                                    modetext(deletint);
                                 }
                             }
                     ).setNeutralButton(
@@ -521,10 +525,10 @@ public class kadennmenuActivity extends AppCompatActivity {
         kadennresurchedit.setText("");
     }
 
-    public void modetext(){
-        if(deletint == 0){
+    public void modetext(int tt){
+        if(tt == 0){
             mode.setText("追加モード");
-        }else if(deletint == 1){
+        }else if(tt == 1){
             mode.setText("削除モード");
         }
     }

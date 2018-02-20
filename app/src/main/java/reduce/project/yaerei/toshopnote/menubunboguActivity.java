@@ -58,6 +58,8 @@ public class menubunboguActivity extends AppCompatActivity {
 
         deletint = t = spint = onclickint = 0;
 
+        modetext(deletint);
+
         bunbogupre = getSharedPreferences("bunnbogusum", Context.MODE_PRIVATE);
         bunbogusum = bunbogupre.getInt("bunnbogusum", 0);
 
@@ -329,6 +331,7 @@ public class menubunboguActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     deletint = 0;
+                                    modetext(deletint);
                                 }
                             }
                     )
@@ -361,6 +364,7 @@ public class menubunboguActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     //ダイアログのOKボタンを押したときの処理
                                     deletint = 1;
+                                    modetext(deletint);
                                 }
                             }
                     )
@@ -390,6 +394,7 @@ public class menubunboguActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     deletint = 0;
+                                    modetext(deletint);
                                 }
                             }
                     )
@@ -519,7 +524,7 @@ public class menubunboguActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     deletint = 0;
-                                    modetext();
+                                    modetext(deletint);
                                 }
                             }
                     ).setNeutralButton(
@@ -543,10 +548,10 @@ public class menubunboguActivity extends AppCompatActivity {
         bunboguresurchedit.setText("");
     }
 
-    public void modetext(){
-        if(deletint == 0){
+    public void modetext(int deletintnum){
+        if(deletintnum == 0){
             mode.setText("追加モード");
-        }else if(deletint == 1){
+        }else if(deletintnum == 1){
             mode.setText("削除モード");
         }
     }

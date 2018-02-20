@@ -156,7 +156,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
                     android:onClick="intentbutton"
-                    android:text="合計金額" />
+                    android:text="@string/sumhyoji" />
 
 
                 <LinearLayout
